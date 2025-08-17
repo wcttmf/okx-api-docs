@@ -1,0 +1,348 @@
+<h3 id="block-trading-rest-api-create-rfq">Create RFQ</h3>
+<p>Creates a new RFQ</p>
+<aside class="notice">
+<br/>
+Please select trading bot "WAGMI" as the counterparty when submitting RFQs in demo trading.<br/>
+Prices provided on RFQs by the trading bot are for reference only. <br/>
+</aside>
+<p>To learn more, please visit <a href="/help/demo-trading">Support center &gt; FAQ &gt; Trading &gt; Liquid marketplace &gt; Demo trading</a></p>
+<h4 id="block-trading-rest-api-create-rfq-rate-limit-5-requests-per-2-seconds-80-requests-per-12-hours">Rate Limit: 5 requests per 2 seconds; 80 requests per 12 hours</h4><h4 id="block-trading-rest-api-create-rfq-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="block-trading-rest-api-create-rfq-permission-trade">Permission: Trade</h4><h4 id="block-trading-rest-api-create-rfq-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/rfq/create-rfq</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/rfq/create-rfq
+
+<span class="o">{</span>
+    <span class="s2">"anonymous"</span>: <span class="nb">true</span>,
+    <span class="s2">"counterparties"</span>:[
+        <span class="s2">"Trader1"</span>,
+        <span class="s2">"Trader2"</span>
+    <span class="o">]</span>,
+    <span class="s2">"allowPartialExecution"</span>:false,
+    <span class="s2">"clRfqId"</span>:<span class="s2">"rfq01"</span>,
+    <span class="s2">"tag"</span>:<span class="s2">"123456"</span>,
+    <span class="s2">"legs"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"sz"</span>:<span class="s2">"25"</span>,
+            <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+            <span class="s2">"posSide"</span>: <span class="s2">"long"</span>,
+            <span class="s2">"tdMode"</span>:<span class="s2">"cross"</span>,
+            <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"BTC-USD-221208-100000-C"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"sz"</span>:<span class="s2">"150"</span>,
+            <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+            <span class="s2">"posSide"</span>: <span class="s2">"long"</span>,
+            <span class="s2">"tdMode"</span>:<span class="s2">"cross"</span>,
+            <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"ETH-USDT"</span>,
+            <span class="s2">"tgtCcy"</span>:<span class="s2">"base_ccy"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.BlockTrading</span> <span class="k">as</span> <span class="n">BlockTrading</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">blockTradingAPI</span> <span class="o">=</span> <span class="n">BlockTrading</span><span class="p">.</span><span class="n">BlockTradingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Create RFQ
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">blockTradingAPI</span><span class="p">.</span><span class="n">create_rfq</span><span class="p">(</span>
+    <span class="n">anonymous</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">counterparties</span><span class="o">=</span><span class="p">[</span>
+        <span class="s">"Trader1"</span><span class="p">,</span>
+        <span class="s">"Trader2"</span>
+    <span class="p">],</span>
+    <span class="n">clRfqId</span><span class="o">=</span> <span class="s">"rfq01"</span><span class="p">,</span>
+    <span class="n">legs</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"sz"</span><span class="p">:</span><span class="s">"25"</span><span class="p">,</span>
+            <span class="s">"side"</span><span class="p">:</span><span class="s">"buy"</span><span class="p">,</span>
+            <span class="s">"posSide"</span><span class="p">:</span> <span class="s">"long"</span><span class="p">,</span>
+            <span class="s">"tdMode"</span><span class="p">:</span><span class="s">"cross"</span><span class="p">,</span>
+            <span class="s">"ccy"</span><span class="p">:</span><span class="s">"USDT"</span><span class="p">,</span>
+            <span class="s">"instId"</span><span class="p">:</span><span class="s">"BTC-USD-221208-100000-C"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s">"sz"</span><span class="p">:</span><span class="s">"150"</span><span class="p">,</span>
+            <span class="s">"side"</span><span class="p">:</span><span class="s">"buy"</span><span class="p">,</span>
+            <span class="s">"posSide"</span><span class="p">:</span> <span class="s">"long"</span><span class="p">,</span>
+            <span class="s">"tdMode"</span><span class="p">:</span><span class="s">"cross"</span><span class="p">,</span>
+            <span class="s">"ccy"</span><span class="p">:</span><span class="s">"USDT"</span><span class="p">,</span>
+            <span class="s">"instId"</span><span class="p">:</span><span class="s">"ETH-USDT"</span><span class="p">,</span>
+            <span class="s">"tgtCcy"</span><span class="p">:</span><span class="s">"base_ccy"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="block-trading-rest-api-create-rfq-request-parameters">Request parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">counterparties</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The trader code(s) of the counterparties who receive the RFQ. Can be found via /api/v5/rfq/counterparties/</td>
+</tr>
+<tr>
+<td style="text-align: left">anonymous</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Submit RFQ on a disclosed or anonymous basis. Valid values are <code>true</code> or <code>false</code>. <br/>If not specified, the default value is <code>false</code>. <br/>When anonymous = true, the taker’s identify is not disclosed to maker even after trade execution.</td>
+</tr>
+<tr>
+<td style="text-align: left">clRfqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied RFQ ID. <br/>A combination of case-sensitive alpha-numeric, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">RFQ tag. <br/>The block trade associated with the RFQ will have the same tag. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">allowPartialExecution</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the RFQ can be partially filled provided that the shape of legs stays the same. Valid values are <code>true</code> or <code>false</code>. <br/><code>false</code> by default.</td>
+</tr>
+<tr>
+<td style="text-align: left">legs</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">An Array of objects containing each leg of the RFQ. Maximum 15 legs can be placed per request</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The Instrument ID of each leg. Example : "BTC-USDT-SWAP"</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trade mode <br/>Margin mode: <code>cross</code> <code>isolated</code> <br/>Non-Margin mode: <code>cash</code>. <br/>If not provided, tdMode will inherit default values set by the system shown below: <br/>Futures mode &amp; SPOT: <code>cash</code> <br/>Buy options in Futures mode and Multi-currency Margin: <code>isolated</code> <br/>Other cases: <code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Margin currency. <br/>Only applicable to <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>. The parameter will be ignored in other scenarios.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The size of each leg</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lmtPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Taker expected price for the RFQ<br/><br/> If provided, RFQ trade will be automatically executed if the price from the quote is better than or equal to the price specified until the RFQ is canceled or expired.<br/> This field has to be provided for all legs to have the RFQ automatically executed, or leave empty for all legs, otherwise request will be rejected.<br/> The auto execution side depends on the leg side of the RFQ.<br/> For <code>SPOT/MARGIN/FUTURES/SWAP</code>, lmtPx will be in unit of the quote ccy.<br/> For <code>OPTION</code>, lmtPx will be in unit of settle ccy.<br/> The field will not be disclosed to counterparties.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The direction of each leg. Valid values can be <code>buy</code> or <code>sell</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Position side. <br/>The default is <code>net</code> in the net mode. It can only be <code>long</code> or <code>short</code> in the long/short mode. <br/>If not specified, users in long/short mode always open new positions. <br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Defines the unit of the “sz” attribute. <br/>Only applicable to instType = SPOT. <br/>The valid enumerations are <code>base_ccy</code> and <code>quote_ccy</code>. When not specified, this is equal to <code>base_ccy</code> by default.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The quote currency used for trading. Only applicable to SPOT. <br/>The default value is the quote currency of the instId, for example: for <code>BTC-USD</code>, the default is <code>USD</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="s2">"1611033737572"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="s2">"1611033737572"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"traderCode"</span><span class="p">:</span><span class="s2">"SATOSHI"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rfqId"</span><span class="p">:</span><span class="s2">"22534"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clRfqId"</span><span class="p">:</span><span class="s2">"rfq01"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"allowPartialExecution"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"validUntil"</span><span class="p">:</span><span class="s2">"1611033857557"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"counterparties"</span><span class="p">:[</span><span class="w">
+                </span><span class="s2">"Trader1"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Trader2"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"legs"</span><span class="p">:[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"BTC-USD-221208-100000-C"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tgtCcy"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"ETH-USDT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="s2">"150"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tgtCcy"</span><span class="p">:</span><span class="s2">"base_ccy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-rest-api-create-rfq-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The result code, <code>0</code> means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The error message, not empty if the code is not 0.</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Array of objects containing the results of the RFQ creation.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The timestamp the RFQ was created. Unix timestamp format in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The timestamp the RFQ was last updated. Unix timestamp format in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The status of the RFQ. <br/>Valid values can be <code>active</code> <code>canceled</code> <code>pending_fill</code> <code>filled</code> <code>expired</code> <code>traded_away</code> <code>failed</code>. <br/><code>traded_away</code> only applies to Maker</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; counterparties</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">The list of counterparties traderCode the RFQ was broadcast to.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; validUntil</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The timestamp the RFQ expires. Unix timestamp format in milliseconds. <br/>If all legs are options, the RFQ will expire after 10 minutes; otherwise, the RFQ will expire after 2 minutes.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; clRfqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied RFQ ID. This attribute is treated as client sensitive information. It will not be exposed to the Maker, only return empty string.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">RFQ tag. The block trade associated with the RFQ will have the same tag.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; allowPartialExecution</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether the RFQ can be partially filled provided that the shape of legs stays the same.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; traderCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">A unique identifier of taker.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rfqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The unique identifier of the RFQ generated by system.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; legs</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">An Array of objects containing each leg of the RFQ.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade mode <br/>Margin mode: <code>cross</code> <code>isolated</code> <br/>Non-Margin mode: <code>cash</code>. <br/>If not provided, tdMode will inherit default values set by the system shown below: <br/>Futures mode &amp; SPOT: <code>cash</code> <br/>Buy options in Futures mode and Multi-currency Margin: <code>isolated</code> <br/>Other cases: <code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency. <br/>Only applicable to <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>. The parameter will be ignored in other scenarios.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Size of the leg in contracts or spot.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The direction of the leg. Valid values can be buy or sell.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side. <br/>The default is <code>net</code> in the net mode. If not specified, return "", which is equivalent to net. <br/>It can only be <code>long</code> or <code>short</code> in the long/short mode. If not specified, return "", which corresponds to the direction that opens new positions for the trade (buy =&gt; long, sell =&gt; short). <br/>Only applicable to FUTURES/SWAP.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Defines the unit of the “sz” attribute. <br/>Only applicable to instType = SPOT. <br/>The valid enumerations are <code>base_ccy</code> and <code>quote_ccy</code>. When not specified this is equal to <code>base_ccy</code> by default.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The quote currency used for trading. Only applicable to SPOT. <br/>The default value is the quote currency of the instId, for example: for <code>BTC-USD</code>, the default is <code>USD</code>.</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,8 @@
+<h3 id="spread-trading-comprehensive-api-workflow-trade-state">Trade State</h3>
+<p>Track the state of a trade by subscribing to the <code>sprd-trades</code>WebSocket channel.</p>
+<ol>
+<li>After an executed trade undergoes clearing and settlement on OKX, it reaches finality.</li>
+<li>For successfully cleared trades, a WebSocket message is sent with the <code>state</code>denoted as <code>filled</code>.</li>
+<li>In the case of an unsuccessful trade clearing, a trade update message is sent with the <code>state</code> reflected as <code>rejected</code>.</li>
+<li>If the trade state is <code>rejected</code>, the trade update message will also include the error <code>code</code> and a corresponding error message (<code>msg</code>) that explains the reason for the rejection.</li>
+</ol>

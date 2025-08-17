@@ -1,0 +1,123 @@
+<h3 id="trading-account-rest-api-get-greeks">Get Greeks</h3>
+<p>Retrieve a greeks list of all assets in the account.</p>
+<h4 id="trading-account-rest-api-get-greeks-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-greeks-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-greeks-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-greeks-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/greeks</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Get the greeks of all assets in the account</span>
+GET /api/v5/account/greeks
+
+<span class="c"># Get the greeks of BTC assets in the account</span>
+GET /api/v5/account/greeks?ccy<span class="o">=</span>BTC
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Retrieve a greeks list of all assets in the account
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_greeks</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-greeks-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Single currency, e.g. <code>BTC</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">            
+           </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"thetaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"deltaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"gammaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">    
+           </span><span class="nl">"vegaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"ts"</span><span class="p">:</span><span class="s2">"1620282889345"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-greeks-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">deltaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">delta: Black-Scholes Greeks in dollars</td>
+</tr>
+<tr>
+<td style="text-align: left">deltaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">delta: Greeks in coins</td>
+</tr>
+<tr>
+<td style="text-align: left">gammaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">gamma: Black-Scholes Greeks in dollars, only applicable to OPTION</td>
+</tr>
+<tr>
+<td style="text-align: left">gammaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">gamma: Greeks in coins, only applicable to OPTION</td>
+</tr>
+<tr>
+<td style="text-align: left">thetaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">theta: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">thetaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">theta: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">vegaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">vega: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">vegaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">vega：Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time of getting Greeks, Unix timestamp format in milliseconds, e.g. 1597026383085</td>
+</tr>
+</tbody></table>

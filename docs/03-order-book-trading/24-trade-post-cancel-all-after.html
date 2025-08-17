@@ -1,0 +1,99 @@
+<h3 id="order-book-trading-trade-post-cancel-all-after">POST / Cancel All After</h3>
+<p>Cancel all pending orders after the countdown timeout. Applicable to all trading symbols through order book (except Spread trading)<br/></p>
+<h4 id="order-book-trading-trade-post-cancel-all-after-rate-limit-1-request-per-second">Rate Limit: 1 request per second</h4><h4 id="order-book-trading-trade-post-cancel-all-after-rate-limit-rule-user-id-tag">Rate limit rule: User ID + tag</h4><h4 id="order-book-trading-trade-post-cancel-all-after-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-trade-post-cancel-all-after-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/trade/cancel-all-after</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/trade/cancel-all-after
+<span class="o">{</span>
+   <span class="s2">"timeOut"</span>:<span class="s2">"60"</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Trade</span> <span class="k">as</span> <span class="n">Trade</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">tradeAPI</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">.</span><span class="n">TradeAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Set cancel all after
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">tradeAPI</span><span class="p">.</span><span class="n">cancel_all_after</span><span class="p">(</span>
+    <span class="n">timeOut</span><span class="o">=</span><span class="s">"10"</span>
+<span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre></div><h4 id="order-book-trading-trade-post-cancel-all-after-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">timeOut</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The countdown for order cancellation, with second as the unit.<br/>Range of value can be 0, [10, 120]. <br/>Setting timeOut to 0 disables Cancel All After.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">CAA order tag <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="s2">"1587971460"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="s2">"1587971400"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-post-cancel-all-after-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">triggerTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The time the cancellation is triggered.<br/>triggerTime=0 means Cancel All After is disabled.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">CAA order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The time the request is received.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Users are recommended to send heartbeat to the exchange every second. When the cancel all after is triggered, the trading engine will cancel orders on behalf of the client one by one and this operation may take up to a few seconds. This feature is intended as a protection mechanism for clients only and clients should not use this feature as part of their trading strategies.
+</aside>
+<aside class="notice">
+<br/>
+To use tag level CAA, first, users need to set tags for their orders using the `tag` request parameter in the placing orders endpoint. When calling the CAA endpoint, if the `tag` request parameter is not provided, the default will be to set CAA at the account level. In this case, all pending orders for all order book trading symbols under that sub-account will be cancelled when CAA triggers, consistent with the existing logic. If the `tag` request parameter is provided, CAA will be set at the order tag level. When triggered, only pending orders of order book trading symbols with the specified tag will be canceled, while orders with other tags or no tags will remain unaffected.
+<br/>
+<br/>
+Users can run a maximum of 20 tag level CAAs simultaneously under the same sub-account. The system will only count live tag level CAAs. CAAs that have been triggered or revoked by the user will not be counted. The user will receive error code 51071 when exceeding the limit.
+</aside>

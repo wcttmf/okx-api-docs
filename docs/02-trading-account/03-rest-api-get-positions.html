@@ -1,0 +1,492 @@
+<h3 id="trading-account-rest-api-get-positions">Get positions</h3>
+<p>Retrieve information on your positions. When the account is in <code>net</code> mode, <code>net</code> positions will be displayed, and when the account is in <code>long/short</code> mode, <code>long</code> or <code>short</code> positions will be displayed. Return in reverse chronological order using ctime.</p>
+<h4 id="trading-account-rest-api-get-positions-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-positions-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-positions-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-positions-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/positions</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Query BTC-USDT position information</span>
+GET /api/v5/account/positions?instId<span class="o">=</span>BTC-USDT
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get positions information
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_positions</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-positions-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code><br/><code>instId</code> will be checked against <code>instType</code> when both parameters are passed.</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code>. Single instrument ID or multiple instrument IDs (no more than 10) separated with comma</td>
+</tr>
+<tr>
+<td style="text-align: left">posId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Single position ID or multiple position IDs (no more than 20) separated with comma. <br/>There is attribute expiration, the posId and position information will be cleared if it is more than 30 days after the last full close position.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+instId<br/>
+If the instrument ever had position and its open interest is 0, it will return the position information with specific instId. It will not return the position information with specific instId if there is no valid posId; it will not return the position information without specific instId. 
+</aside>
+<aside class="notice">
+In the isolated margin trading settings, if it is set to the manual transfers mode, after the position is transferred to the margin, a position with a position of 0 will be generated
+</aside>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"adl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availPos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00190433573"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62961.4"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"baseBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"baseBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"baseInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bePx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bizRefId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bizRefType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1724740225685"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"closeOrderAlgo"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"deltaPA"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fundingFee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gammaPA"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"idxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62890.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MARGIN"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"interest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62892.9"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liab"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-99.9998177776581948"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liabCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPenalty"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53615.448336593756"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.000317654"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62891.9"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.404143929947395"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0000318005395854"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"119.756628017499"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"optVal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pendingCloseOrdLiabVal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00190433573"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1752810569801498626"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"realizedPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"spotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"spotInUseCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thetaPA"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"785524470"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1724742632153"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0000033452492717"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uplLastPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0000033199677697"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0105311101755551"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uplRatioLastPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0104515220008934"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"usdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vegaPA"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"nonSettleAvgPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"settledPnl"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-positions-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin mode<br/><code>cross</code> <br/><code>isolated</code></td>
+</tr>
+<tr>
+<td style="text-align: left">posId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side<br/><code>long</code>, <code>pos</code> is positive  <br/><code>short</code>, <code>pos</code> is positive  <br/><code>net</code> (<code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>: positive <code>pos</code> means long position and negative <code>pos</code> means short position. For <code>MARGIN</code>, <code>pos</code> is always positive, <code>posCcy</code> being base currency means long position, <code>posCcy</code> being quote currency means short position.)</td>
+</tr>
+<tr>
+<td style="text-align: left">pos</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity of positions. In the isolated margin mode, when doing manual transfers, a position with pos of <code>0</code> will be generated after the deposit is transferred</td>
+</tr>
+<tr>
+<td style="text-align: left">baseBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Base currency balance, only applicable to <code>MARGIN</code>（Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">quoteBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Quote currency balance, only applicable to <code>MARGIN</code>（Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">baseBorrowed</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Base currency amount already borrowed, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">baseInterest</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Base Interest, undeducted interest that has been incurred, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">quoteBorrowed</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Quote currency amount already borrowed, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">quoteInterest</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Quote Interest, undeducted interest that has been incurred, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">posCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position currency, only applicable to <code>MARGIN</code> positions.</td>
+</tr>
+<tr>
+<td style="text-align: left">availPos</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position that can be closed <br/>Only applicable to <code>MARGIN</code> and <code>OPTION</code>.<br/>For <code>MARGIN</code> position, the rest of sz will be <code>SPOT</code> trading after the liability is repaid while closing the position. Please get the available reduce-only amount from "Get maximum available tradable amount" if you want to reduce the amount of <code>SPOT</code> trading as much as possible.</td>
+</tr>
+<tr>
+<td style="text-align: left">avgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average open price<br/>Under cross-margin mode, the entry price of expiry futures will update at settlement to the last settlement price, and when the position is opened or increased.</td>
+</tr>
+<tr>
+<td style="text-align: left">nonSettleAvgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Non-settlement entry price<br/>The non-settlement entry price only reflects the average price at which the position is opened or increased.<br/>Applicable to <code>cross</code> <code>FUTURES</code> positions.</td>
+</tr>
+<tr>
+<td style="text-align: left">markPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest Mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">upl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss calculated by mark price.</td>
+</tr>
+<tr>
+<td style="text-align: left">uplRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss ratio calculated by mark price.</td>
+</tr>
+<tr>
+<td style="text-align: left">uplLastPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss calculated by last price. Main usage is showing, actual value is upl.</td>
+</tr>
+<tr>
+<td style="text-align: left">uplRatioLastPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss ratio calculated by last price.</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage<br/> Not applicable to <code>OPTION</code> and positions of cross margin mode under <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">liqPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated liquidation price  <br/>Not applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">imr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Initial margin requirement, only applicable to <code>cross</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">margin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin, can be added or reduced. Only applicable to <code>isolated</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maintenance margin ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">mmr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maintenance margin requirement</td>
+</tr>
+<tr>
+<td style="text-align: left">liab</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liabilities, only applicable to <code>MARGIN</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">liabCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liabilities currency, only applicable to <code>MARGIN</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">interest</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Interest. Undeducted interest that has been incurred.</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">optVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Option Value, only applicable to <code>OPTION</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">pendingCloseOrdLiabVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The amount of close orders of isolated margin liability.</td>
+</tr>
+<tr>
+<td style="text-align: left">notionalUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Notional value of positions in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">adl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Auto-deleveraging (ADL) indicator<br/>Divided into 5 levels, from 1 to 5, the smaller the number, the weaker the adl intensity. <br/>Only applicable to <code>FUTURES/SWAP/OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency used for margin</td>
+</tr>
+<tr>
+<td style="text-align: left">last</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest traded price</td>
+</tr>
+<tr>
+<td style="text-align: left">idxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest underlying index price</td>
+</tr>
+<tr>
+<td style="text-align: left">usdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest USD price of the <code>ccy</code> on the market, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">bePx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Breakeven price</td>
+</tr>
+<tr>
+<td style="text-align: left">deltaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">delta: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">deltaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">delta: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">gammaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">gamma: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">gammaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">gamma: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">thetaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">theta：Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">thetaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">theta：Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">vegaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">vega：Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">vegaPA</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">vega：Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">spotInUseAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Spot in use amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">spotInUseCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Spot in use unit, e.g. <code>BTC</code><br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">clSpotInUseAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">User-defined spot risk offset amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maxSpotInUseAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Max possible spot risk offset amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">bizRefId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">External business id, e.g. experience coupon id</td>
+</tr>
+<tr>
+<td style="text-align: left">bizRefType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">External business type</td>
+</tr>
+<tr>
+<td style="text-align: left">realizedPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Realized profit and loss<br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code><br/><code>realizedPnl</code>=<code>pnl</code>+<code>fee</code>+<code>fundingFee</code>+<code>liqPenalty</code>+<code>settledPnl</code></td>
+</tr>
+<tr>
+<td style="text-align: left">settledPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated settled profit and loss (calculated by settlement price)<br/>Only applicable to <code>cross</code> <code>FUTURES</code></td>
+</tr>
+<tr>
+<td style="text-align: left">pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated pnl of closing order(s) (excluding the fee).</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated fee<br/>Negative number represents the user transaction fee charged by the platform.Positive number represents rebate.</td>
+</tr>
+<tr>
+<td style="text-align: left">fundingFee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated funding fee</td>
+</tr>
+<tr>
+<td style="text-align: left">liqPenalty</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated liquidation penalty. It is negative when there is a value.</td>
+</tr>
+<tr>
+<td style="text-align: left">closeOrderAlgo</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Close position algo orders attached to the position. This array will have values only after you request "Place algo order" with <code>closeFraction</code>=1.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; closeFraction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fraction of position to be closed when the algo order is triggered.</td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Creation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest time position was adjusted, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>
+<aside class="notice">
+<p>
+As for portfolio margin account, the IMR and MMR of the position are calculated in risk unit granularity, thus their values of the same risk unit cross positions are the same.
+</p>
+</aside>

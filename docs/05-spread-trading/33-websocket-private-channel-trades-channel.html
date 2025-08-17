@@ -1,0 +1,395 @@
+<h3 id="spread-trading-websocket-private-channel-trades-channel">Trades channel</h3>
+<p>All updates relating to User's Trades are sent through the <code>sprd-trades</code> WebSocket Notifications channel.</p>
+<p>This is a private channel and consumable solely by the authenticated user.</p>
+<p>Updates received through the <code>sprd-trades</code> WebSocket Notification channel can include Trades being <code>filled</code> or <code>rejected</code>.</p>
+<p>You may receive multiple notifications if an Order of yours interacts with more than one other Order.</p>
+<h4 id="spread-trading-websocket-private-channel-trades-channel-url-path">URL Path</h4>
+<p>/ws/v5/business (required login)</p>
+<blockquote>
+<p>Request Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"sprd-trades"</span>,
+      <span class="s2">"sprdId"</span>: <span class="s2">"BTC-USDT_BTC-USDT-SWAP"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"sprd-trades"</span><span class="p">,</span>
+          <span class="s">"sprdId"</span><span class="p">:</span> <span class="s">"BTC-USDT_BTC-USDT-SWAP"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>Request Example:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"sprd-trades"</span>,
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"sprd-trades"</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="spread-trading-websocket-private-channel-trades-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>sprd-trades</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sprdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Spread ID</td>
+</tr>
+</tbody></table>
+<h4 id="spread-trading-websocket-private-channel-trades-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sprdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Spread ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"arg"</span>: <span class="o">{</span>
+        <span class="s2">"channel"</span>: <span class="s2">"sprd-trades"</span>,
+        <span class="s2">"sprdId"</span>: <span class="s2">"BTC-USDT_BTC-USDT-SWAP"</span>,
+        <span class="s2">"uid"</span>: <span class="s2">"614488474791936"</span>
+    <span class="o">}</span>,
+    <span class="s2">"data"</span>:[
+         <span class="o">{</span>
+            <span class="s2">"sprdId"</span>:<span class="s2">"BTC-USDT-SWAP_BTC-USDT-200329"</span>,
+            <span class="s2">"tradeId"</span>:<span class="s2">"123"</span>,
+            <span class="s2">"ordId"</span>:<span class="s2">"123445"</span>,
+            <span class="s2">"clOrdId"</span>: <span class="s2">"b16"</span>,
+            <span class="s2">"tag"</span>:<span class="s2">""</span>,
+            <span class="s2">"fillPx"</span>:<span class="s2">"999"</span>,
+            <span class="s2">"fillSz"</span>:<span class="s2">"3"</span>,
+            <span class="s2">"state"</span>: <span class="s2">"filled"</span>,
+            <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+            <span class="s2">"execType"</span>:<span class="s2">"M"</span>,
+            <span class="s2">"ts"</span>:<span class="s2">"1597026383085"</span>,
+            <span class="s2">"legs"</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-SWAP"</span>,
+                    <span class="s2">"px"</span>: <span class="s2">"20000"</span>,
+                    <span class="s2">"sz"</span>: <span class="s2">"3"</span>,
+                    <span class="s2">"szCont"</span>: <span class="s2">"0.03"</span>,
+                    <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+                    <span class="s2">"fillPnl"</span>: <span class="s2">""</span>,
+                    <span class="s2">"fee"</span>: <span class="s2">""</span>,
+                    <span class="s2">"feeCcy"</span>: <span class="s2">""</span>,
+                    <span class="s2">"tradeId"</span>: <span class="s2">"1232342342"</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-200329"</span>,
+                    <span class="s2">"px"</span>: <span class="s2">"21000"</span>,
+                    <span class="s2">"sz"</span>: <span class="s2">"3"</span>,
+                    <span class="s2">"szCont"</span>: <span class="s2">"0.03"</span>,
+                    <span class="s2">"side"</span>: <span class="s2">"sell"</span>,
+                    <span class="s2">"fillPnl"</span>: <span class="s2">""</span>,
+                    <span class="s2">"fee"</span>: <span class="s2">""</span>,
+                    <span class="s2">"feeCcy"</span>: <span class="s2">""</span>,
+                    <span class="s2">"tradeId"</span>: <span class="s2">"5345646634"</span>
+                <span class="o">}</span>,
+            <span class="o">]</span>
+            <span class="s2">"code"</span>: <span class="s2">""</span>,
+            <span class="s2">"msg"</span>: <span class="s2">""</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="spread-trading-websocket-private-channel-trades-channel-push-data-parameters">Push Data Parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; uid</td>
+<td>String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td>&gt; sprdId</td>
+<td>String</td>
+<td>spread ID</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td>&gt; sprdId</td>
+<td>String</td>
+<td>spread ID</td>
+</tr>
+<tr>
+<td>&gt; tradeId</td>
+<td>String</td>
+<td>Trade ID</td>
+</tr>
+<tr>
+<td>&gt; ordId</td>
+<td>String</td>
+<td>Order ID</td>
+</tr>
+<tr>
+<td>&gt; clOrdId</td>
+<td>String</td>
+<td>Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td>&gt; tag</td>
+<td>String</td>
+<td>Order tag</td>
+</tr>
+<tr>
+<td>&gt; fillPx</td>
+<td>String</td>
+<td>Last filled price</td>
+</tr>
+<tr>
+<td>&gt; fillSz</td>
+<td>String</td>
+<td>Last filled quantity</td>
+</tr>
+<tr>
+<td>&gt; side</td>
+<td>String</td>
+<td>Order side,  buy  sell</td>
+</tr>
+<tr>
+<td>&gt; state</td>
+<td>String</td>
+<td>Trade state. Valid values are filled and rejected</td>
+</tr>
+<tr>
+<td>&gt; execType</td>
+<td>String</td>
+<td>Liquidity taker or maker <br/><code>T</code>: taker  <br/><code>M</code>: maker</td>
+</tr>
+<tr>
+<td>&gt;ts</td>
+<td>String</td>
+<td>Data generation time, Unix timestamp format in milliseconds, e.g. 1597026383085.</td>
+</tr>
+<tr>
+<td>&gt; legs</td>
+<td>Array of objects</td>
+<td>Legs of trade</td>
+</tr>
+<tr>
+<td>&gt;&gt; instId</td>
+<td>String</td>
+<td>Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td>&gt;&gt; px</td>
+<td>String</td>
+<td>The price the leg executed</td>
+</tr>
+<tr>
+<td>&gt;&gt; sz</td>
+<td>String</td>
+<td>Size of the leg in contracts or spot.</td>
+</tr>
+<tr>
+<td>&gt;&gt; szCont</td>
+<td>String</td>
+<td>Filled amount of the contract  <br/>Only applicable to contracts, return "" for spot</td>
+</tr>
+<tr>
+<td>&gt;&gt; side</td>
+<td>String</td>
+<td>The direction of the leg. Valid value can be <code>buy</code> or <code>sell</code>.</td>
+</tr>
+<tr>
+<td>&gt;&gt; fillPnl</td>
+<td>String</td>
+<td>Last filled profit and loss, applicable to orders which have a trade and aim to close position. It always is 0 in other conditions</td>
+</tr>
+<tr>
+<td>&gt;&gt; fee</td>
+<td>String</td>
+<td>Fee. Negative number represents the user transaction fee charged by the platform. Positive number represents rebate.</td>
+</tr>
+<tr>
+<td>&gt;&gt; feeCcy</td>
+<td>String</td>
+<td>Fee currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; tradeId</td>
+<td>String</td>
+<td>Traded ID in the OKX orderbook.</td>
+</tr>
+<tr>
+<td>&gt; code</td>
+<td>String</td>
+<td>Error Code, the default is 0</td>
+</tr>
+<tr>
+<td>&gt; msg</td>
+<td>String</td>
+<td>Error Message, the default is ""</td>
+</tr>
+</tbody></table>
+<h2 id="spread-trading-websocket-public-channel">WebSocket Public Channel</h2>
+<ul>
+<li>Production Trading URL: <code>wss://ws.okx.com:8443/ws/v5/business</code></li>
+<li>Demo Trading URL: <code>wss://wspap.okx.com:8443/ws/v5/business</code> </li>
+</ul>

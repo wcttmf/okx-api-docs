@@ -1,0 +1,78 @@
+<h3 id="overview-demo-trading-services-demo-trading-explorer">Demo Trading Explorer</h3>
+<p>You need to sign in to your OKX account before accessing the explorer. The interface only allow access to the demo trading environment.</p>
+<ul>
+<li><p>Clicking <code>Try it out</code> button in Parameters Panel and editing request parameters.</p></li>
+<li><p>Clicking <code>Execute</code> button to send your request. You can check response in Responses panel.</p></li>
+</ul>
+<p>Try <a href="/demo-trading-explorer/v5/en">demo trading explorer</a></p>
+<h2 id="overview-general-info">General Info</h2>
+<p><strong>The rules for placing orders at the exchange level are as follows:</strong></p>
+<ul>
+<li>The maximum number of pending orders (including post only orders, limit orders and taker orders that are being processed): 4,000 </li>
+<li><p>The maximum number of pending orders per trading symbol is 500, the limit of 500 pending orders applies to the following <strong>order types</strong>: </p>
+<ul>
+<li>Limit</li>
+<li>Market</li>
+<li>Post only</li>
+<li>Fill or Kill (FOK)</li>
+<li>Immediate or Cancel (IOC)</li>
+<li>Market order with Immediate-or-Cancel order (optimal limit IOC)</li>
+<li>Take Profit / Stop Loss (TP/SL)</li>
+<li>Limit and market orders triggered under the order types below:
+
+<ul>
+<li>Take Profit / Stop Loss (TP/SL)</li>
+<li>Trigger</li>
+<li>Trailing stop</li>
+<li>Arbitrage</li>
+<li>Iceberg</li>
+<li>TWAP</li>
+<li>Recurring buy</li>
+</ul></li>
+</ul></li>
+<li><p>The maximum number of pending spread orders: 500 across all spreads</p></li>
+<li><p>The maximum number of pending algo orders:  </p>
+<ul>
+<li>TP/SL order: 100 per instrument</li>
+<li>Trigger order: 500</li>
+<li>Trailing order: 50</li>
+<li>Iceberg order: 100</li>
+<li>TWAP order: 20</li>
+</ul></li>
+<li><p>The maximum number of grid trading</p>
+<ul>
+<li>Spot grid: 100</li>
+<li>Contract grid: 100</li>
+</ul></li>
+</ul>
+<p><br/></p>
+<p><strong>The rules for trading are as follows:</strong></p>
+<ul>
+<li>When the number of maker orders matched with a taker order exceeds the maximum number limit of 1000, the taker order will be canceled.
+
+<ul>
+<li>The limit orders will only be executed with a portion corresponding to 1000 maker orders and the remainder will be canceled.</li>
+<li>Fill or Kill (FOK) orders will be canceled directly.</li>
+</ul></li>
+</ul>
+<p><br/></p>
+<p><strong>The rules for the returning data are as follows:</strong></p>
+<ul>
+<li><p><code>code</code> and <code>msg</code> represent the request result or error reason when the return data has <code>code</code>, and has not <code>sCode</code>;</p></li>
+<li><p>It is <code>sCode</code> and <code>sMsg</code> that represent the request result or error reason when the return data has <code>sCode</code> rather than <code>code</code> and <code>msg</code>.</p></li>
+</ul>
+<p><br/></p>
+<p><strong>The introduction of <code>instFamily</code>:</strong></p>
+<ul>
+<li>There are no difference between <code>uly</code> and <code>instFamily</code>:
+
+<ul>
+<li>For BTC-USD-SWAP, <code>uly</code> and <code>instFamily</code> are both BTC-USD. For BTC-USDC-SWAP, <code>uly</code> and <code>instFamily</code> are both BTC-USDC.</li>
+<li>If you set the request parameter "uly" as BTC-USD, you will get the data for BTC-USD (coin-margined) contracts.</li>
+<li>If you set the request parameter "instFamily" as BTC-USD, then you also will get data for BTC-USD (coin-margined) contracts.<br/></li>
+</ul></li>
+<li>You can look up the corresponding instFamily of each instrument from the "Get instruments" endpoint.</li>
+</ul>
+<h2 id="overview-transaction-timeouts">Transaction Timeouts</h2>
+<p>Orders may not be processed in time due to network delay or busy OKX servers. You can configure the expiry time of the request using <code>expTime</code> if you want the order request to be discarded after a specific time.</p>
+<p>If <code>expTime</code> is specified in the requests for Place (multiple) orders or Amend (multiple) orders, the request will not be processed if the current system time of the server is after the <code>expTime</code>.</p>

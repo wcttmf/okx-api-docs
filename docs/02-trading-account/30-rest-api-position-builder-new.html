@@ -1,0 +1,792 @@
+<h3 id="trading-account-rest-api-position-builder-new">Position builder (new)</h3>
+<p>Calculates portfolio margin information for virtual position/assets or current position of the user.<br/>
+You can add up to 200 virtual positions and 200 virtual assets in one request.</p>
+<h4 id="trading-account-rest-api-position-builder-new-rate-limit-2-requests-per-2-seconds">Rate Limit: 2 requests per 2 seconds</h4><h4 id="trading-account-rest-api-position-builder-new-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-position-builder-new-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-position-builder-new-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/position-builder</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Both real and virtual positions and assets are calculated </span>
+POST /api/v5/account/position-builder
+body
+<span class="o">{</span>
+    <span class="s2">"inclRealPosAndEq"</span>: <span class="nb">false</span>,
+    <span class="s2">"simPos"</span>:[
+         <span class="o">{</span>
+            <span class="s2">"pos"</span>:<span class="s2">"-10"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+            <span class="s2">"avgPx"</span>:<span class="s2">"100000"</span>
+         <span class="o">}</span>,
+         <span class="o">{</span>
+            <span class="s2">"pos"</span>:<span class="s2">"10"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"LTC-USDT-SWAP"</span>,
+            <span class="s2">"avgPx"</span>:<span class="s2">"8000"</span>
+         <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"simAsset"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"ccy"</span>: <span class="s2">"USDT"</span>,
+            <span class="s2">"amt"</span>: <span class="s2">"100"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"greeksType"</span>:<span class="s2">"CASH"</span>
+<span class="o">}</span>
+
+
+<span class="c"># Only existing real positions are calculated</span>
+POST /api/v5/account/position-builder
+body
+<span class="o">{</span>
+   <span class="s2">"inclRealPosAndEq"</span>:true
+<span class="o">}</span>
+
+
+<span class="c"># Only virtual positions are calculated</span>
+POST /api/v5/account/position-builder
+body
+<span class="o">{</span>
+    <span class="s2">"acctLv"</span>: <span class="s2">"4"</span>,
+    <span class="s2">"inclRealPosAndEq"</span>: <span class="nb">false</span>,
+    <span class="s2">"simPos"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"pos"</span>:<span class="s2">"10"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+            <span class="s2">"avgPx"</span>:<span class="s2">"100000"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"pos"</span>:<span class="s2">"10"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"LTC-USDT-SWAP"</span>,
+            <span class="s2">"avgPx"</span>:<span class="s2">"8000"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+
+<span class="c"># Switch to Multi-currency margin mode</span>
+POST /api/v5/account/position-builder
+body
+<span class="o">{</span>
+    <span class="s2">"acctLv"</span>: <span class="s2">"3"</span>,
+    <span class="s2">"lever"</span>:<span class="s2">"10"</span>,
+    <span class="s2">"simPos"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"pos"</span>:<span class="s2">"10"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+            <span class="s2">"avgPx"</span>:<span class="s2">"100000"</span>,
+            <span class="s2">"lever"</span>:<span class="s2">"5"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"pos"</span>:<span class="s2">"10"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"LTC-USDT-SWAP"</span>,
+            <span class="s2">"avgPx"</span>:<span class="s2">"8000"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">position_builder</span><span class="p">(</span>
+    <span class="n">inclRealPosAndEq</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">simPos</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"pos"</span><span class="p">:</span> <span class="s">"10"</span><span class="p">,</span>
+            <span class="s">"instId"</span><span class="p">:</span> <span class="s">"BTC-USDT-SWAP"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s">"pos"</span><span class="p">:</span> <span class="s">"10"</span><span class="p">,</span>
+            <span class="s">"instId"</span><span class="p">:</span> <span class="s">"LTC-USDT-SWAP"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-position-builder-new-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">acctLv</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Switch to account mode<br/><code>3</code>: Multi-currency margin<br/><code>4</code>: Portfolio margin<br/>The default is <code>4</code></td>
+</tr>
+<tr>
+<td style="text-align: left">inclRealPosAndEq</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether import existing positions and assets<br/>The default is <code>true</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Cross margin leverage in Multi-currency margin mode, the default is <code>1</code>.<br/>If the allowed leverage is exceeded, set according to the maximum leverage.<br/>Only applicable to <code>Multi-currency margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">simPos</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">List of simulated positions</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code><br/>Applicable to <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pos</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Quantity of positions</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; avgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Average open price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">leverage<br/>Only applicable to <code>Multi-currency margin</code><br/>The default is <code>1</code><br/>If the allowed leverage is exceeded, set according to the maximum leverage.</td>
+</tr>
+<tr>
+<td style="text-align: left">simAsset</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">List of simulated assets<br/>When <code>inclRealPosAndEq</code> is <code>true</code>, only real assets are considered and virtual assets are ignored</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Currency amount</td>
+</tr>
+<tr>
+<td style="text-align: left">greeksType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Greeks type<br/><code>BS</code>: Black-Scholes Model Greeks<br/><code>PA</code>: Crypto Greeks<br/><code>CASH</code>: Empirical Greeks<br/>The default is <code>BS</code></td>
+</tr>
+<tr>
+<td style="text-align: left">idxVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Price volatility percentage, indicating what this price change means towards each of the values. In decimal form, range -0.99 ~ 1, in 0.01 increment.<br/> Default 0</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"acctLever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.1364949794742562"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowImr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"spotInUse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowImr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"spotInUse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowImr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"spotInUse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-78589.37"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowImr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7855.32188898"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"borrowMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"spotInUse"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"borrowMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1571.064377796"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"derivMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1375.4837063088003"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"eq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-78553.21888979999"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"marginRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-25.95365779811705"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"positions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"riskUnitData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-9704.903689800001"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"imrBf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1538.9669514070802"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mmrBf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1183.8207318516002"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1164.4109244719994"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr1FinalResult"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1164.4109244719994"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"spotShock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.12"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"volShock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"up"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"mr1Scenarios"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"volSame"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.08"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-776.2739496480004"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.08"</span><span class="p">:</span><span class="w"> </span><span class="s2">"776.2739496480004"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-388.1369748240002"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1164.4109244719994"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1164.4109244719994"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"388.1369748240002"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nl">"volShockDown"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.08"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-776.2739496480004"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.08"</span><span class="p">:</span><span class="w"> </span><span class="s2">"776.2739496480004"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-388.1369748240002"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1164.4109244719994"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1164.4109244719994"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"388.1369748240002"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nl">"volShockUp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.08"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-776.2739496480004"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.08"</span><span class="p">:</span><span class="w"> </span><span class="s2">"776.2739496480004"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-388.1369748240002"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1164.4109244719994"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1164.4109244719994"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.04"</span><span class="p">:</span><span class="w"> </span><span class="s2">"388.1369748240002"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"mr2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr4"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19.4098073796"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr5"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1164.4109244720003"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr6FinalResult"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-2328.8218489440005"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"spotShock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.24"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"mr7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"43.67206660410001"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr8"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1571.064377796"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr9"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"portfolios"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-10"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100000"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-9704.903689800001"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"floatPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"290.6300000000003"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"isRealPos"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"markPxBf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"97093.7"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9703.22"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="nl">"riskUnit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"290.49631020000027"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1019.5308"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"imrBf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"249.16186679436"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mmrBf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"191.6629744572"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"183.50672805719995"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr1FinalResult"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-183.50672805719995"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"spotShock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.18"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"volShock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"up"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"mr1Scenarios"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"volSame"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.06"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-61.168909352399936"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.06"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61.168909352399936"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.18"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-183.50672805719995"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.18"</span><span class="p">:</span><span class="w"> </span><span class="s2">"183.50672805719995"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"122.33781870480001"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-122.33781870480001"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nl">"volShockDown"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.06"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-61.168909352399936"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.06"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61.168909352399936"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.18"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-183.50672805719995"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.18"</span><span class="p">:</span><span class="w"> </span><span class="s2">"183.50672805719995"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"122.33781870480001"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-122.33781870480001"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nl">"volShockUp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.06"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-61.168909352399936"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.06"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61.168909352399936"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.18"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-183.50672805719995"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.18"</span><span class="p">:</span><span class="w"> </span><span class="s2">"183.50672805719995"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"122.33781870480001"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"-0.12"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-122.33781870480001"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"mr2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr4"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.1562464"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr5"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"183.5067280572"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr6FinalResult"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-367.0134561144"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"spotShock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.36"</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"mr7"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7.1367156"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr8"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1571.064377796"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"mr9"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"portfolios"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8000"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1019.5308"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"floatPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-78980"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"isRealPos"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"markPxBf"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"102"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1018.9"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="nl">"riskUnit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-78943.6692"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"totalImr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9643.45070718144"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalMmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2946.5480841048"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1736936801642"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-78653.1728898"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-position-builder-new-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameters</strong></th>
+<th><strong>Types</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>eq</td>
+<td>String</td>
+<td>Adjusted equity (<code>USD</code>) for the account</td>
+</tr>
+<tr>
+<td>totalMmr</td>
+<td>String</td>
+<td>Total MMR (<code>USD</code>) for the account</td>
+</tr>
+<tr>
+<td>totalImr</td>
+<td>String</td>
+<td>Total IMR (<code>USD</code>) for the account</td>
+</tr>
+<tr>
+<td>borrowMmr</td>
+<td>String</td>
+<td>Borrow MMR (<code>USD</code>) for the account</td>
+</tr>
+<tr>
+<td>derivMmr</td>
+<td>String</td>
+<td>Derivatives MMR (<code>USD</code>) for the account</td>
+</tr>
+<tr>
+<td>marginRatio</td>
+<td>String</td>
+<td>Cross maintenance margin ratio for the account</td>
+</tr>
+<tr>
+<td>upl</td>
+<td>String</td>
+<td>UPL for the account</td>
+</tr>
+<tr>
+<td>acctLever</td>
+<td>String</td>
+<td>Leverage of the account</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>String</td>
+<td>Update time for the account, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>assets</td>
+<td>Array of objects</td>
+<td>Asset info</td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>&gt; availEq</td>
+<td>String</td>
+<td>Currency equity</td>
+</tr>
+<tr>
+<td>&gt; spotInUse</td>
+<td>String</td>
+<td>Spot in use</td>
+</tr>
+<tr>
+<td>&gt; borrowMmr</td>
+<td>String</td>
+<td><del>Borrowing MMR (<code>USD</code>)</del>(Deprecated)</td>
+</tr>
+<tr>
+<td>&gt; borrowImr</td>
+<td>String</td>
+<td>Borrowing IMR (<code>USD</code>)</td>
+</tr>
+<tr>
+<td>riskUnitData</td>
+<td>Array of objects</td>
+<td>Risk unit info</td>
+</tr>
+<tr>
+<td>&gt; riskUnit</td>
+<td>String</td>
+<td>Risk unit, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>&gt; mmrBf</td>
+<td>String</td>
+<td>Risk unit MMR before volatility (<code>USD</code>)<br/> Return "" if users don't pass in idxVol</td>
+</tr>
+<tr>
+<td>&gt; mmr</td>
+<td>String</td>
+<td>Risk unit MMR (<code>USD</code>)</td>
+</tr>
+<tr>
+<td>&gt; imrBf</td>
+<td>String</td>
+<td>Risk unit IMR before volatility (<code>USD</code>)<br/> Return "" if users don't pass in idxVol</td>
+</tr>
+<tr>
+<td>&gt; imr</td>
+<td>String</td>
+<td>Risk unit IMR (<code>USD</code>)</td>
+</tr>
+<tr>
+<td>&gt; upl</td>
+<td>String</td>
+<td>Risk unit UPL (<code>USD</code>)</td>
+</tr>
+<tr>
+<td>&gt; mr1</td>
+<td>String</td>
+<td>Stress testing value of spot and volatility (all derivatives, and spot trading in spot-derivatives risk offset mode)</td>
+</tr>
+<tr>
+<td>&gt; mr2</td>
+<td>String</td>
+<td>Stress testing value of time value of money (TVM) (for options)</td>
+</tr>
+<tr>
+<td>&gt; mr3</td>
+<td>String</td>
+<td>Stress testing value of volatility span (for options)</td>
+</tr>
+<tr>
+<td>&gt; mr4</td>
+<td>String</td>
+<td>Stress testing value of basis (for all derivatives)</td>
+</tr>
+<tr>
+<td>&gt; mr5</td>
+<td>String</td>
+<td>Stress testing value of interest rate risk (for options)</td>
+</tr>
+<tr>
+<td>&gt; mr6</td>
+<td>String</td>
+<td>Stress testing value of extremely volatile markets (for all derivatives, and spot trading in spot-derivatives risk offset mode)</td>
+</tr>
+<tr>
+<td>&gt; mr7</td>
+<td>String</td>
+<td>Stress testing value of position reduction cost (for all derivatives)</td>
+</tr>
+<tr>
+<td>&gt; mr8</td>
+<td>String</td>
+<td>Borrowing MMR/IMR</td>
+</tr>
+<tr>
+<td>&gt; mr9</td>
+<td>String</td>
+<td>USDT-USDC-USD hedge risk</td>
+</tr>
+<tr>
+<td>&gt; mr1Scenarios</td>
+<td>Object</td>
+<td>MR1 scenario analysis</td>
+</tr>
+<tr>
+<td>&gt;&gt; volShockDown</td>
+<td>Object</td>
+<td>When volatility shocks down, the P&amp;L of stress tests under different price volatility ratios, format in {<code>change</code>: <code>value</code>,...}<br/><code>change</code>: price volatility ratio (in percentage), e.g. <code>0.01</code> representing <code>1%</code><br/><code>value</code>: P&amp;L under stress tests, measured in <code>USD</code><br/>e.g. {"-0.15":"-2333.23", ...}</td>
+</tr>
+<tr>
+<td>&gt;&gt; volSame</td>
+<td>Object</td>
+<td>When volatility keeps the same, the P&amp;L of stress tests under different price volatility ratios, format in {<code>change</code>: <code>value</code>,...}<br/><code>change</code>: price volatility ratio (in percentage), e.g. <code>0.01</code> representing <code>1%</code><br/><code>value</code>: P&amp;L under stress tests, measured in <code>USD</code><br/>e.g. {"-0.15":"-2333.23", ...}</td>
+</tr>
+<tr>
+<td>&gt;&gt; volShockUp</td>
+<td>Object</td>
+<td>When volatility shocks up, the P&amp;L of stress tests under different price volatility ratios, format in {<code>change</code>: <code>value</code>,...}<br/><code>change</code>: price volatility ratio (in percentage), e.g. <code>0.01</code> representing <code>1%</code><br/><code>value</code>: P&amp;L under stress tests, measured in <code>USD</code><br/>e.g. {"-0.15":"-2333.23", ...}</td>
+</tr>
+<tr>
+<td>&gt; mr1FinalResult</td>
+<td>Object</td>
+<td>MR1 worst-case scenario</td>
+</tr>
+<tr>
+<td>&gt;&gt; pnl</td>
+<td>String</td>
+<td>MR1 stress P&amp;L (<code>USD</code>)</td>
+</tr>
+<tr>
+<td>&gt;&gt; spotShock</td>
+<td>String</td>
+<td>MR1 worst-case scenario spot shock (in percentage), e.g. <code>0.01</code> representing <code>1%</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; volShock</td>
+<td>String</td>
+<td>MR1 worst-case scenario volatility shock<br/><code>down</code>: volatility shock down<br/><code>unchange</code>: volatility unchanged<br/><code>up</code>: volatility shock up</td>
+</tr>
+<tr>
+<td>&gt; mr6FinalResult</td>
+<td>Object</td>
+<td>MR6 scenario analysis</td>
+</tr>
+<tr>
+<td>&gt;&gt; pnl</td>
+<td>String</td>
+<td>MR6 stress P&amp;L (<code>USD</code>)</td>
+</tr>
+<tr>
+<td>&gt;&gt; spotShock</td>
+<td>String</td>
+<td>MR6 worst-case scenario spot shock (in percentage), e.g. <code>0.01</code> representing <code>1%</code></td>
+</tr>
+<tr>
+<td>&gt; delta</td>
+<td>String</td>
+<td>(Risk unit) The rate of change in the contract’s price with respect to changes in the underlying asset’s price. <br/>When the price of the underlying changes by x, the option’s price changes by delta multiplied by x.</td>
+</tr>
+<tr>
+<td>&gt; gamma</td>
+<td>String</td>
+<td>(Risk unit) The rate of change in the delta with respect to changes in the underlying price. <br/>When the price of the underlying changes by x%, the option’s delta changes by gamma multiplied by x%.</td>
+</tr>
+<tr>
+<td>&gt; theta</td>
+<td>String</td>
+<td>(Risk unit) The change in contract price each day closer to expiry.</td>
+</tr>
+<tr>
+<td>&gt; vega</td>
+<td>String</td>
+<td>(Risk unit) The change of the option price when underlying volatility increases by 1%.</td>
+</tr>
+<tr>
+<td>&gt; portfolios</td>
+<td>Array of objects</td>
+<td>Portfolios info<br/>Only applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; instId</td>
+<td>String</td>
+<td>Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; instType</td>
+<td>String</td>
+<td>Instrument type<br/><code>SPOT</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; amt</td>
+<td>String</td>
+<td>When <code>instType</code> is <code>SPOT</code>, it represents spot in use.<br/>When <code>instType</code> is <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code>, it represents position amount.</td>
+</tr>
+<tr>
+<td>&gt;&gt; posSide</td>
+<td>String</td>
+<td>Position side<br/><code>long</code><br/><code>short</code><br/><code>net</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; avgPx</td>
+<td>String</td>
+<td>Average open price</td>
+</tr>
+<tr>
+<td>&gt;&gt; markPxBf</td>
+<td>String</td>
+<td>Mark price before price volatility<br/> Return "" if users don't pass in idxVol</td>
+</tr>
+<tr>
+<td>&gt;&gt; markPx</td>
+<td>String</td>
+<td>Mark price</td>
+</tr>
+<tr>
+<td>&gt;&gt; floatPnl</td>
+<td>String</td>
+<td>Float P&amp;L</td>
+</tr>
+<tr>
+<td>&gt;&gt; notionalUsd</td>
+<td>String</td>
+<td>Notional in <code>USD</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; delta</td>
+<td>String</td>
+<td>When <code>instType</code> is <code>SPOT</code>, it represents asset amount.<br/>When <code>instType</code> is <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code>, it represents the rate of change in the contract’s price with respect to changes in the underlying asset’s price (by Instrument ID).</td>
+</tr>
+<tr>
+<td>&gt;&gt; gamma</td>
+<td>String</td>
+<td>The rate of change in the delta with respect to changes in the underlying price (by Instrument ID). <br/>When <code>instType</code> is <code>SPOT</code>, it will return "".</td>
+</tr>
+<tr>
+<td>&gt;&gt; theta</td>
+<td>String</td>
+<td>The change in contract price each day closer to expiry (by Instrument ID).<br/>When <code>instType</code> is <code>SPOT</code>, it will return "".</td>
+</tr>
+<tr>
+<td>&gt;&gt; vega</td>
+<td>String</td>
+<td>The change of the option price when underlying volatility increases by 1% (by Instrument ID).<br/>When <code>instType</code> is <code>SPOT</code>, it will return "".</td>
+</tr>
+<tr>
+<td>&gt;&gt; isRealPos</td>
+<td>Boolean</td>
+<td>Whether it is a real position<br/>If <code>instType</code> is <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code>, it is a valid parameter, else it will return <code>false</code></td>
+</tr>
+<tr>
+<td>positions</td>
+<td>Array of objects</td>
+<td>Position info<br/>Only applicable to <code>Multi-currency margin</code></td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td>&gt; instType</td>
+<td>String</td>
+<td>Instrument type<br/><code>SPOT</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td>&gt; amt</td>
+<td>String</td>
+<td>When <code>instType</code> is <code>SPOT</code>, it represents spot in use.<br/>When <code>instType</code> is <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code>, it represents position amount.</td>
+</tr>
+<tr>
+<td>&gt; posSide</td>
+<td>String</td>
+<td>Position side<br/><code>long</code><br/><code>short</code><br/><code>net</code></td>
+</tr>
+<tr>
+<td>&gt; avgPx</td>
+<td>String</td>
+<td>Average open price</td>
+</tr>
+<tr>
+<td>&gt; markPxBf</td>
+<td>String</td>
+<td>Mark price before price volatility<br/> Return "" if users don't pass in idxVol</td>
+</tr>
+<tr>
+<td>&gt; markPx</td>
+<td>String</td>
+<td>Mark price</td>
+</tr>
+<tr>
+<td>&gt; floatPnl</td>
+<td>String</td>
+<td>Float P&amp;L</td>
+</tr>
+<tr>
+<td>&gt; imrBf</td>
+<td>String</td>
+<td>IMR before price volatility</td>
+</tr>
+<tr>
+<td>&gt; imr</td>
+<td>String</td>
+<td>IMR</td>
+</tr>
+<tr>
+<td>&gt; mgnRatio</td>
+<td>String</td>
+<td>Maintenance margin ratio</td>
+</tr>
+<tr>
+<td>&gt; lever</td>
+<td>String</td>
+<td>Leverage</td>
+</tr>
+<tr>
+<td>&gt; notionalUsd</td>
+<td>String</td>
+<td>Notional in <code>USD</code></td>
+</tr>
+<tr>
+<td>&gt; isRealPos</td>
+<td>Boolean</td>
+<td>Whether it is a real position<br/>If <code>instType</code> is <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code>, it is a valid parameter, else it will return <code>false</code></td>
+</tr>
+</tbody></table>

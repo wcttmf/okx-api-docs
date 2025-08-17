@@ -1,0 +1,109 @@
+<h3 id="funding-account-rest-api-get-deposit-withdraw-status">Get deposit withdraw status</h3>
+<p>Retrieve deposit's and withdrawal's detailed status and estimated complete time.</p>
+<h4 id="funding-account-rest-api-get-deposit-withdraw-status-rate-limit-1-request-per-2-seconds">Rate Limit: 1 request per 2 seconds</h4><h4 id="funding-account-rest-api-get-deposit-withdraw-status-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-deposit-withdraw-status-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-deposit-withdraw-status-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/asset/deposit-withdraw-status</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># For deposit</span>
+GET /api/v5/asset/deposit-withdraw-status?txId<span class="o">=</span>xxxxxx&amp;to<span class="o">=</span>1672734730284&amp;ccy<span class="o">=</span>USDT&amp;chain<span class="o">=</span>USDT-ERC20
+
+<span class="c"># For withdrawal</span>
+GET /api/v5/asset/deposit-withdraw-status?wdId<span class="o">=</span>200045249
+
+</code></pre></div><h4 id="funding-account-rest-api-get-deposit-withdraw-status-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">wdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Withdrawal ID, use to retrieve withdrawal status <br/>Required to input one and only one of <code>wdId</code> and <code>txId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">txId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Hash record of the deposit, use to retrieve deposit status <br/>Required to input one and only one of <code>wdId</code> and <code>txId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Currency type, e.g. <code>USDT</code> <br/>Required when retrieving deposit status with <code>txId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">to</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">To address, the destination address in deposit <br/>Required when retrieving deposit status with <code>txId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">chain</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Currency chain information, e.g. USDT-ERC20 <br/>Required when retrieving deposit status with <code>txId</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"wdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200045249"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"txId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16f3638329xxxxxx42d988f97"</span><span class="p">,</span><span class="w"> 
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending withdrawal: Wallet is under maintenance, please wait."</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"estCompleteTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01/09/2023, 8:10:48 PM"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-deposit-withdraw-status-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">estCompleteTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated complete time<br/>The timezone is <code>UTC+8</code>. The format is MM/dd/yyyy, h:mm:ss AM/PM <br/>estCompleteTime is only an approximate estimated time, for reference only.</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The detailed stage and status of the deposit/withdrawal <br/>The message in front of the colon is the stage; the message after the colon is the ongoing status.</td>
+</tr>
+<tr>
+<td style="text-align: left">txId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Hash record on-chain<br/>For withdrawal, if the <code>txId</code> has already been generated, it will return the value, otherwise, it will return "".</td>
+</tr>
+<tr>
+<td style="text-align: left">wdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal ID<br/>When retrieving deposit status, wdId returns blank "".</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Stage References<br/>
+Deposit<br/>
+Stage 1: On-chain transaction detection <br/>
+Stage 2: Push deposit data to associated account <br/>
+Stage 3: Receiving account credit <br/>
+Final stage: Deposit complete<br/>
+Withdrawal<br/>
+Stage 1: Pending withdrawal <br/>
+Stage 2: Withdrawal in progress <br/>
+Final stage: Withdrawal complete / cancellation complete <br/>
+</aside>

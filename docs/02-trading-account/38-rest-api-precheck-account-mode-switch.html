@@ -1,0 +1,309 @@
+<h3 id="trading-account-rest-api-precheck-account-mode-switch">Precheck account mode switch</h3>
+<p>Retrieve precheck information for account mode switching.</p>
+<h4 id="trading-account-rest-api-precheck-account-mode-switch-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-precheck-account-mode-switch-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-precheck-account-mode-switch-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-precheck-account-mode-switch-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/set-account-switch-precheck</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/account/set-account-switch-precheck?acctLv<span class="o">=</span>3
+
+</code></pre></div><h4 id="trading-account-rest-api-precheck-account-mode-switch-request-parameters">Request parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Required</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>acctLv</td>
+<td>String</td>
+<td>Yes</td>
+<td>Account mode<br/> <code>1</code>: Spot mode<br/> <code>2</code>: Futures mode<br/> <code>3</code>: Multi-currency margin code<br/> <code>4</code>: Portfolio margin mode</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example. Futures mode-&gt;Portfolio margin mode, need to finish the Q&amp;A on web or mobile first</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51070"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"You do not meet the requirements for switching to this account mode. Please upgrade the account mode on the OKX website or App"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example. Futures mode-&gt;Portfolio margin mode, unmatched information. sCode 1</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnAft"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnBf"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posList"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"posTierCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unmatchedInfoCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"posList"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                    </span><span class="nl">"totalAsset"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"repay_borrowings"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example. Portfolio margin mode-&gt;Multi-currency margin code, the user has cross-margin positions but doesn't preset leverage. sCode 3 </p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnAft"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnBf"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posList"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456500916518912"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456108363218944"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456332909477888"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456415990251520"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"posTierCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unmatchedInfoCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example. Portfolio margin mode-&gt;Multi-currency margin code, the user finishes the leverage setting to 10, and passes the position tier an margin check. sCode 0. </p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnAft"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"acctAvailEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"106002.2061970689"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"148.1652396878421"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"mgnBf"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"acctAvailEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77308.89735228613"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.460069474634038"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"posList"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456500916518912"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456108363218944"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456332909477888"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2005456415990251520"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"posTierCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unmatchedInfoCheck"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="trading-account-rest-api-precheck-account-mode-switch-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sCode</td>
+<td>String</td>
+<td>Check code<br/> <code>0</code>: pass all checks<br/> <code>1</code>: unmatched information<br/> <code>3</code>: leverage setting is not finished<br/> <code>4</code>: position tier or margin check is not passed</td>
+</tr>
+<tr>
+<td>curAcctLv</td>
+<td>String</td>
+<td>Account mode<br/> <code>1</code>: Spot mode<br/> <code>2</code>: Futures mode<br/> <code>3</code>: Multi-currency margin code<br/> <code>4</code>: Portfolio margin mode<br/> Applicable to all scenarios</td>
+</tr>
+<tr>
+<td>acctLv</td>
+<td>String</td>
+<td>Account mode<br/> <code>1</code>: Spot mode<br/> <code>2</code>: Futures mode<br/> <code>3</code>: Multi-currency margin code<br/> <code>4</code>: Portfolio margin mode<br/> Applicable to all scenarios</td>
+</tr>
+<tr>
+<td>riskOffsetType</td>
+<td>String</td>
+<td><del>Risk offset type<br/> <code>1</code>: Spot-derivatives (USDT) risk offset<br/> <code>2</code>: Spot-derivatives (Crypto) risk offset<br/> <code>3</code>: Derivatives only mode<br/> <code>4</code>: Spot-derivatives (USDC) risk offset<br/> Applicable when acctLv is <code>4</code>, return "" for other scenarios<br/> If the user preset before, it will use the user's specified value; if not, the default value <code>3</code> will be applied</del>(Deprecated)</td>
+</tr>
+<tr>
+<td>unmatchedInfoCheck</td>
+<td>Array of objects</td>
+<td>Unmatched information list<br/> Applicable when sCode is <code>1</code>, indicating there is unmatched information; return [] for other scenarios</td>
+</tr>
+<tr>
+<td>&gt;&gt; type</td>
+<td>String</td>
+<td>Unmatched information type<br/> <code>asset_validation</code>: asset validation<br/> <code>pending_orders</code>: order book pending orders<br/> <code>pending_algos</code>: pending algo orders and trading bots, such as iceberg, recurring buy and twap<br/> <code>isolated_margin</code>: isolated margin (quick margin and manual transfers)<br/> <code>isolated_contract</code>: isolated contract (manual transfers)<br/> <code>contract_long_short</code>: contract positions in hedge mode<br/> <code>cross_margin</code>: cross margin positions<br/> <code>cross_option_buyer</code>: cross options buyer<br/> <code>isolated_option</code>: isolated options (only applicable to spot mode)<br/> <code>growth_fund</code>: positions with trial funds<br/> <code>all_positions</code>: all positions<br/> <code>spot_lead_copy_only_simple_single</code>: copy trader and customize lead trader can only use spot mode or Futures mode<br/> <code>stop_spot_custom</code>: spot customize copy trading<br/> <code>stop_futures_custom</code>: contract customize copy trading<br/> <code>lead_portfolio</code>: lead trader can not switch to portfolio margin mode<br/> <code>futures_smart_sync</code>: you can not switch to spot mode when having smart contract sync<br/> <code>vip_fixed_loan</code>: vip loan<br/> <code>repay_borrowings</code>: borrowings<br/> <code>compliance_restriction</code>: due to compliance restrictions, margin trading services are unavailable<br/> <code>compliance_kyc2</code>: Due to compliance restrictions, margin trading services are unavailable. If you are not a resident of this region, please complete kyc2 identity verification.</td>
+</tr>
+<tr>
+<td>&gt;&gt; totalAsset</td>
+<td>String</td>
+<td>Total assets<br/> Only applicable when type is <code>asset_validation</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt;&gt; posList</td>
+<td>Array of strings</td>
+<td>Unmatched position list (posId)<br/> Applicable when type is related to positions, return [] for other scenarios</td>
+</tr>
+<tr>
+<td>posList</td>
+<td>Array of objects</td>
+<td>Cross margin contract position list<br/> Applicable when curAcctLv is <code>4</code>, acctLv is <code>2/3</code> and user has cross margin contract positions<br/> Applicable when sCode is <code>0/3/4</code></td>
+</tr>
+<tr>
+<td>&gt; posId</td>
+<td>String</td>
+<td>Position ID</td>
+</tr>
+<tr>
+<td>&gt; lever</td>
+<td>String</td>
+<td>Leverage of cross margin contract positions after switch</td>
+</tr>
+<tr>
+<td>posTierCheck</td>
+<td>Array of objects</td>
+<td>Cross margin contract positions that don't pass the position tier check<br/> Only applicable when sCode is <code>4</code></td>
+</tr>
+<tr>
+<td>&gt; instFamily</td>
+<td>String</td>
+<td>Instrument family</td>
+</tr>
+<tr>
+<td>&gt; instType</td>
+<td>String</td>
+<td>Instrument type<br/> <code>SWAP</code><br/> <code>FUTURES</code><br/> <code>OPTION</code></td>
+</tr>
+<tr>
+<td>&gt; pos</td>
+<td>String</td>
+<td>Quantity of position</td>
+</tr>
+<tr>
+<td>&gt; lever</td>
+<td>String</td>
+<td>Leverage</td>
+</tr>
+<tr>
+<td>&gt; maxSz</td>
+<td>String</td>
+<td>If acctLv is <code>2/3</code>, it refers to the maximum position size allowed at the current leverage. If acctLv is <code>4</code>, it refers to the maximum position limit for cross-margin positions under the PM mode.</td>
+</tr>
+<tr>
+<td>mgnBf</td>
+<td>Object</td>
+<td>The margin related information before switching account mode<br/> Applicable when sCode is <code>0/4</code>, return null for other scenarios</td>
+</tr>
+<tr>
+<td>&gt; acctAvailEq</td>
+<td>String</td>
+<td>Account available equity in USD<br/> Applicable when curAcctLv is <code>3/4</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt; mgnRatio</td>
+<td>String</td>
+<td>Maintenance Margin ratio in USD<br/> Applicable when curAcctLv is <code>3/4</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt; details</td>
+<td>Array of objects</td>
+<td>Detailed information<br/> Only applicable when curAcctLv is <code>2</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt;&gt; ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; availEq</td>
+<td>String</td>
+<td>Available equity of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; mgnRatio</td>
+<td>String</td>
+<td>Maintenance margin ratio of currency</td>
+</tr>
+<tr>
+<td>mgnAft</td>
+<td>Object</td>
+<td>The margin related information after switching account mode<br/> Applicable when sCode is <code>0/4</code>, return null for other scenarios</td>
+</tr>
+<tr>
+<td>&gt; acctAvailEq</td>
+<td>String</td>
+<td>Account available equity in USD<br/> Applicable when acctLv is <code>3/4</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt; mgnRatio</td>
+<td>String</td>
+<td>Maintenance margin ratio in USD<br/> Applicable when acctLv is <code>3/4</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt; details</td>
+<td>Array of objects</td>
+<td>Detailed information<br/> Only applicable when acctLv is <code>2</code>, return "" for other scenarios</td>
+</tr>
+<tr>
+<td>&gt;&gt; ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; availEq</td>
+<td>String</td>
+<td>Available equity of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; mgnRatio</td>
+<td>String</td>
+<td>Maintenance margin ratio of currency</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,647 @@
+<h3 id="affiliate-rest-api-get-the-invitee-39-s-detail">Get the invitee's detail</h3><h4 id="affiliate-rest-api-get-the-invitee-39-s-detail-rate-limit-20-requests-per-2-seconds">Rate limit：20 requests per 2 seconds</h4><h4 id="affiliate-rest-api-get-the-invitee-39-s-detail-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="affiliate-rest-api-get-the-invitee-39-s-detail-http-request">HTTP request</h4>
+<p><code>GET /api/v5/affiliate/invitee/detail</code></p>
+<blockquote>
+<p>Request sample</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/affiliate/invitee/detail?uid<span class="o">=</span>11111111
+</code></pre></div><h4 id="affiliate-rest-api-get-the-invitee-39-s-detail-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">uid</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">UID of the invitee. Only applicable to the UID of invitee master account. <br/> The data returned covers invitee master account and invitee sub-accounts.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Returned results</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"accFee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"affiliateCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HIIIIII"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"depAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"firstTradeTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"inviteeLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"inviteeRebateRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.39"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"joinTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1712546713000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"kycTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lv1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vietnam"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalCommission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"volMonth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="affiliate-rest-api-get-the-invitee-39-s-detail-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter name</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">inviteeLevel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Invitee's relative level to the affiliate<br/>If the user is a invitee, the level will be <code>2</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">joinTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Timestamp that the rebate relationship is established, Unix timestamp in millisecond format, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">inviteeRebateRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Self rebate rate of the invitee (in decimal), e.g. <code>0.01</code> represents <code>10%</code></td>
+</tr>
+<tr>
+<td style="text-align: left">totalCommission</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total commission earned from the invitee, unit in <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">firstTradeTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Timestamp that the first trade is completed after the latest rebate relationship is established with the parent affiliate<br/> Unix timestamp in millisecond format, e.g. 1597026383085<br/>If user has not traded, "" will be returned</td>
+</tr>
+<tr>
+<td style="text-align: left">level</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Invitee trading fee level, e.g. Lv1</td>
+</tr>
+<tr>
+<td style="text-align: left">depAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated amount of deposit in USDT<br/>If user has not deposited, 0 will be returned</td>
+</tr>
+<tr>
+<td style="text-align: left">volMonth</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated Trading volume in the current month in USDT<br/>If user has not traded, 0 will be returned</td>
+</tr>
+<tr>
+<td style="text-align: left">accFee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated Amount of trading fee in USDT<br/>If there is no any fee, 0 will be returned</td>
+</tr>
+<tr>
+<td style="text-align: left">kycTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">KYC2 verification time. Unix timestamp in millisecond format and the precision is in day<br/>If user has not passed KYC2, "" will be returned</td>
+</tr>
+<tr>
+<td style="text-align: left">region</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">User country or region. e.g. "United Kingdom"</td>
+</tr>
+<tr>
+<td style="text-align: left">affiliateCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Affiliate invite code that the invitee registered/recalled via</td>
+</tr>
+</tbody></table>
+<h1 id="status">Status</h1><h2 id="status-get-status">GET / Status</h2>
+<p>Get event status of system upgrade.</p>
+<p>Planned system maintenance that may result in short interruption (lasting less than 5 seconds) or websocket disconnection (users can immediately reconnect) will not be announced. The maintenance will only be performed during times of low market volatility.</p>
+<h4 id="status-get-status-get-the-invitee-39-s-detail-rate-limit-1-request-per-5-seconds">Rate Limit: 1 request per 5 seconds</h4><h4 id="status-get-status-get-the-invitee-39-s-detail-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/system/status</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/system/status
+
+GET /api/v5/system/status?state<span class="o">=</span>canceled
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Status</span> <span class="k">as</span> <span class="n">Status</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span><span class="n">statusAPI</span> <span class="o">=</span> <span class="n">Status</span><span class="p">.</span><span class="n">StatusAPI</span><span class="p">(</span>
+    <span class="n">domain</span><span class="o">=</span><span class="s">"https://www.okx.com"</span><span class="p">,</span>
+    <span class="n">flag</span><span class="o">=</span><span class="n">flag</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Get event status of system upgrade
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">statusAPI</span><span class="p">.</span><span class="n">status</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="status-get-status-get-the-invitee-39-s-detail-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">System maintenance status<br/><code>scheduled</code>: waiting<br/><code>ongoing</code>: processing<br/><code>pre_open</code>: pre_open<br/><code>completed</code>: completed<br/><code>canceled</code>: canceled<br/>Generally, <code>pre_open</code> last about 10 minutes. There will be <code>pre_open</code> when the time of upgrade is too long.  <br/>If this parameter is not filled, the data with status <code>scheduled</code>, <code>ongoing</code> and <code>pre_open</code> will be returned by default</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"begin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1672823400000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1672823520000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"preOpenBegin"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"scheDesc"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"serviceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maintType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"system"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unified"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Trading account system upgrade (in batches of accounts)"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="status-get-status-get-the-invitee-39-s-detail-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">title</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The title of system maintenance instructions</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">System maintenance status</td>
+</tr>
+<tr>
+<td style="text-align: left">begin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Begin time of system maintenance, Unix timestamp format in milliseconds, e.g. <code>1617788463867</code></td>
+</tr>
+<tr>
+<td style="text-align: left">end</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time of resuming trading totally. Unix timestamp format in milliseconds, e.g. <code>1617788463867</code>.<br/>It is expected end time before <code>completed</code>, changed to actual end time after <code>completed</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">preOpenBegin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The time of pre_open. Canceling orders, placing Post Only orders, and transferring funds to trading accounts are back after <code>preOpenBegin</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">href</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Hyperlink for system maintenance details, if there is no return value, the default value will be empty. e.g. ""</td>
+</tr>
+<tr>
+<td style="text-align: left">serviceType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Service type<br/><code>0</code>: WebSocket<br/><code>5</code>: Trading service<br/><code>6</code>: Block trading<br/><code>7</code>: Trading bot<br/><code>8</code>: Trading service (in batches of accounts)<br/><code>9</code>: Trading service (in batches of products)<br/><code>10</code>: Spread trading<br/><code>11</code>: Copy trading<br/><code>99</code>: Others (e.g. Suspend partial instruments)</td>
+</tr>
+<tr>
+<td style="text-align: left">system</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">System<br/><code>unified</code>: Trading account</td>
+</tr>
+<tr>
+<td style="text-align: left">scheDesc</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rescheduled description, e.g. <code>Rescheduled from 2021-01-26T16:30:00.000Z</code> to <code>2021-01-28T16:30:00.000Z</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maintType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maintenance type<br/><code>1</code>: Scheduled maintenance<br/><code>2</code>: Unscheduled maintenance<br/><code>3</code>: System disruption</td>
+</tr>
+<tr>
+<td style="text-align: left">env</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Environment<br/><code>1</code>: Production Trading<br/><code>2</code>: Demo Trading</td>
+</tr>
+</tbody></table>
+<h2 id="status-ws-status-channel">WS / Status channel</h2>
+<p>Get the status of system maintenance and push when rescheduling and the system maintenance status and end time changes. First subscription: "Push the latest change data"; every time there is a state change, push the changed content.</p>
+<p>Planned system maintenance that may result in short interruption (lasting less than 5 seconds) or websocket disconnection (users can immediately reconnect) will not be announced. The maintenance will only be performed during times of low market volatility.</p>
+<h4 id="status-ws-status-channel-get-the-invitee-39-s-detail-url-path">URL Path</h4>
+<p>/ws/v5/public</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"status"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPublicAsync</span> <span class="kn">import</span> <span class="n">WsPublicAsync</span>
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPublicAsync</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"wss://wspap.okx.com:8443/ws/v5/public"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="s">"channel"</span><span class="p">:</span> <span class="s">"status"</span>
+    <span class="p">}]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div><h4 id="status-ws-status-channel-get-the-invitee-39-s-detail-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td><code>subscribe</code> <code>unsubscribe</code></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>status</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"status"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">statuss</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="status-ws-status-channel-get-the-invitee-39-s-detail-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td><code>subscribe</code> <code>unsubscribe</code> <code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>status</code></td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"status"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"begin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1672823400000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"end"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1672825980000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"preOpenBegin"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"scheDesc"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"serviceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"system"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unified"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maintType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Trading account WebSocket system upgrade"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1672826038470"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="status-ws-status-channel-get-the-invitee-39-s-detail-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; title</td>
+<td style="text-align: left">String</td>
+<td>The title of system maintenance instructions</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td>System maintenance status,<code>scheduled</code>: waiting;  <code>ongoing</code>: processing; <code>pre_open</code>: pre_open; <code>completed</code>: completed ;<code>canceled</code>: canceled. <br/>Generally, <code>pre_open</code> last about 10 minutes. There will be <code>pre_open</code> when the time of upgrade is too long.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; begin</td>
+<td style="text-align: left">String</td>
+<td>Start time of system maintenance, Unix timestamp format in milliseconds, e.g. <code>1617788463867</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; end</td>
+<td style="text-align: left">String</td>
+<td>Time of resuming trading totally. Unix timestamp format in milliseconds, e.g. <code>1617788463867</code>.<br/>It is expected end time before <code>completed</code>, changed to actual end time after <code>completed</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; preOpenBegin</td>
+<td style="text-align: left">String</td>
+<td>The time of pre_open. Canceling orders, placing Post Only orders, and transferring funds to trading accounts are back after <code>preOpenBegin</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; href</td>
+<td style="text-align: left">String</td>
+<td>Hyperlink for system maintenance details, if there is no return value, the default value will be empty. e.g. “”</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; serviceType</td>
+<td style="text-align: left">String</td>
+<td>Service type, <code>0</code>: WebSocket ; <code>5</code>: Trading service; <code>6</code>: Block trading; <code>7</code>: Trading bot; <code>8</code>: Trading service (in batches of accounts); <code>9</code>: Trading service (in batches of products); <code>10</code>: Spread trading; <code>11</code>: Copy trading; <code>99</code>: Others (e.g. Suspend partial instruments)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; system</td>
+<td style="text-align: left">String</td>
+<td>System, <code>unified</code>: Trading account</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; scheDesc</td>
+<td style="text-align: left">String</td>
+<td>Rescheduled description, e.g. <code>Rescheduled from 2021-01-26T16:30:00.000Z to 2021-01-28T16:30:00.000Z</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maintType</td>
+<td style="text-align: left">String</td>
+<td>Maintenance type<br/><code>1</code>: Scheduled maintenance; <code>2</code>: Unscheduled maintenance; <code>3</code>: System disruption</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; env</td>
+<td style="text-align: left">String</td>
+<td>Environment.<br/><code>1</code>: Production Trading, <code>2</code>: Demo Trading</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ts</td>
+<td style="text-align: left">String</td>
+<td>Push time due to change event, Unix timestamp format in milliseconds, e.g. <code>1617788463867</code></td>
+</tr>
+</tbody></table>
+<h1 id="announcement">Announcement</h1><h2 id="announcement-get-announcements">GET / Announcements</h2>
+<p>Get announcements, the response is sorted by <code>pTime</code> with the most recent first. The sort will not be affected if the announcement is updated. Every page has 20 records<br/><br/></p>
+<p>Authentication is optional for this endpoint.<br/></p>
+<p>It will be regarded as private endpoint and authentication is required if OK-ACCESS-KEY in HTTP header is delivered.<br/>
+It will be regarded as public endpoint and authentication isn't required if OK-ACCESS-KEY in HTTP header isn't delivered. <br/><br/></p>
+<p>There are differences between public endpoint and private endpoint. <br/>
+For public endpoint, the response is restricted based on your request IP.<br/>
+For private endpoint, the response is restricted based on your country of residence.</p>
+<h4 id="announcement-get-announcements-get-the-invitee-39-s-detail-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="announcement-get-announcements-get-the-invitee-39-s-detail-rate-limit-rule-user-id-private-or-ip-public">Rate limit rule: User ID(Private) or IP(Public)</h4><h4 id="announcement-get-announcements-get-the-invitee-39-s-detail-permission-read">Permission: Read</h4><h4 id="announcement-get-announcements-get-the-invitee-39-s-detail-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/support/announcements</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/support/announcements
+
+</code></pre></div><h4 id="announcement-get-announcements-get-the-invitee-39-s-detail-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">annType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Announcement type. Delivering the <code>annType</code> from "GET / Announcement types"<br/> Returning all when it is not posted</td>
+</tr>
+<tr>
+<td style="text-align: left">page</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Page for pagination. <br/>The default is 1</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"annType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"announcements-latest-announcements"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1726128000000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OKX to delist KISHU margin trading pairs"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.okx.com/help/okx-to-delist-kishu-margin-trading-pairs"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"annType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"announcements-latest-announcements"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725967800000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OKX completed MATIC token migration"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.okx.com/help/okx-completed-matic-token-migration"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"totalPage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="announcement-get-announcements-get-the-invitee-39-s-detail-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">totalPage</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total number of pages</td>
+</tr>
+<tr>
+<td style="text-align: left">details</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">List of announcements</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; title</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Announcement title</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; annType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Announcement type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Publish time. Unix timestamp format in milliseconds, e.g. 1597026383085</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; url</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Announcement url</td>
+</tr>
+</tbody></table>
+<h2 id="announcement-get-announcement-types">GET / Announcement types</h2>
+<p>Authentication is not required for this public endpoint.<br/></p>
+<p>The response is restricted based on your request IP.</p>
+<h4 id="announcement-get-announcement-types-get-the-invitee-39-s-detail-rate-limit-1-request-per-2-seconds">Rate Limit: 1 request per 2 seconds</h4><h4 id="announcement-get-announcement-types-get-the-invitee-39-s-detail-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="announcement-get-announcement-types-get-the-invitee-39-s-detail-permission-read">Permission: Read</h4><h4 id="announcement-get-announcement-types-get-the-invitee-39-s-detail-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/support/announcement-types</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/support/announcement-types
+
+</code></pre></div><h4 id="announcement-get-announcement-types-get-the-invitee-39-s-detail-request-parameters">Request Parameters</h4>
+<p>None</p>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"annType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"announcements-new-listings"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"annTypeDesc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New listings"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"annType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"announcements-delistings"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"annTypeDesc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Delistings"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="announcement-get-announcement-types-get-the-invitee-39-s-detail-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">annType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Announcement type</td>
+</tr>
+<tr>
+<td style="text-align: left">annTypeDesc</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Announcement type description</td>
+</tr>
+</tbody></table>
+<h1 id="error-code">Error Code</h1>
+<p>Here is the REST API Error Code</p>
+<h2 id="error-code-rest-api">REST API</h2>
+<p>REST API Error Code is from 50000 to 59999.</p>

@@ -1,0 +1,101 @@
+<h3 id="funding-account-rest-api-get-account-asset-valuation">Get account asset valuation</h3>
+<p>View account asset valuation</p>
+<h4 id="funding-account-rest-api-get-account-asset-valuation-rate-limit-1-request-per-second">Rate Limit: 1 request per second</h4><h4 id="funding-account-rest-api-get-account-asset-valuation-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-account-asset-valuation-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-account-asset-valuation-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/asset/asset-valuation</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/asset/asset-valuation
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Funding</span> <span class="k">as</span> <span class="n">Funding</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">fundingAPI</span> <span class="o">=</span> <span class="n">Funding</span><span class="p">.</span><span class="n">FundingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get account asset valuation
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">fundingAPI</span><span class="p">.</span><span class="n">get_asset_valuation</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="funding-account-rest-api-get-account-asset-valuation-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Asset valuation calculation unit <br/>BTC, USDT<br/>USD, CNY, JP, KRW, RUB, EUR<br/>VND, IDR, INR, PHP, THB, TRY <br/>AUD, SGD, ARS, SAR, AED, IQD <br/>The default is the valuation in BTC.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"classic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"124.6"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"earn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1122.73"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"funding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.09"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"trading"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2544.28"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"totalBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3790.09"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1637566660769"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-account-asset-valuation-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>totalBal</td>
+<td>String</td>
+<td>Valuation of total account assets</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>String</td>
+<td>Unix timestamp format in milliseconds, e.g.<code>1597026383085</code></td>
+</tr>
+<tr>
+<td>details</td>
+<td>Object</td>
+<td>Asset valuation details for each account</td>
+</tr>
+<tr>
+<td>&gt; funding</td>
+<td>String</td>
+<td>Funding account</td>
+</tr>
+<tr>
+<td>&gt; trading</td>
+<td>String</td>
+<td>Trading account</td>
+</tr>
+<tr>
+<td>&gt; classic</td>
+<td>String</td>
+<td>[Deprecated] Classic account</td>
+</tr>
+<tr>
+<td>&gt; earn</td>
+<td>String</td>
+<td>Earn account</td>
+</tr>
+</tbody></table>

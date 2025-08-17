@@ -1,0 +1,64 @@
+<h3 id="trading-account-rest-api-get-collateral-assets">Get collateral assets</h3><h4 id="trading-account-rest-api-get-collateral-assets-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-collateral-assets-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-collateral-assets-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-collateral-assets-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/collateral-assets</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/account/collateral-assets
+</code></pre></div><h4 id="trading-account-rest-api-get-collateral-assets-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Single currency or multiple currencies (no more than 20) separated with comma, e.g. "BTC" or "BTC,ETH".</td>
+</tr>
+<tr>
+<td style="text-align: left">collateralEnabled</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether or not to be a collateral asset</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="w"> </span><span class="p">:[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"collateralEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"collateralEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-collateral-assets-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">collateralEnabled</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether or not to be a collateral asset</td>
+</tr>
+</tbody></table>

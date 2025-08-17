@@ -1,0 +1,93 @@
+<h3 id="trading-account-rest-api-get-pm-position-limitation">Get PM position limitation</h3>
+<p>Retrieve cross position limitation of SWAP/FUTURES/OPTION under Portfolio margin mode.</p>
+<h4 id="trading-account-rest-api-get-pm-position-limitation-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-pm-position-limitation-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-pm-position-limitation-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-pm-position-limitation-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/position-tiers</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Query limitation of BTC-USDT</span>
+GET /api/v5/account/position-tiers?instType<span class="o">=</span>SWAP&amp;uly<span class="o">=</span>BTC-USDT
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get PM position limitation
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_account_position_tiers</span><span class="p">(</span>
+    <span class="n">instType</span><span class="o">=</span><span class="s">"SWAP"</span><span class="p">,</span>
+    <span class="n">uly</span><span class="o">=</span><span class="s">"BTC-USDT"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-pm-position-limitation-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Single instrument family or instrument families (no more than 5) separated with comma.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"maxSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-pm-position-limitation-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">uly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Underlying<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument family<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maxSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Max number of positions</td>
+</tr>
+<tr>
+<td style="text-align: left">posType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Limitation of position type, only applicable to cross <code>OPTION</code> under portfolio margin mode <br/><code>1</code>: Contracts of pending orders and open positions for all derivatives instruments. <code>2</code>: Contracts of pending orders for all derivatives instruments. <code>3</code>: Pending orders for all derivatives instruments. <code>4</code>: Contracts of pending orders and open positions for all derivatives instruments on the same side. <code>5</code>: Pending orders for one derivatives instrument. <code>6</code>: Contracts of pending orders and open positions for one derivatives instrument. <code>7</code>: Contracts of one pending order.</td>
+</tr>
+</tbody></table>

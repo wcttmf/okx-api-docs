@@ -1,0 +1,183 @@
+<h3 id="trading-account-rest-api-get-fee-rates">Get fee rates</h3><h4 id="trading-account-rest-api-get-fee-rates-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-fee-rates-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-fee-rates-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-fee-rates-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/trade-fee</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Query trade fee rate of SPOT BTC-USDT</span>
+GET /api/v5/account/trade-fee?instType<span class="o">=</span>SPOT&amp;instId<span class="o">=</span>BTC-USDT
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get trading fee rates of current account
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_fee_rates</span><span class="p">(</span>
+    <span class="n">instType</span><span class="o">=</span><span class="s">"SPOT"</span><span class="p">,</span>
+    <span class="n">instId</span><span class="o">=</span><span class="s">"BTC-USDT"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-fee-rates-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code><br/>Applicable to <code>SPOT</code>/<code>MARGIN</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument family, e.g. <code>BTC-USD</code><br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ruleType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trading rule types<br/> <code>normal</code>: normal trading<br/> <code>pre_market</code>: pre-market trading<br/> ruleType can not be passed through together with instId/instFamily</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="err">//Deprecated</span><span class="w">
+    </span><span class="nl">"delivery"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"exercise"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lv1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"maker"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0008"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"makerU"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"makerUSDC"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"taker"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.001"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"takerU"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"takerUSDC"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ruleType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1608623351857"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fiat"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-fee-rates-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>level</td>
+<td>String</td>
+<td>Fee rate Level</td>
+</tr>
+<tr>
+<td>taker</td>
+<td>String</td>
+<td>For <code>SPOT</code>/<code>MARGIN</code>, it is taker fee rate of the USDT trading pairs. <br/>For <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>, it is the fee rate of crypto-margined contracts</td>
+</tr>
+<tr>
+<td>maker</td>
+<td>String</td>
+<td>For <code>SPOT</code>/<code>MARGIN</code>, it is maker fee rate of the USDT trading pairs. <br/>For <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>, it is the fee rate of crypto-margined contracts</td>
+</tr>
+<tr>
+<td>takerU</td>
+<td>String</td>
+<td>Taker fee rate of USDT-margined contracts, only applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td>makerU</td>
+<td>String</td>
+<td>Maker fee rate of USDT-margined contracts, only applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td>delivery</td>
+<td>String</td>
+<td>Delivery fee rate</td>
+</tr>
+<tr>
+<td>exercise</td>
+<td>String</td>
+<td>Fee rate for exercising the option</td>
+</tr>
+<tr>
+<td>instType</td>
+<td>String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td>takerUSDC</td>
+<td>String</td>
+<td>For <code>SPOT</code>/<code>MARGIN</code>, it is taker fee rate of the USDⓈ&amp;Crypto trading pairs.<br/>For <code>FUTURES</code>/<code>SWAP</code>, it is the fee rate of USDC-margined contracts</td>
+</tr>
+<tr>
+<td>makerUSDC</td>
+<td>String</td>
+<td>For <code>SPOT</code>/<code>MARGIN</code>, it is maker fee rate of the USDⓈ&amp;Crypto trading pairs.<br/>For <code>FUTURES</code>/<code>SWAP</code>, it is the fee rate of USDC-margined contracts</td>
+</tr>
+<tr>
+<td>ruleType</td>
+<td>String</td>
+<td>Trading rule types<br/> <code>normal</code>: normal trading<br/> <code>pre_market</code>: pre-market trading</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>String</td>
+<td>Data return time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>category</td>
+<td>String</td>
+<td>Currency category. Note: this parameter is already deprecated</td>
+</tr>
+<tr>
+<td>fiat</td>
+<td>Array of objects</td>
+<td>Details of fiat fee rate</td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Fiat currency.</td>
+</tr>
+<tr>
+<td>&gt; taker</td>
+<td>String</td>
+<td>Taker fee rate</td>
+</tr>
+<tr>
+<td>&gt; maker</td>
+<td>String</td>
+<td>Maker fee rate</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Remarks: <br/>
+The fee rate like maker and taker: positive number, which means the rate of rebate; negative number, which means the rate of commission.
+</aside>
+<aside class="notice">
+USDⓈ represent the stablecoin besides USDT and USDC
+</aside>

@@ -1,0 +1,142 @@
+<h3 id="financial-product-flexible-loan-get-loan-info">GET / Loan info</h3><h4 id="financial-product-flexible-loan-get-loan-info-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="financial-product-flexible-loan-get-loan-info-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="financial-product-flexible-loan-get-loan-info-permission-read">Permission: Read</h4><h4 id="financial-product-flexible-loan-get-loan-info-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/finance/flexible-loan/loan-info</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/finance/flexible-loan/loan-info
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">from</span> <span class="nn">okx.Finance</span> <span class="kn">import</span> <span class="n">FlexibleLoan</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">flexibleLoanAPI</span> <span class="o">=</span> <span class="n">FlexibleLoan</span><span class="p">.</span><span class="n">FlexibleLoanAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">flexibleLoanAPI</span><span class="p">.</span><span class="n">loan_info</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"collateralData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0000097"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMP"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.78"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"STX"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOT"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.05357864"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LUNA"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"collateralNotionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.5078763"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"curLTV"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5742"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqLTV"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.8374"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"loanData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.86590608"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDC"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"loanNotionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.8661285"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"marginCallLTV"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.7374"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"riskWarningData"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="financial-product-flexible-loan-get-loan-info-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">loanNotionalUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Loan value in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">loanData</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Loan data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Loan currency, e.g. <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Loan amount</td>
+</tr>
+<tr>
+<td style="text-align: left">collateralNotionalUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Collateral value in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">collateralData</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Collateral data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Collateral currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Collateral amount</td>
+</tr>
+<tr>
+<td style="text-align: left">riskWarningData</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Risk warning data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidation instrument ID, e.g. <code>BTC-USDT</code><br/>This field is only valid when there is only one type of collateral and one type of borrowed currency. In other cases, it returns "".</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; liqPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidation price<br/>The unit of the liquidation price is the quote currency of the instrument, e.g. <code>USDT</code> in <code>BTC-USDT</code>.<br/>This field is only valid when there is only one type of collateral and one type of borrowed currency. In other cases, it returns "".</td>
+</tr>
+<tr>
+<td style="text-align: left">curLTV</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current LTV, e.g. <code>0.1</code> represents <code>10%</code><br/>Note: LTV = Loan to Value</td>
+</tr>
+<tr>
+<td style="text-align: left">marginCallLTV</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin call LTV, e.g. <code>0.1</code> represents <code>10%</code><br/>If your loan hits the margin call LTV, our system will automatically warn you that your loan is getting close to forced liquidation.</td>
+</tr>
+<tr>
+<td style="text-align: left">liqLTV</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidation LTV, e.g. <code>0.1</code> represents <code>10%</code><br/>If your loan reaches liquidation LTV, it'll trigger forced liquidation. When this happens, you'll lose access to your collateral and any repayments made.</td>
+</tr>
+</tbody></table>

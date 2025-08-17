@@ -1,0 +1,295 @@
+<h3 id="order-book-trading-market-data-ws-call-auction-details-channel">WS / Call auction details channel</h3>
+<p>Retrieve call auction details.</p>
+<h4 id="order-book-trading-market-data-ws-call-auction-details-channel-url-path">URL Path</h4>
+<p>/ws/v5/public</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>: <span class="o">[{</span>
+        <span class="s2">"channel"</span>: <span class="s2">"call-auction-details"</span>,
+        <span class="s2">"instId"</span>: <span class="s2">"ONDO-USDC"</span>
+    <span class="o">}]</span>
+<span class="o">}</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPublicAsync</span> <span class="kn">import</span> <span class="n">WsPublicAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPublicAsync</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"wss://wspap.okx.com:8443/ws/v5/public"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="s">"channel"</span><span class="p">:</span> <span class="s">"call-auction-details"</span><span class="p">,</span>
+        <span class="s">"instId"</span><span class="p">:</span> <span class="s">"ONDO-USDC"</span>
+    <span class="p">}]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="order-book-trading-market-data-ws-call-auction-details-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name <br/><code>call-auction-details</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Instrument ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call-auction-details"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ONDO-USDC"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">call-auction-details</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instId</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">BTC-USD-191227</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="order-book-trading-market-data-ws-call-auction-details-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">yes</td>
+<td>channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call-auction-details"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ONDO-USDC"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ONDO-USDC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unmatchedSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9988764"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"eqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.6"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"matchedSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44978"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"continuous_trading"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"auctionEndTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1726542000000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1726542000007"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="order-book-trading-market-data-ws-call-auction-details-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>&gt; eqPx</td>
+<td>String</td>
+<td>Equilibrium price</td>
+</tr>
+<tr>
+<td>&gt; matchedSz</td>
+<td>String</td>
+<td>Matched size for both buy and sell<br/>The unit is in base currency</td>
+</tr>
+<tr>
+<td>&gt; unmatchedSz</td>
+<td>String</td>
+<td>Unmatched size</td>
+</tr>
+<tr>
+<td>&gt; auctionEndTime</td>
+<td>String</td>
+<td>Call auction end time. Unix timestamp in milliseconds.</td>
+</tr>
+<tr>
+<td>&gt; state</td>
+<td>String</td>
+<td>Trading state of the symbol<br/><code>call_auction</code><br/><code>continuous_trading</code></td>
+</tr>
+<tr>
+<td>&gt; ts</td>
+<td>String</td>
+<td>Data generation time. Unix timestamp in millieseconds.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+During call auction, users can get the updates of equilibrium price, matched size, unmatched size, and auction end time. The data will be updated around once a second. When call auction ends, this channel will push the last message, returning the actual open price, matched size, and unmatched size, with trading state as `continuous_trading`.
+</aside>
+<h1 id="block-trading">Block Trading</h1><h2 id="block-trading-block-trading-workflow">Block Trading Workflow</h2>
+<p>A block trade is a <strong>large sized, privately negotiated</strong> transaction that allows traders to execute spot, perpetuals, futures, options and a combination of instruments (multi leg) which are traded <strong>outside the order book</strong> and at a <strong>mutually agreed price</strong> between the counter-parties. Once the transaction economics have been agreed upon, it will be submitted to OKX to be seamlessly margined, cleared and executed.</p>
+<p><strong>Basic Concepts</strong></p>
+<ol>
+<li><strong>RFQs</strong> - Request for Quote sent by the Taker to Maker(s). It captures the quantity, instrument or multi instrument strategy that a Taker wants to trade.</li>
+<li><strong>Quotes</strong> - Quotes are created by the <em>Maker</em> in response to a requested RFQ.</li>
+<li><strong>Trades</strong> - Trades occur when the <em>Taker</em> successfully <em>executes</em> upon a makers quote to an RFQ.</li>
+</ol>
+<p><strong>High Level Workflow</strong> </p>
+<p>To trade as either Taker or Maker, users need to deposit at least 100,000 USD into their trading account. 
+In addition, to become a Maker, <a href="https://share.hsforms.com/1mYdfKtJJR3CC03IyCeC6hg3a1fq">Please complete the form to access block trading</a>.</p>
+<ol>
+<li>Taker creates an RFQ and selects which counterparties to broadcast the RFQ to.</li>
+<li>Multiple Maker(s) send a two way quote as a response to the RFQ.</li>
+<li>Taker chooses to execute upon the best quote and the trade is sent to OKX for clearing &amp; settlement.</li>
+<li>Taker &amp; Maker receive confirmation of the trade's execution. </li>
+<li>Trade economics are published to market feed. (minus counterparty info) </li>
+</ol>
+<p><strong>Self-trade Prevention</strong>
+Users cannot send RFQ requests to themselves.</p>
+<p><strong>Taker's Perspective</strong></p>
+<ol>
+<li>Taker creates an RFQ using <code>POST /api/v5/rfq/create-rfq</code>. Taker can pull available instruments via <code>GET /api/v5/public/instruments</code> and available counterparties from <code>GET /api/v5/rfq/counterparties</code>.</li>
+<li>Taker can cancel an RFQ anytime until it becomes inactive with <code>POST /api/v5/rfq/cancel-rfq</code>.</li>
+<li>Maker, who is a requested counterparty to the RFQ, and is notified over the <code>rfqs</code> WebSocket channel, can provide a Quote to the RFQ.</li>
+<li>Taker, who will be notified of quotes from the <code>quotes</code> WebSocket channel, can execute upon the best Quote with <code>POST /api/v5/rfq/execute-quote</code>.</li>
+<li>Taker will receive confirmation of the trade's successful execution on the <code>struc-block-trades</code> and <code>rfqs</code> WebSocket channel.</li>
+<li>Taker will also receive confirmation of the trade being completed on the <code>public-struc-block-trades</code> WebSocket channel as well as all other block trades on OKX.</li>
+</ol>
+<p><strong>Maker's Perspective</strong></p>
+<ol>
+<li>Maker is notified about a new RFQ who they are a counterparty to, on the <code>rfqs</code> WebSocket channel.</li>
+<li>Maker can create a one way or two way Quote using <code>POST /api/v5/rfq/create-quote</code>.</li>
+<li>Maker can cancel an existing quote anytime until it becomes inactive with <code>POST /api/v5/rfq/cancel-quote</code>.</li>
+<li>Taker chooses to execute upon an available Quote.</li>
+<li>Maker will receive updates of their Quote from the <code>quotes</code> WebSocket channel.</li>
+<li>Maker will receive confirmation of the successful execution of their Quote from the <code>struc-block-trades</code> and <code>quotes</code> WebSocket channel.</li>
+<li>Maker will receive confirmation of the trade being completed on the <code>public-struc-block-trades</code> WebSocket channel as well as all other block trades on OKX.</li>
+</ol>
+<h2 id="block-trading-rest-api">REST API</h2>
+<aside class="notice">
+Block trading is not supported under spot mode.
+</aside>

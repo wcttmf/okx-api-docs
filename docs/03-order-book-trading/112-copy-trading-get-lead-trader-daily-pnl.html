@@ -1,0 +1,80 @@
+<h3 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl">GET / Lead trader daily pnl</h3>
+<p>Public endpoint. Retrieve lead trader daily pnl. Results are returned in counter chronological order.</p>
+<h4 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/public-pnl</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/public-pnl?instType<span class="o">=</span>SWAP&amp;uniqueCode<span class="o">=</span>D9ADEAB33AE9EABD&amp;lastDays<span class="o">=</span>1
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead trader unique code<br/>A combination of case-sensitive alphanumerics, all numbers and the length is 16 characters, e.g. 213E8C92DC61EFAC</td>
+</tr>
+<tr>
+<td style="text-align: left">lastDays</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Last days<br/><code>1</code>: last 7 days <br/><code>2</code>: last 30 days<br/><code>3</code>: last 90 days <br/><code>4</code>: last 365 days</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"beginTs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701100800000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"97.3309"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3672"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"beginTs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701014400000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"96.7755"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3651"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-lead-trader-daily-pnl-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">beginTs</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Begin time on that day</td>
+</tr>
+<tr>
+<td style="text-align: left">pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated pnl</td>
+</tr>
+<tr>
+<td style="text-align: left">pnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated pnl ratio</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,85 @@
+<h3 id="order-book-trading-copy-trading-post-close-lead-position">POST / Close lead position</h3>
+<p>You can only close a lead position once a time. <br/>
+It is required to pass subPosId which can get from <a href="/docs-v5/en/#order-book-trading-copy-trading-get-existing-lead-positions">Get existing leading positions</a>.</p>
+<h4 id="order-book-trading-copy-trading-post-close-lead-position-rate-limit-20-requests-per-2-seconds">Rate limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-post-close-lead-position-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-post-close-lead-position-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-copy-trading-post-close-lead-position-http-request">HTTP request</h4>
+<p><code>POST /api/v5/copytrading/close-subposition</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST /api/v5/copytrading/close-subposition
+body
+{
+    "subPosId": "518541406042591232",
+}
+</code></pre></div><h4 id="order-book-trading-copy-trading-post-close-lead-position-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">subPosId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order type<br/><code>market</code>：Market order, the default value<br/><code>limit</code>：Limit order<br/></td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order price. Only applicable to <code>limit</code> order and <code>SPOT</code> lead trader <br/>If the price is 0, the pending order will be canceled. <br/>It is modifying order if you set <code>px</code> after placing limit order.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"subPosId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"518560559046594560"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-post-close-lead-position-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subPosId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

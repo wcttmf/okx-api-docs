@@ -1,0 +1,139 @@
+<h3 id="order-book-trading-copy-trading-post-first-copy-settings">POST / First copy settings</h3>
+<p>The first copy settings for the certain lead trader. You need to first copy settings after stopping copying.</p>
+<h4 id="order-book-trading-copy-trading-post-first-copy-settings-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-post-first-copy-settings-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-post-first-copy-settings-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-copy-trading-post-first-copy-settings-http-request">HTTP request</h4>
+<p><code>POST /api/v5/copytrading/first-copy-settings</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST /api/v5/copytrading/first-copy-settings
+body
+{
+    "instType": "SWAP",
+    "uniqueCode": "25CD5A80241D6FE6",
+    "copyMgnMode": "cross",
+    "copyInstIdType": "copy",
+    "copyMode": "ratio_copy",
+    "copyRatio": "1",
+    "copyTotalAmt": "500",
+    "subPosCloseType": "copy_close"
+}
+</code></pre></div><h4 id="order-book-trading-copy-trading-post-first-copy-settings-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead trader unique code<br/>A combination of case-sensitive alphanumerics, all numbers and the length is 16 characters, e.g. 213E8C92DC61EFAC</td>
+</tr>
+<tr>
+<td style="text-align: left">copyMgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Copy margin mode<br/><code>cross</code>: cross<br/><code>isolated</code>: isolated<br/><code>copy</code>: Use the same margin mode as lead trader when opening positions</td>
+</tr>
+<tr>
+<td style="text-align: left">copyInstIdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Copy contract type setted<br/><code>custom</code>: custom by <code>instId</code> which is required；<br/><code>copy</code>: Keep your contracts consistent with this trader by automatically adding or removing contracts when they do</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Instrument ID. <br/>If there are multiple instruments, separate them with commas.</td>
+</tr>
+<tr>
+<td style="text-align: left">copyMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Copy mode<br/><code>fixed_amount</code>: set the same fixed amount for each order, and <code>copyAmt</code> is required；<br/><code>ratio_copy</code>: set amount as a multiple of the lead trader’s order value, and <code>copyRatio</code> is required <br/>The default is <code>fixed_amount</code></td>
+</tr>
+<tr>
+<td style="text-align: left">copyTotalAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Maximum total amount in USDT. <br/>The maximum total amount you'll invest at any given time across all orders in this copy trade<br/>You won’t copy new orders if you exceed this amount</td>
+</tr>
+<tr>
+<td style="text-align: left">copyAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Copy amount per order in USDT.</td>
+</tr>
+<tr>
+<td style="text-align: left">copyRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Copy ratio per order.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take profit per order. 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">slRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop loss per order. 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">slTotalAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Total stop loss in USDT for trader. <br/>If your net loss (total profit - total loss) reaches this amount, you'll stop copying this trader</td>
+</tr>
+<tr>
+<td style="text-align: left">subPosCloseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Action type for open positions<br/><code>market_close</code>: immediately close at market price<br/><code>copy_close</code>：close when trader closes<br/><code>manual_close</code>: close manually<br/>The default is <code>copy_close</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-post-first-copy-settings-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">result</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">The result of setting <br/><code>true</code></td>
+</tr>
+</tbody></table>

@@ -1,0 +1,239 @@
+<h3 id="order-book-trading-copy-trading-get-lead-trader-ranks">GET / Lead trader ranks</h3>
+<p>Public endpoint. Retrieve lead trader ranks.</p>
+<h4 id="order-book-trading-copy-trading-get-lead-trader-ranks-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-ranks-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-ranks-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-ranks-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/public-lead-traders</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/public-lead-traders?instType<span class="o">=</span>SWAP
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-lead-trader-ranks-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">sortType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Sort type<br/><code>overview</code>: overview, the default value<br/><code>pnl</code>: profit and loss<br/><code>aum</code>: assets under management<br/><code>win_ratio</code>: win ratio<br/><code>pnl_ratio</code>: pnl ratio<br/><code>current_copy_trader_pnl</code>: current copy trader pnl</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Lead trader state<br/><code>0</code>: All lead traders, the default, including vacancy and non-vacancy <br/><code>1</code>: lead traders who have vacancy</td>
+</tr>
+<tr>
+<td style="text-align: left">minLeadDays</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Minimum lead days<br/><code>1</code>: 7 days<br/><code>2</code>: 30 days<br/><code>3</code>: 90 days<br/><code>4</code>: 180 days</td>
+</tr>
+<tr>
+<td style="text-align: left">minAssets</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Minimum assets in USDT</td>
+</tr>
+<tr>
+<td style="text-align: left">maxAssets</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Maximum assets in USDT</td>
+</tr>
+<tr>
+<td style="text-align: left">minAum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Minimum assets in USDT under management.</td>
+</tr>
+<tr>
+<td style="text-align: left">maxAum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Maximum assets in USDT under management.</td>
+</tr>
+<tr>
+<td style="text-align: left">dataVer</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Data version. It is 14 numbers. e.g. 20231010182400. Generally, it is used for pagination <br/>A new version will be generated every 10 minutes. Only last 5 versions are stored<br/>The default is latest version. If it is not exist, error will not be throwed and the latest version will be used.</td>
+</tr>
+<tr>
+<td style="text-align: left">page</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Page for pagination</td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is 20; the default is 10</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"dataVer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20231129213200"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ranks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"accCopyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3536"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"aum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1509265.3238761567721365"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"copyState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"copyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"999"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"leadDays"</span><span class="p">:</span><span class="w"> </span><span class="s2">"156"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxCopyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"nickName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Crypto to the moon"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48805.1105999999972258"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.6898"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pnlRatios"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"beginTs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701187200000"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.6744"</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="nl">"beginTs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1700755200000"</span><span class="p">,</span><span class="w">
+                            </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.649"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="nl">"portLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://static.okx.com/cdn/okex/users/headimages/20230624/f49a683aaf5949ea88b01bbc771fb9fc"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"traderInsts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="s2">"ICP-USDT-SWAP"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"MINA-USDT-SWAP"</span><span class="w">
+
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="nl">"uniqueCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"540D011FDACCB47A"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"winRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.6957"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"totalPage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-lead-trader-ranks-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">dataVer</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Data version</td>
+</tr>
+<tr>
+<td style="text-align: left">totalPage</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total number of pages</td>
+</tr>
+<tr>
+<td style="text-align: left">ranks</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">The rank information of lead traders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; aum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">assets under management</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; copyState</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current copy state <br/><code>0</code>: non-copy, <code>1</code>: copy</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxCopyTraderNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum number of copy traders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; copyTraderNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current number of copy traders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; accCopyTraderNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated number of copy traders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; portLink</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Portrait link</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; nickName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Nick name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead trader unique code</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; winRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Win ratio, 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; leadDays</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead days</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; traderInsts</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Contract list which lead trader is leading</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Pnl (in USDT) of last 90 days.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Pnl ratio of last 90 days. 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnlRatios</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Pnl ratios</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; beginTs</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Begin time of pnl ratio on that day</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; pnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Pnl ratio on that day</td>
+</tr>
+</tbody></table>

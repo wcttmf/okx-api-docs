@@ -1,0 +1,453 @@
+<h3 id="order-book-trading-market-data-ws-order-book-channel">WS / Order book channel</h3>
+<p>Retrieve order book data. Best ask price may be lower than the best bid price during the pre-open period.<br/></p>
+<p>Use <code>books</code> for 400 depth levels, <code>books5</code> for 5 depth levels, <code>bbo-tbt</code> tick-by-tick 1 depth level, <code>books50-l2-tbt</code> tick-by-tick 50 depth levels, and <code>books-l2-tbt</code> for tick-by-tick 400 depth levels. <br/></p>
+<ul>
+<li><code>books</code>: 400 depth levels will be pushed in the initial full snapshot. Incremental data will be pushed every 100 ms for the changes in the order book during that period of time. <br/></li>
+<li><code>books5</code>: 5 depth levels snapshot will be pushed in the initial push. Snapshot data will be pushed every 100 ms when there are changes in the 5 depth levels snapshot.<br/></li>
+<li><code>bbo-tbt</code>: 1 depth level snapshot will be pushed in the initial push. Snapshot data will be pushed every 10 ms when there are changes in the 1 depth level snapshot. <br/></li>
+<li><code>books-l2-tbt</code>: 400 depth levels will be pushed in the initial full snapshot. Incremental data will be pushed every 10 ms for the changes in the order book during that period of time. <br/></li>
+<li><code>books50-l2-tbt</code>: 50 depth levels will be pushed in the initial full snapshot. Incremental data will be pushed every 10 ms for the changes in the order book during that period of time.</li>
+<li>The push sequence for order book channels within the same connection and trading symbols is fixed as: bbo-tbt -&gt; books-l2-tbt -&gt; books50-l2-tbt -&gt; books -&gt; books5.</li>
+<li>Users can not simultaneously subscribe to <code>books-l2-tbt</code> and <code>books50-l2-tbt/books</code> channels for the same trading symbol. 
+
+<ul>
+<li>For more details, please refer to the changelog <a href="/docs-v5/log_en/#2024-07-17">2024-07-17</a></li>
+</ul></li>
+</ul>
+<aside class="notice">
+Only API users who are VIP5 and above in trading fee tier are allowed to subscribe to "books-l2-tbt" 400 depth channels <br/>
+Only API users who are VIP4 and above in trading fee tier are allowed to subscribe to "books50-l2-tbt" 50 depth channels<br/>
+</aside>
+<p>Identity verification refers to <a href="/docs-v5/en/#overview-websocket-login">Login</a> </p>
+<h4 id="order-book-trading-market-data-ws-order-book-channel-url-path">URL Path</h4>
+<p>/ws/v5/public</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"books"</span>,
+      <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPublicAsync</span> <span class="kn">import</span> <span class="n">WsPublicAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPublicAsync</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"wss://wspap.okx.com:8443/ws/v5/public"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s">"channel"</span><span class="p">:</span> <span class="s">"books"</span><span class="p">,</span>
+        <span class="s">"instId"</span><span class="p">:</span> <span class="s">"BTC-USDT"</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="order-book-trading-market-data-ws-order-book-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>books</code><br/><code>books5</code><br/><code>bbo-tbt</code><br/><code>books50-l2-tbt</code><br/><code>books-l2-tbt</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Instrument ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"books"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">books</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instId</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">BTC-USD-191227</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-ws-order-book-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example: Full Snapshot</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"books"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"snapshot"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8476.98"</span><span class="p">,</span><span class="w"> </span><span class="s2">"415"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"13"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8477"</span><span class="p">,</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8477.34"</span><span class="p">,</span><span class="w"> </span><span class="s2">"85"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8477.56"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8505.84"</span><span class="p">,</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8506.37"</span><span class="p">,</span><span class="w"> </span><span class="s2">"85"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8506.49"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8506.96"</span><span class="p">,</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8476.97"</span><span class="p">,</span><span class="w"> </span><span class="s2">"256"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"12"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8475.55"</span><span class="p">,</span><span class="w"> </span><span class="s2">"101"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8475.54"</span><span class="p">,</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8475.3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8447.32"</span><span class="p">,</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8447.02"</span><span class="p">,</span><span class="w"> </span><span class="s2">"246"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8446.83"</span><span class="p">,</span><span class="w"> </span><span class="s2">"24"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8446"</span><span class="p">,</span><span class="w"> </span><span class="s2">"95"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="mi">-855196043</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"prevSeqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"seqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Push Data Example: Incremental Data</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"books"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8476.98"</span><span class="p">,</span><span class="w"> </span><span class="s2">"415"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"13"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8477"</span><span class="p">,</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8477.34"</span><span class="p">,</span><span class="w"> </span><span class="s2">"85"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8477.56"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8505.84"</span><span class="p">,</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8506.37"</span><span class="p">,</span><span class="w"> </span><span class="s2">"85"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8506.49"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8506.96"</span><span class="p">,</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2"</span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8476.97"</span><span class="p">,</span><span class="w"> </span><span class="s2">"256"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"12"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8475.55"</span><span class="p">,</span><span class="w"> </span><span class="s2">"101"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8475.54"</span><span class="p">,</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8475.3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8447.32"</span><span class="p">,</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8447.02"</span><span class="p">,</span><span class="w"> </span><span class="s2">"246"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8446.83"</span><span class="p">,</span><span class="w"> </span><span class="s2">"24"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"8446"</span><span class="p">,</span><span class="w"> </span><span class="s2">"95"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"checksum"</span><span class="p">:</span><span class="w"> </span><span class="mi">-855196043</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"prevSeqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"seqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123457</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-ws-order-book-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">action</td>
+<td style="text-align: left">String</td>
+<td>Push data action, incremental data or full snapshot. <br/><code>snapshot</code>: full  <br/><code>update</code>: incremental</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; asks</td>
+<td style="text-align: left">Array of Arrays</td>
+<td>Order book on sell side</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; bids</td>
+<td style="text-align: left">Array of Arrays</td>
+<td>Order book on buy side</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ts</td>
+<td style="text-align: left">String</td>
+<td>Order book generation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; checksum</td>
+<td style="text-align: left">Integer</td>
+<td>Checksum, implementation details below</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; prevSeqId</td>
+<td style="text-align: left">Integer</td>
+<td>Sequence ID of the last sent message. Only applicable to <code>books</code>, <code>books-l2-tbt</code>, <code>books50-l2-tbt</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; seqId</td>
+<td style="text-align: left">Integer</td>
+<td>Sequence ID of the current message, implementation details below</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+An example of the array of asks and bids values: ["411.8", "10", "0", "4"]<br/>
+- "411.8" is the depth price<br/>
+- "10" is the quantity at the price (number of contracts for derivatives, quantity in base currency for Spot and Spot Margin)<br/>
+- "0" is part of a deprecated feature and it is always "0"<br/>
+- "4" is the number of orders at the price.
+</aside>
+<aside class="notice">
+If you need to subscribe to many 50 or 400 depth level channels, it is recommended to subscribe through multiple websocket connections, with each of less than 30 channels.
+</aside>
+<aside class="notice">
+The order book data will be updated around once a second during the call auction.
+</aside>
+<h4 id="order-book-trading-market-data-ws-order-book-channel-sequence-id">Sequence ID</h4>
+<p><code>seqId</code> is the sequence ID of the market data published. The set of sequence ID received by users is the same if users are connecting to the same channel through multiple websocket connections. Each <code>instId</code> has an unique set of sequence ID. Users can use <code>prevSeqId</code> and <code>seqId</code> to build the message sequencing for incremental order book updates. Generally the value of seqId is larger than prevSeqId. The <code>prevSeqId</code> in the new message matches with <code>seqId</code> of the previous message. The smallest possible sequence ID value is 0, except in snapshot messages where the prevSeqId is always -1.<br/></p>
+<p>Exceptions:<br/>
+1. If there are no updates to the depth for an extended period(Around 60 seconds), for the channel that always updates snapshot data, OKX will send the latest snapshot, for the channel that has incremental data, OKX will send a message with <code>'asks': [], 'bids': []</code> to inform users that the connection is still active. <code>seqId</code> is the same as the last sent message and <code>prevSeqId</code> equals to <code>seqId</code>.
+2. The sequence number may be reset due to maintenance, and in this case, users will receive an incremental message with <code>seqId</code> smaller than <code>prevSeqId</code>. However, subsequent messages will follow the regular sequencing rule.</p>
+<h5 id="order-book-trading-market-data-ws-order-book-channel-sequence-id-example">Example</h5>
+<ol>
+<li>Snapshot message: prevSeqId = -1, seqId = 10</li>
+<li>Incremental message 1 (normal update): prevSeqId = 10, seqId = 15</li>
+<li>Incremental message 2 (no update): prevSeqId = 15, seqId = 15</li>
+<li>Incremental message 3 (sequence reset): prevSeqId = 15, seqId = 3</li>
+<li>Incremental message 4 (normal update): prevSeqId = 3, seqId = 5</li>
+</ol>
+<h4 id="order-book-trading-market-data-ws-order-book-channel-checksum">Checksum</h4>
+<p>This mechanism can assist users in checking the accuracy of depth data.</p>
+<h5 id="order-book-trading-market-data-ws-order-book-channel-checksum-merging-incremental-data-into-full-data">Merging incremental data into full data</h5>
+<p>After subscribing to the incremental load push (such as <code>books</code> 400 levels) of Order Book Channel, users first receive the initial full load of market depth. After the incremental load is subsequently received, update the local full load.</p>
+<ol>
+<li>If there is the same price, compare the size. If the size is 0, delete this depth data. If the size changes, replace the original data.</li>
+<li>If there is no same price, sort by price (bid in descending order, ask in ascending order), and insert the depth information into the full load.</li>
+</ol>
+<h5 id="order-book-trading-market-data-ws-order-book-channel-checksum-calculate-checksum">Calculate Checksum</h5>
+<p>Use the first 25 bids and asks in the full load to form a string (where a colon connects the price and size in an ask or a bid), and then calculate the CRC32 value (32-bit signed integer).</p>
+<blockquote>
+<p>Calculate Checksum</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>1. More than 25 levels of bid and ask
+A full load of market depth (only 2 levels of data are shown here, while 25 levels of data should actually be intercepted):
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3366.1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3366"</span><span class="p">,</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"4"</span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3366.8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3368"</span><span class="p">,</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"4"</span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>Check string:
+"3366.1:7:3366.8:9:3366:6:3368:8"
+
+2. Less than 25 levels of bid or ask
+A full load of market depth:
+</code></pre></div><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3366.1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"7"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3366.8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3368"</span><span class="p">,</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"4"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"3372"</span><span class="p">,</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"4"</span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>Check string:
+"3366.1:7:3366.8:9:3368:8:3372:8"
+</code></pre></div>
+<ol>
+<li>When the bid and ask depth data exceeds 25 levels, each of them will intercept 25 levels of data, and the string to be checked is queued in a way that the bid and ask depth data are alternately arranged. <br/>Such as: <code>bid[price:size]</code>:<code>ask[price:size]</code>:<code>bid[price:size]</code>:<code>ask[price:size]</code>...</li>
+<li>When the bid or ask depth data is less than 25 levels, the missing depth data will be ignored.<br/>Such as: <code>bid[price:size]</code>:<code>ask[price:size]</code>:<code>asks[price:size]</code>:<code>asks[price:size]</code>...</li>
+</ol>
+<blockquote>
+<p>Push Data Example of bbo-tbt channel</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bbo-tbt"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BCH-USDT-SWAP"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"111.06"</span><span class="p">,</span><span class="s2">"55154"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"111.05"</span><span class="p">,</span><span class="s2">"57745"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1670324386802"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"seqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">363996337</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Push Data Example of books5 channel</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"books5"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BCH-USDT-SWAP"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.06"</span><span class="p">,</span><span class="s2">"55154"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.07"</span><span class="p">,</span><span class="s2">"53276"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.08"</span><span class="p">,</span><span class="s2">"72435"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.09"</span><span class="p">,</span><span class="s2">"70312"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.1"</span><span class="p">,</span><span class="s2">"67272"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">]],</span><span class="w">
+      </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.05"</span><span class="p">,</span><span class="s2">"57745"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.04"</span><span class="p">,</span><span class="s2">"57109"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.03"</span><span class="p">,</span><span class="s2">"69563"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.02"</span><span class="p">,</span><span class="s2">"71248"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="s2">"111.01"</span><span class="p">,</span><span class="s2">"65090"</span><span class="p">,</span><span class="s2">"0"</span><span class="p">,</span><span class="s2">"2"</span><span class="p">]],</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BCH-USDT-SWAP"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1670324386802"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"seqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">363996337</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>

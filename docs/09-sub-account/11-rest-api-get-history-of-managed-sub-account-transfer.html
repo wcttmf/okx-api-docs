@@ -1,0 +1,120 @@
+<h3 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer">Get history of managed sub-account transfer</h3>
+<p>Only applicable to the trading team's master account to getting transfer records of managed sub accounts entrusted to oneself.</p>
+<h4 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer-rate-limit-6-requests-per-second">Rate limit：6 requests per second</h4><h4 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer-permission-read">Permission: Read</h4><h4 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer-http-request">HTTP request</h4>
+<p><code>GET /api/v5/asset/subaccount/managed-subaccount-bills</code></p>
+<blockquote>
+<p>Request sample</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/asset/subaccount/managed-subaccount-bills
+</code></pre></div><h4 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Currency, e.g <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Transfer type<br/><code>0</code>: Transfers from master account to sub-account<br/><code>1</code>: Transfers from sub-account to master account</td>
+</tr>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Sub-account name</td>
+</tr>
+<tr>
+<td style="text-align: left">subUid</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Sub-account UID</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Query the data prior to the requested bill ID creation time (exclude), Unix timestamp in millisecond format, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Query the data after the requested bill ID creation time (exclude), Unix timestamp in millisecond format, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is 100. The default is 100.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Returned results</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"billId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12344"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"subAcct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test-1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"subUid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxxxx"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="sub-account-rest-api-get-history-of-managed-sub-account-transfer-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter name</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">billId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Transfer currency</td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Transfer amount</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill type</td>
+</tr>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account name</td>
+</tr>
+<tr>
+<td style="text-align: left">subUid</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account UID</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill ID creation time, Unix timestamp in millisecond format, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>

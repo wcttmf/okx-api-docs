@@ -1,0 +1,95 @@
+<h3 id="sub-account-rest-api-get-sub-account-maximum-withdrawals">Get sub-account maximum withdrawals</h3>
+<p>Retrieve the maximum withdrawal information of a sub-account via the master account (applies to master accounts only). If no currency is specified, the transferable amount of all owned currencies will be returned.</p>
+<h4 id="sub-account-rest-api-get-sub-account-maximum-withdrawals-rate-limit-20-requests-per-2-seconds">Rate limit: 20 requests per 2 seconds</h4><h4 id="sub-account-rest-api-get-sub-account-maximum-withdrawals-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="sub-account-rest-api-get-sub-account-maximum-withdrawals-permission-read">Permission: Read</h4><h4 id="sub-account-rest-api-get-sub-account-maximum-withdrawals-http-request">HTTP request</h4>
+<p><code>GET /api/v5/account/subaccount/max-withdrawal</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/account/subaccount/max-withdrawal?subAcct<span class="o">=</span>test1
+
+</code></pre></div><h4 id="sub-account-rest-api-get-sub-account-maximum-withdrawals-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Sub-account name</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Single currency or multiple currencies (no more than 20) separated with comma, e.g. <code>BTC</code> or <code>BTC,ETH</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"maxWd"</span><span class="p">:</span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"maxWdEx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"spotOffsetMaxWd"</span><span class="p">:</span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"spotOffsetMaxWdEx"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"maxWd"</span><span class="p">:</span><span class="s2">"15"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"maxWdEx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"spotOffsetMaxWd"</span><span class="p">:</span><span class="s2">"15"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"spotOffsetMaxWdEx"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"maxWd"</span><span class="p">:</span><span class="s2">"10600"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"maxWdEx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"spotOffsetMaxWd"</span><span class="p">:</span><span class="s2">"10600"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"spotOffsetMaxWdEx"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">],</span><span class="w">
+   </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="sub-account-rest-api-get-sub-account-maximum-withdrawals-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>maxWd</td>
+<td>String</td>
+<td>Max withdrawal (excluding borrowed assets under <code>Multi-currency margin</code>)</td>
+</tr>
+<tr>
+<td>maxWdEx</td>
+<td>String</td>
+<td>Max withdrawal (including borrowed assets under <code>Multi-currency margin</code>)</td>
+</tr>
+<tr>
+<td>spotOffsetMaxWd</td>
+<td>String</td>
+<td>Max withdrawal under Spot-Derivatives risk offset mode (excluding borrowed assets under <code>Portfolio margin</code>) <br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>spotOffsetMaxWdEx</td>
+<td>String</td>
+<td>Max withdrawal under Spot-Derivatives risk offset mode (including borrowed assets under <code>Portfolio margin</code>) <br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+</tbody></table>

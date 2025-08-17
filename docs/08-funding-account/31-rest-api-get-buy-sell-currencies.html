@@ -1,0 +1,65 @@
+<h3 id="funding-account-rest-api-get-buy-sell-currencies">Get buy/sell currencies</h3><h4 id="funding-account-rest-api-get-buy-sell-currencies-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="funding-account-rest-api-get-buy-sell-currencies-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-buy-sell-currencies-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-buy-sell-currencies-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/fiat/buy-sell/currencies</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/fiat/buy-sell/currencies
+</code></pre></div>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+           </span><span class="nl">"fiatCcyList"</span><span class="p">:[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="err">...</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"cryptoCcyList"</span><span class="p">:[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="err">...</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-buy-sell-currencies-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">fiatCcyList</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Fiat currency list</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">cryptoCcyList</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Crypto currency list</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency, e.g. <code>USD</code></td>
+</tr>
+</tbody></table>
+<aside class="notice">
+This feature is only available to Bahamas institutional users at the moment.
+</aside>

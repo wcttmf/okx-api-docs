@@ -1,0 +1,973 @@
+<h3 id="trading-account-websocket-positions-channel">Positions channel</h3>
+<p>Retrieve position information. Initial snapshot will be pushed according to subscription granularity. Data will be pushed when triggered by events such as placing/canceling order, and will also be pushed in regular interval according to subscription granularity.<br/></p>
+<p>Concurrent connection to this channel will be restricted by the following rules: <a href="/docs-v5/en/#overview-websocket-connection-count-limit">WebSocket connection count limit</a>.</p>
+<h4 id="trading-account-websocket-positions-channel-url-path">URL Path</h4>
+<p>/ws/v5/private (required login)</p>
+<blockquote>
+<p>Request Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"positions"</span>,
+      <span class="s2">"instType"</span>: <span class="s2">"FUTURES"</span>,
+      <span class="s2">"instFamily"</span>: <span class="s2">"BTC-USD"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/private"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"positions"</span><span class="p">,</span>
+          <span class="s">"instType"</span><span class="p">:</span> <span class="s">"FUTURES"</span><span class="p">,</span>
+          <span class="s">"instFamily"</span><span class="p">:</span> <span class="s">"BTC-USD"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"positions"</span>,
+      <span class="s2">"instType"</span>: <span class="s2">"ANY"</span>,
+      <span class="s2">"extraParams"</span>: <span class="s2">"
+        {
+          </span><span class="se">\"</span><span class="s2">updateInterval</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0</span><span class="se">\"</span><span class="s2">
+        }
+      "</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/private"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"channel"</span><span class="p">:</span> <span class="s">"positions"</span><span class="p">,</span>
+            <span class="s">"instType"</span><span class="p">:</span> <span class="s">"ANY"</span><span class="p">,</span>
+            <span class="s">"extraParams"</span><span class="p">:</span> <span class="s">"{</span><span class="se">\"</span><span class="s">updateInterval</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">0</span><span class="se">\"</span><span class="s">}"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="trading-account-websocket-positions-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td>Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name<br/><code>positions</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Instrument type<br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code> <br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument family<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument ID<br/>If instId and instFamily are both passed, instId will be used</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; extraParams</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Additional configuration</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; updateInterval</td>
+<td style="text-align: left">int</td>
+<td>No</td>
+<td><code>0</code>: only push due to positions events <br/><code>2000, 3000, 4000</code>: push by events and regularly according to the time interval setting (ms) <br/><br/>The data will be pushed both by events and around per 5 seconds regularly if this field is omitted or set to other values than the valid values above. <br/><br/>The following format should be strictly followed when using this field. <br/>"extraParams": " <br/>{ <br/>\"updateInterval\": \"0\" <br/>}<br/>"</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"positions"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FUTURES"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"positions"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANY"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">positions</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instType</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">FUTURES</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-websocket-positions-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Instrument type<br/><code>MARGIN</code><br/><code>FUTURES</code><br/><code>SWAP</code><br/><code>OPTION</code><br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument family</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example: single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:{</span><span class="w">
+      </span><span class="nl">"channel"</span><span class="p">:</span><span class="s2">"positions"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77982378738415879"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"FUTURES"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"snapshot"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"curPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lastPage"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"adl"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"availPos"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="s2">"2566.31"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cTime"</span><span class="p">:</span><span class="s2">"1619507758793"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deltaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gammaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"imr"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"ETH-USD-210430"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"FUTURES"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"interest"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"idxPx"</span><span class="p">:</span><span class="s2">"2566.13"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"last"</span><span class="p">:</span><span class="s2">"2566.22"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lever"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liab"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liabCcy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="s2">"2352.8496681818233"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"markPx"</span><span class="p">:</span><span class="s2">"2353.849"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"margin"</span><span class="p">:</span><span class="s2">"0.0003896645377994"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="s2">"11.731726509588816"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmr"</span><span class="p">:</span><span class="s2">"0.0000311811092368"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="s2">"2276.2546609009605"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"optVal"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pTime"</span><span class="p">:</span><span class="s2">"1619507761462"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pendingCloseOrdLiabVal"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pos"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"quoteBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"quoteInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posCcy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posId"</span><span class="p">:</span><span class="s2">"307173036051017730"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posSide"</span><span class="p">:</span><span class="s2">"long"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"clSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"maxSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bizRefId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bizRefType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spotInUseCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thetaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="s2">"109844"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uTime"</span><span class="p">:</span><span class="s2">"1619507761462"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"upl"</span><span class="p">:</span><span class="s2">"-0.0000009932766034"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplLastPx"</span><span class="p">:</span><span class="s2">"-0.0000009932766034"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="s2">"-0.0025490556801078"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplRatioLastPx"</span><span class="p">:</span><span class="s2">"-0.0025490556801078"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vegaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"realizedPnl"</span><span class="p">:</span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pnl"</span><span class="p">:</span><span class="s2">"0.0011"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fee"</span><span class="p">:</span><span class="s2">"-0.0001"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fundingFee"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liqPenalty"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"nonSettleAvgPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> 
+      </span><span class="nl">"settledPnl"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"closeOrderAlgo"</span><span class="p">:[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="s2">"0.6"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="s2">"0.4"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:{</span><span class="w">
+      </span><span class="nl">"channel"</span><span class="p">:</span><span class="s2">"positions"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77982378738415879"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"ANY"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"snapshot"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"curPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"lastPage"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"adl"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"availPos"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="s2">"2566.31"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cTime"</span><span class="p">:</span><span class="s2">"1619507758793"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deltaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gammaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"imr"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"ETH-USD-210430"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"FUTURES"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"interest"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"idxPx"</span><span class="p">:</span><span class="s2">"2566.13"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"last"</span><span class="p">:</span><span class="s2">"2566.22"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"usdPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bePx"</span><span class="p">:</span><span class="s2">"2353.949"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lever"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liab"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liabCcy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="s2">"2352.8496681818233"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"markPx"</span><span class="p">:</span><span class="s2">"2353.849"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"margin"</span><span class="p">:</span><span class="s2">"0.0003896645377994"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="s2">"11.731726509588816"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmr"</span><span class="p">:</span><span class="s2">"0.0000311811092368"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="s2">"2276.2546609009605"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"optVal"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pTime"</span><span class="p">:</span><span class="s2">"1619507761462"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pendingCloseOrdLiabVal"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pos"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"quoteBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"quoteInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posCcy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posId"</span><span class="p">:</span><span class="s2">"307173036051017730"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posSide"</span><span class="p">:</span><span class="s2">"long"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"clSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"maxSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spotInUseCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bizRefId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bizRefType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thetaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="s2">"109844"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uTime"</span><span class="p">:</span><span class="s2">"1619507761462"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"upl"</span><span class="p">:</span><span class="s2">"-0.0000009932766034"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplLastPx"</span><span class="p">:</span><span class="s2">"-0.0000009932766034"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="s2">"-0.0025490556801078"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplRatioLastPx"</span><span class="p">:</span><span class="s2">"-0.0025490556801078"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vegaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"realizedPnl"</span><span class="p">:</span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pnl"</span><span class="p">:</span><span class="s2">"0.0011"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fee"</span><span class="p">:</span><span class="s2">"-0.0001"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fundingFee"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liqPenalty"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"nonSettleAvgPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> 
+      </span><span class="nl">"settledPnl"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"closeOrderAlgo"</span><span class="p">:[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="s2">"0.6"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="s2">"0.4"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"adl"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"availPos"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="s2">"2566.31"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cTime"</span><span class="p">:</span><span class="s2">"1619507758793"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"deltaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gammaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"imr"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"ETH-USD-SWAP"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"interest"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"idxPx"</span><span class="p">:</span><span class="s2">"2566.13"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"last"</span><span class="p">:</span><span class="s2">"2566.22"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"usdPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bePx"</span><span class="p">:</span><span class="s2">"2353.949"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lever"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liab"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liabCcy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="s2">"2352.8496681818233"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"markPx"</span><span class="p">:</span><span class="s2">"2353.849"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"margin"</span><span class="p">:</span><span class="s2">"0.0003896645377994"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="s2">"11.731726509588816"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmr"</span><span class="p">:</span><span class="s2">"0.0000311811092368"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="s2">"2276.2546609009605"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"optVal"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pTime"</span><span class="p">:</span><span class="s2">"1619507761462"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pendingCloseOrdLiabVal"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pos"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"baseInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"quoteBorrowed"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"quoteInterest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posCcy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posId"</span><span class="p">:</span><span class="s2">"307173036051017730"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"posSide"</span><span class="p">:</span><span class="s2">"long"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"clSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"maxSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spotInUseCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bizRefId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bizRefType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"thetaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="s2">"109844"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uTime"</span><span class="p">:</span><span class="s2">"1619507761462"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"upl"</span><span class="p">:</span><span class="s2">"-0.0000009932766034"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplLastPx"</span><span class="p">:</span><span class="s2">"-0.0000009932766034"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="s2">"-0.0025490556801078"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uplRatioLastPx"</span><span class="p">:</span><span class="s2">"-0.0025490556801078"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vegaPA"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"realizedPnl"</span><span class="p">:</span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pnl"</span><span class="p">:</span><span class="s2">"0.0011"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fee"</span><span class="p">:</span><span class="s2">"-0.0001"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fundingFee"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"liqPenalty"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"nonSettleAvgPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w"> 
+      </span><span class="nl">"settledPnl"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"closeOrderAlgo"</span><span class="p">:[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="s2">"0.6"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="s2">"mark"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="s2">"0.4"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-websocket-positions-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uid</td>
+<td style="text-align: left">String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td>Instrument family</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">eventType</td>
+<td style="text-align: left">String</td>
+<td>Event type: <br/><code>snapshot</code>: Initial and regular snapshot push <br/><code>event_update</code>: Event-driven update push</td>
+</tr>
+<tr>
+<td style="text-align: left">curPage</td>
+<td style="text-align: left">Integer</td>
+<td>Current page number. <br/>Only applicable for <code>snapshot</code> events. Not included in <code>event_update</code> events.</td>
+</tr>
+<tr>
+<td style="text-align: left">lastPage</td>
+<td style="text-align: left">Boolean</td>
+<td>Whether this is the last page of pagination:<br/><code>true</code><br/><code>false</code><br/>Only applicable for <code>snapshot</code> events. Not included in <code>event_update</code> events.</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; mgnMode</td>
+<td style="text-align: left">String</td>
+<td>Margin mode, <code>cross</code> <code>isolated</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posId</td>
+<td style="text-align: left">String</td>
+<td>Position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td>Position side<br/><code>long</code> <br/><code>short</code> <br/><code>net</code> (<code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>: positive <code>pos</code> means long position and negative <code>pos</code> means short position. <code>MARGIN</code>: <code>posCcy</code> being base currency means long position, <code>posCcy</code> being quote currency means short position.)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pos</td>
+<td style="text-align: left">String</td>
+<td>Quantity of positions. In the isolated margin mode, when doing manual transfers, a position with pos of <code>0</code> will be generated after the deposit is transferred</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; baseBal</td>
+<td style="text-align: left">String</td>
+<td><del>Base currency balance, only applicable to <code>MARGIN</code>（Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; quoteBal</td>
+<td style="text-align: left">String</td>
+<td><del>Quote currency balance, only applicable to <code>MARGIN</code>（Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; baseBorrowed</td>
+<td style="text-align: left">String</td>
+<td><del>Base currency amount already borrowed, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; baseInterest</td>
+<td style="text-align: left">String</td>
+<td><del>Base Interest, undeducted interest that has been incurred, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; quoteBorrowed</td>
+<td style="text-align: left">String</td>
+<td><del>Quote currency amount already borrowed, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; quoteInterest</td>
+<td style="text-align: left">String</td>
+<td><del>Quote Interest, undeducted interest that has been incurred, only applicable to MARGIN(Quick Margin Mode）</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posCcy</td>
+<td style="text-align: left">String</td>
+<td>Position currency, only applicable to <code>MARGIN</code> positions</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; availPos</td>
+<td style="text-align: left">String</td>
+<td>Position that can be closed <br/>Only applicable to <code>MARGIN</code> and <code>OPTION</code>. <br/>For <code>Margin</code> position, the rest of sz will be <code>SPOT</code> trading after the liability is repaid while closing the position. Please get the available reduce-only amount from "Get maximum available tradable amount" if you want to reduce the amount of <code>SPOT</code> trading as much as possible.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; avgPx</td>
+<td style="text-align: left">String</td>
+<td>Average open price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; upl</td>
+<td style="text-align: left">String</td>
+<td>Unrealized profit and loss calculated by mark price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uplRatio</td>
+<td style="text-align: left">String</td>
+<td>Unrealized profit and loss ratio calculated by mark price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uplLastPx</td>
+<td style="text-align: left">String</td>
+<td>Unrealized profit and loss calculated by last price. Main usage is showing, actual value is upl.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uplRatioLastPx</td>
+<td style="text-align: left">String</td>
+<td>Unrealized profit and loss ratio calculated by last price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lever</td>
+<td style="text-align: left">String</td>
+<td>Leverage, not applicable to <code>OPTION</code> seller</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; liqPx</td>
+<td style="text-align: left">String</td>
+<td>Estimated liquidation price <br/>Not applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; markPx</td>
+<td style="text-align: left">String</td>
+<td>Latest Mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; imr</td>
+<td style="text-align: left">String</td>
+<td>Initial margin requirement, only applicable to <code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; margin</td>
+<td style="text-align: left">String</td>
+<td>Margin, can be added or reduced. Only applicable to <code>isolated</code> <code>Margin</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; mgnRatio</td>
+<td style="text-align: left">String</td>
+<td>Maintenance margin ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; mmr</td>
+<td style="text-align: left">String</td>
+<td>Maintenance margin requirement</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; liab</td>
+<td style="text-align: left">String</td>
+<td>Liabilities, only applicable to <code>MARGIN</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; liabCcy</td>
+<td style="text-align: left">String</td>
+<td>Liabilities currency, only applicable to <code>MARGIN</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; interest</td>
+<td style="text-align: left">String</td>
+<td>Interest accrued that has not been settled.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tradeId</td>
+<td style="text-align: left">String</td>
+<td>Last trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; notionalUsd</td>
+<td style="text-align: left">String</td>
+<td>Notional value of positions in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; optVal</td>
+<td style="text-align: left">String</td>
+<td>Option Value, only applicable to <code>OPTION</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pendingCloseOrdLiabVal</td>
+<td style="text-align: left">String</td>
+<td>The amount of close orders of isolated margin liability.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; adl</td>
+<td style="text-align: left">String</td>
+<td>Auto decrease line, signal area<br/>Divided into 5 levels, from 1 to 5, the smaller the number, the weaker the adl intensity. <br/>Only applicable to <code>FUTURES/SWAP/OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; bizRefId</td>
+<td style="text-align: left">String</td>
+<td>External business id, e.g. experience coupon id</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; bizRefType</td>
+<td style="text-align: left">String</td>
+<td>External business type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td>Currency used for margin</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; last</td>
+<td style="text-align: left">String</td>
+<td>Latest traded price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; idxPx</td>
+<td style="text-align: left">String</td>
+<td>Latest underlying index price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; usdPx</td>
+<td style="text-align: left">String</td>
+<td>Latest USD price of the <code>ccy</code> on the market, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; bePx</td>
+<td style="text-align: left">String</td>
+<td>Breakeven price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; deltaBS</td>
+<td style="text-align: left">String</td>
+<td>delta: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; deltaPA</td>
+<td style="text-align: left">String</td>
+<td>delta: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; gammaBS</td>
+<td style="text-align: left">String</td>
+<td>gamma: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; gammaPA</td>
+<td style="text-align: left">String</td>
+<td>gamma: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; thetaBS</td>
+<td style="text-align: left">String</td>
+<td>theta: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; thetaPA</td>
+<td style="text-align: left">String</td>
+<td>theta: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; vegaBS</td>
+<td style="text-align: left">String</td>
+<td>vega: Black-Scholes Greeks in dollars, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; vegaPA</td>
+<td style="text-align: left">String</td>
+<td>vega: Greeks in coins, only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; spotInUseAmt</td>
+<td style="text-align: left">String</td>
+<td>Spot in use amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; spotInUseCcy</td>
+<td style="text-align: left">String</td>
+<td>Spot in use unit, e.g. <code>BTC</code><br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; clSpotInUseAmt</td>
+<td style="text-align: left">String</td>
+<td>User-defined spot risk offset amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxSpotInUseAmt</td>
+<td style="text-align: left">String</td>
+<td>Max possible spot risk offset amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; realizedPnl</td>
+<td style="text-align: left">String</td>
+<td>Realized profit and loss<br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code><br/> realizedPnl=pnl+fee+fundingFee+liqPenalty+settledPnl</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnl</td>
+<td style="text-align: left">String</td>
+<td>Accumulated pnl of closing order(s) (excluding the fee).</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fee</td>
+<td style="text-align: left">String</td>
+<td>Accumulated fee<br/>Negative number represents the user transaction fee charged by the platform.Positive number represents rebate.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fundingFee</td>
+<td style="text-align: left">String</td>
+<td>Accumulated funding fee</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; liqPenalty</td>
+<td style="text-align: left">String</td>
+<td>Accumulated liquidation penalty. It is negative when there is a value.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; closeOrderAlgo</td>
+<td style="text-align: left">Array of objects</td>
+<td>Close position algo orders attached to the position. This array will have values only after you request "Place algo order" with <code>closeFraction</code>=1.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td>Stop-loss trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td>Take-profit trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; closeFraction</td>
+<td style="text-align: left">String</td>
+<td>Fraction of position to be closed when the algo order is triggered.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; cTime</td>
+<td style="text-align: left">String</td>
+<td>Creation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uTime</td>
+<td style="text-align: left">String</td>
+<td>Latest time position was adjusted, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pTime</td>
+<td style="text-align: left">String</td>
+<td>Push time of positions information, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; nonSettleAvgPx</td>
+<td style="text-align: left">String</td>
+<td>Non-Settlement entry price<br/>The non-settlement entry price only reflects the average price at which the position is opened or increased.<br/>Applicable to <code>FUTURES</code> <code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; settledPnl</td>
+<td style="text-align: left">String</td>
+<td>Accumulated settled P&amp;L (calculated by settlement price)<br/>Applicable to <code>FUTURES</code> <code>cross</code></td>
+</tr>
+</tbody></table>
+<aside class="notice">
+<br/> - The position data is sent on event basis and regular basis
+<br/> - The event push is not pushed in real-time. It is aggregated and pushed at a fixed time interval, around 50ms. For example, if multiple events occur within a fixed time interval, the system will aggregate them into a single message and push it at the end of the fixed time interval. If the data volume is too large, it may be split into multiple messages.
+<br/> - The regular push sends updates regardless of whether there are position activities or not.
+<br/> - If an event push and a regular push happen at the same time, the system will send the event push first, followed by the regular push.
+</aside>
+<aside class="notice">
+As for portfolio margin account, the IMR and MMR of the position are calculated in risk unit granularity, thus their values of the same risk unit cross positions are the same.
+</aside>
+<aside class="notice">
+In the position-by-position trading setting, it is an autonomous transfer mode. After the margin is transferred, positions with a position of 0 will be pushed
+</aside>
+<aside class="notice">
+<br/> - Only position with non-zero position quantity will be pushed. Definition of non-zero quantity: value of pos parameter is not 0. If the data is too large to be sent in a single push message, it will be split into multiple messages.
+<br/> - For example, when subscribing to positions channel specifying an underlying and there are 20 positions are with non-zero quantity, all 20 positions data will be pushed in initial snapshot and in regular push. Subsequently when there is change in pos of a position, only the data of that position will be pushed triggered by this change.
+</aside>

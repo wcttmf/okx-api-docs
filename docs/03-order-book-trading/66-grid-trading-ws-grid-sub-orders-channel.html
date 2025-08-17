@@ -1,0 +1,379 @@
+<h3 id="order-book-trading-grid-trading-ws-grid-sub-orders-channel">WS / Grid sub orders channel</h3>
+<p>Retrieve grid sub orders. Data will be pushed when triggered by events such as placing order.<br/>
+Please ignore the empty data.</p>
+<h4 id="order-book-trading-grid-trading-ws-grid-sub-orders-channel-url-path">URL Path</h4>
+<p>/ws/v5/business (required login)</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>: <span class="o">[{</span>
+        <span class="s2">"channel"</span>: <span class="s2">"grid-sub-orders"</span>,
+        <span class="s2">"algoId"</span>: <span class="s2">"449327675342323712"</span>
+    <span class="o">}]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="s">"channel"</span><span class="p">:</span> <span class="s">"grid-sub-orders"</span><span class="p">,</span>
+        <span class="s">"algoId"</span><span class="p">:</span> <span class="s">"449327675342323712"</span>
+    <span class="p">}]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div><h4 id="order-book-trading-grid-trading-ws-grid-sub-orders-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td>Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name<br/><code>grid-sub-orders</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Algo Order ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grid-sub-orders"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"449327675342323712"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">grid-sub-orders</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instType</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">FUTURES</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-ws-grid-sub-orders-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Algo Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example: </p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grid-sub-orders"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44705892343619584"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"449327675342323712"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"accFillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"449327675342323712"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contract_grid"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1653445498664"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ctVal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"groupId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"449518234142904321"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ordType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1653486524502"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"28007.2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"rebate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"rebateCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tag"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1653445498674"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-ws-grid-sub-orders-channel-response-parameters-when-data-is-pushed">Response parameters when data is pushed.</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uid</td>
+<td style="text-align: left">String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Algo Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td>Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoOrdType</td>
+<td style="text-align: left">String</td>
+<td>Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; groupId</td>
+<td style="text-align: left">String</td>
+<td>Group ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordId</td>
+<td style="text-align: left">String</td>
+<td>Sub order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; cTime</td>
+<td style="text-align: left">String</td>
+<td>Sub order created time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uTime</td>
+<td style="text-align: left">String</td>
+<td>Sub order updated time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tdMode</td>
+<td style="text-align: left">String</td>
+<td>Sub order trade mode<br/>Margin mode <code>cross</code> <code>isolated</code><br/>Non-Margin mode <code>cash</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tag</td>
+<td style="text-align: left">String</td>
+<td>Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordType</td>
+<td style="text-align: left">String</td>
+<td>Sub order type<br/><code>market</code>: Market order<br/><code>limit</code>: Limit order<br/><code>ioc</code>: Immediate-or-cancel order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td>Sub order quantity to buy or sell</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td>Sub order state<br/><code>canceled</code><br/><code>live</code><br/><code>partially_filled</code><br/><code>filled</code><br/><code>cancelling</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; side</td>
+<td style="text-align: left">String</td>
+<td>Sub order side<br/><code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; px</td>
+<td style="text-align: left">String</td>
+<td>Sub order price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fee</td>
+<td style="text-align: left">String</td>
+<td>Sub order fee amount</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; feeCcy</td>
+<td style="text-align: left">String</td>
+<td>Sub order fee currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rebate</td>
+<td style="text-align: left">String</td>
+<td>Sub order rebate amount</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rebateCcy</td>
+<td style="text-align: left">String</td>
+<td>Sub order rebate currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; avgPx</td>
+<td style="text-align: left">String</td>
+<td>Sub order average filled price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; accFillSz</td>
+<td style="text-align: left">String</td>
+<td>Sub order accumulated fill quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td>Sub order position side<br/><code>net</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnl</td>
+<td style="text-align: left">String</td>
+<td>Sub order profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ctVal</td>
+<td style="text-align: left">String</td>
+<td>Contract value<br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lever</td>
+<td style="text-align: left">String</td>
+<td>Leverage</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pTime</td>
+<td style="text-align: left">String</td>
+<td>Push time of orders information, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>
+<h2 id="order-book-trading-signal-bot-trading">Signal bot trading</h2>
+<p>Create and customize your own signals while gaining access to a diverse selection of signals from top providers. Empower your trading strategies and stay ahead of the game with our comprehensive signal trading platform. <a href="/learn/signal-trading">Learn more</a></p>

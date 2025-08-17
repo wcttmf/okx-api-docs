@@ -1,0 +1,13 @@
+<h3 id="overview-rate-limits-sub-account-rate-limit">Sub-account rate limit</h3>
+<p>At the sub-account level, we allow a maximum of 1000 order requests per 2 seconds. Only new order requests and amendment order requests will be counted towards this limit. The limit encompasses all requests from the endpoints below. For batch order requests consisting of multiple orders, each order will be counted individually. Error code 50061 is returned when the sub-account rate limit is exceeded. The existing rate limit rule per instrument ID remains unchanged and the existing rate limit and sub-account rate limit will operate in parallel. If clients require a higher rate limit, clients can trade via multiple sub-accounts.</p>
+<ul>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-place-order">POST / Place order</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-place-multiple-orders">POST / Place multiple orders</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-amend-order">POST / Amend order</a></li>
+<li><p><a href="/docs-v5/en/#order-book-trading-trade-post-amend-multiple-orders">POST / Amend multiple orders</a></p></li>
+<li><p><a href="/docs-v5/en/#order-book-trading-trade-ws-place-order">WS / Place order</a></p></li>
+<li><p><a href="/docs-v5/en/#order-book-trading-trade-ws-place-multiple-orders">WS / Place multiple orders</a></p></li>
+<li><p><a href="/docs-v5/en/#order-book-trading-trade-ws-amend-order">WS / Amend order</a></p></li>
+<li><p><a href="/docs-v5/en/#order-book-trading-trade-ws-amend-multiple-orders">WS / Amend multiple orders</a>
+<br/></p></li>
+</ul>

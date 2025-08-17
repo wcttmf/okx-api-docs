@@ -1,0 +1,226 @@
+<h3 id="order-book-trading-algo-trading-post-amend-algo-order">POST / Amend algo order</h3>
+<p>Amend unfilled algo orders (Support Stop order and Trigger order only, not including Move_order_stop order, Iceberg order, TWAP order, Trailing Stop order).<br/></p>
+<h4 id="order-book-trading-algo-trading-post-amend-algo-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-algo-trading-post-amend-algo-order-rate-limit-rule-user-id-instrument-id">Rate limit rule: User ID + Instrument ID</h4><h4 id="order-book-trading-algo-trading-post-amend-algo-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-algo-trading-post-amend-algo-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/trade/amend-algos</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/trade/amend-algos
+body
+<span class="o">{</span>
+    <span class="s2">"algoId"</span>:<span class="s2">"2510789768709120"</span>,
+    <span class="s2">"newSz"</span>:<span class="s2">"2"</span>,
+    <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-algo-trading-post-amend-algo-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Algo ID<br/>Either <code>algoId</code> or <code>algoClOrdId</code> is required. If both are passed, <code>algoId</code> will be used.</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Client-supplied Algo ID<br/>Either <code>algoId</code> or <code>algoClOrdId</code> is required. If both are passed, <code>algoId</code> will be used.</td>
+</tr>
+<tr>
+<td style="text-align: left">cxlOnFail</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the order needs to be automatically canceled when the order amendment fails  <br/>Valid options: <code>false</code> or <code>true</code>, the default is <code>false</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">reqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Client Request ID as assigned by the client for order amendment <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters. <br/>The response will include the corresponding <code>reqId</code> to help you identify the request if you provide it in the request.</td>
+</tr>
+<tr>
+<td style="text-align: left">newSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">New quantity after amendment and it has to be larger than 0.</td>
+</tr>
+</tbody></table>
+<p><b>Take Profit / Stop Loss Order</b></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">newTpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Take-profit trigger price. <br/>Either the take-profit trigger price or order price is 0, it means that the take-profit is deleted</td>
+</tr>
+<tr>
+<td style="text-align: left">newTpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Take-profit order price <br/>If the price is -1, take-profit will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">newSlTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Stop-loss trigger price.<br/>Either the stop-loss trigger price or order price is 0, it means that the stop-loss is deleted</td>
+</tr>
+<tr>
+<td style="text-align: left">newSlOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Stop-loss order price <br/>If the price is -1, stop-loss will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">newTpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Take-profit trigger price type<br/><code>last</code>: last price <br/><code>index</code>: index price <br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">newSlTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price <br/><code>index</code>: index price <br/><code>mark</code>: mark price</td>
+</tr>
+</tbody></table>
+<p><b>Trigger Order</b></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">newTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">New trigger price after amendment</td>
+</tr>
+<tr>
+<td style="text-align: left">newOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">New order price after amendment<br/>If the price is <code>-1</code>, the order will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">newTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">New trigger price type after amendment <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">attachAlgoOrds</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Attached SL/TP orders info<br/>Applicable to <code>Futures mode/Multi-currency margin/Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; newTpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price<br/>If you fill in this parameter, you should fill in the take-profit order price as well.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; newTpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price<br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; newTpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit order price<br/>If you fill in this parameter, you should fill in the take-profit trigger price as well. <br/>If the price is <code>-1</code>, take-profit will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; newSlTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price<br/>If you fill in this parameter, you should fill in the stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; newSlTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; newSlOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss order price <br/>If you fill in this parameter, you should fill in the stop-loss trigger price. <br/>If the price is <code>-1</code>, stop-loss will be executed at the market price.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="s2">"algo_01"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"2510789768709120"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"reqId"</span><span class="p">:</span><span class="s2">"po103ux"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-algo-trading-post-amend-algo-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">reqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Request ID as assigned by the client for order amendment.</td>
+</tr>
+<tr>
+<td style="text-align: left">sCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The code of the event execution result, <code>0</code> means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">sMsg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rejection message if the request is unsuccessful.</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,120 @@
+<h3 id="order-book-trading-copy-trading-get-copy-traders">GET / Copy traders</h3>
+<p>Public endpoint. Retrieve copy trader coming from certain lead trader. Return according to <code>pnl</code> from high to low</p>
+<h4 id="order-book-trading-copy-trading-get-copy-traders-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-copy-traders-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-copy-trading-get-copy-traders-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-copy-traders-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/public-copy-traders</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/public-copy-traders?instType<span class="o">=</span>SWAP&amp;uniqueCode<span class="o">=</span>D9ADEAB33AE9EABD
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-copy-traders-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead trader unique code<br/>A combination of case-sensitive alphanumerics, all numbers and the length is 16 characters, e.g. 213E8C92DC61EFAC</td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is <code>100</code>; The default is <code>100</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTotalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2060.12242"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTraderNumChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTraderNumChgRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTraders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"beginCopyTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1686125051000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"nickName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bre***@gmail.com"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1076.77388"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"portLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"beginCopyTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1698133811000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"nickName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MrYanDao505"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"983.34854"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"portLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://static.okx.com/cdn/okex/users/headimages/20231010/fd31f45e99fe41f7bb219c0b53ae0ada"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-copy-traders-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">copyTotalPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total copy trader profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The currency name of profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">copyTraderNumChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Number change in last 7 days</td>
+</tr>
+<tr>
+<td style="text-align: left">copyTraderNumChgRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Ratio change in last 7 days</td>
+</tr>
+<tr>
+<td style="text-align: left">copyTraders</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Copy trader information</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; beginCopyTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Begin copying time. Unix timestamp format in milliseconds, e.g.1597026383085</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; nickName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Nick name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; portLink</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy trader portrait link</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy trading profit and loss</td>
+</tr>
+</tbody></table>

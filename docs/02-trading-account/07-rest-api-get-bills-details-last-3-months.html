@@ -1,0 +1,321 @@
+<h3 id="trading-account-rest-api-get-bills-details-last-3-months">Get bills details (last 3 months)</h3>
+<p>Retrieve the account’s bills. The bill refers to all transaction records that result in changing the balance of an account. Pagination is supported, and the response is sorted with most recent first. This endpoint can retrieve data from the last 3 months.</p>
+<h4 id="trading-account-rest-api-get-bills-details-last-3-months-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-bills-details-last-3-months-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-bills-details-last-3-months-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-bills-details-last-3-months-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/bills-archive</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/account/bills-archive
+
+GET /api/v5/account/bills-archive?instType<span class="o">=</span>MARGIN
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get bills details (last 3 months)
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_account_bills_archive</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-bills-details-last-3-months-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Bill currency</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Margin mode<br/><code>isolated</code><br/><code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ctType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Contract type<br/><code>linear</code><br/><code>inverse</code><br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Bill type<br/><code>1</code>: Transfer<br/><code>2</code>: Trade<br/><code>3</code>: Delivery<br/><code>4</code>: Forced repayment<br/><code>5</code>: Liquidation<br/><code>6</code>: Margin transfer<br/><code>7</code>: Interest deduction<br/><code>8</code>: Funding fee<br/><code>9</code>: ADL<br/><code>10</code>: Clawback<br/><code>11</code>: System token conversion<br/><code>12</code>: Strategy transfer<br/><code>13</code>: DDH<br/><code>14</code>: Block trade<br/><code>15</code>: Quick Margin<br/><code>16</code>: Borrowing<br/><code>22</code>: Repay<br/><code>24</code>: Spread trading<br/><code>26</code>: Structured products<br/><code>27</code>: Convert<br/><code>28</code>: Easy convert<br/><code>29</code>: One-click repay<br/><code>30</code>: Simple trade<br/> <code>32</code>: Move position<br/><code>33</code>: Loans<br/><code>34</code>: Settlement<br/><code>250</code>: Copy trader profit sharing expenses<br/><code>251</code>: Copy trader profit sharing refund</td>
+</tr>
+<tr>
+<td style="text-align: left">subType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Bill subtype<br/><code>1</code>: Buy<br/><code>2</code>: Sell<br/><code>3</code>: Open long<br/><code>4</code>: Open short<br/><code>5</code>: Close long<br/><code>6</code>: Close short<br/><code>9</code>: Interest deduction for Market loans<br/><code>11</code>: Transfer in<br/><code>12</code>: Transfer out<br/><code>14</code>: Interest deduction for VIP loans<br/><code>160</code>: Manual margin increase<br/><code>161</code>: Manual margin decrease<br/><code>162</code>: Auto margin increase<br/><code>114</code>: Forced repayment buy<br/><code>115</code>: Forced repayment sell<br/><code>118</code>: System token conversion transfer in<br/><code>119</code>: System token conversion transfer out<br/><code>100</code>: Partial liquidation close long<br/><code>101</code>: Partial liquidation close short<br/><code>102</code>: Partial liquidation buy<br/><code>103</code>: Partial liquidation sell<br/><code>104</code>: Liquidation long<br/><code>105</code>: Liquidation short<br/><code>106</code>: Liquidation buy<br/><code>107</code>: Liquidation sell<br/><code>108</code>: Clawback<br/><code>110</code>: Liquidation transfer in<br/><code>111</code>: Liquidation transfer out<br/><code>125</code>: ADL close long<br/><code>126</code>: ADL close short<br/><code>127</code>: ADL buy<br/><code>128</code>: ADL sell<br/><code>131</code>: ddh buy<br/><code>132</code>: ddh sell<br/><code>170</code>: Exercised(ITM buy side)<br/><code>171</code>: Counterparty exercised(ITM sell side)<br/><code>172</code>: Expired(Non-ITM buy and sell side)<br/><code>112</code>: Delivery long<br/><code>113</code>: Delivery short<br/><code>117</code>: Delivery/Exercise clawback<br/><code>173</code>: Funding fee expense<br/><code>174</code>: Funding fee income<br/><code>200</code>:System transfer in<br/><code>201</code>: Manually transfer in<br/><code>202</code>: System transfer out<br/><code>203</code>: Manually transfer out<br/><code>204</code>: block trade buy<br/><code>205</code>: block trade sell<br/><code>206</code>: block trade open long<br/><code>207</code>: block trade open short<br/><code>208</code>: block trade close long<br/><code>209</code>: block trade close short<br/><code>210</code>: Manual Borrowing of quick margin<br/><code>211</code>: Manual Repayment of quick margin<br/><code>212</code>: Auto borrow of quick margin<br/><code>213</code>: Auto repay of quick margin<br/><code>220</code>: Transfer in when using USDT to buy OPTION<br/><code>221</code>: Transfer out when using USDT to buy OPTION<br/><code>16</code>: Repay forcibly<br/><code>17</code>: Repay interest by borrowing forcibly<br/><code>224</code>: Repayment transfer in<br/><code>225</code>: Repayment transfer out<br/><code>236</code>: Easy convert in<br/><code>237</code>: Easy convert out<br/><code>250</code>: Profit sharing expenses<br/><code>251</code>: Profit sharing refund<br/><code>280</code>: SPOT profit sharing expenses<br/><code>281</code>: SPOT profit sharing refund<br/><code>270</code>: Spread trading buy<br/><code>271</code>: Spread trading sell<br/><code>272</code>: Spread trading open long<br/><code>273</code>: Spread trading open short<br/><code>274</code>: Spread trading close long<br/><code>275</code>: Spread trading close short<br/><code>280</code>: SPOT profit sharing expenses<br/><code>281</code>: SPOT profit sharing refund <br/><code>284</code>: Copy trade automatic transfer in<br/><code>285</code>: Copy trade manual transfer in<br/><code>286</code>: Copy trade automatic transfer out<br/><code>287</code>: Copy trade manual transfer out<br/><code>290</code>: Crypto dust auto-transfer out<br/><del><code>293</code>: Fixed loan interest deduction</del><br/><del><code>294</code>: Fixed loan interest refund</del><br/><del><code>295</code>: Fixed loan overdue penalty</del><br/><code>296</code>: From structured order placements<br/><code>297</code>: To structured order placements<br/><code>298</code>: From structured settlements<br/><code>299</code>: To structured settlements<br/><code>306</code>: Manual borrow<br/><code>307</code>: Auto borrow<br/><code>308</code>: Manual repay<br/><code>309</code>: Auto repay<br/><code>312</code>: Auto offset<br/><code>318</code>: Convert in<br/><code>319</code>: Convert out<br/><code>320</code>: Simple buy<br/><code>321</code>: Simple sell<br/> <code>324</code>: Move position buy<br/> <code>325</code>: Move position sell<br/> <code>326</code>: Move position open long<br/> <code>327</code>: Move position open short<br/> <code>328</code>: Move position close long<br/> <code>329</code>: Move position close short<br/><code>332</code>: Margin transfer in isolated margin position <br/><code>333</code>: Margin transfer out isolated margin position<br/><code>334</code>: Margin loss when closing isolated margin position<br/><code>355</code>: Settlement PnL <br/><code>376</code>: Collateralized borrowing auto conversion buy<br/><code>377</code>: Collateralized borrowing auto conversion sell <br/> <code>381</code>: Auto lend interest transfer in<br/><code>372</code>: Bot airdrop (transfer in)<br/><code>373</code>: Bot airdrop (transfer out)<br/><code>374</code>: Bot airdrop reclaim (transfer in)<br/><code>375</code>: Bot airdrop reclaim (transfer out)</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested bill ID.</td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested bill ID.</td>
+</tr>
+<tr>
+<td style="text-align: left">begin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Filter with a begin timestamp  <code>ts</code>. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">end</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Filter with an end timestamp  <code>ts</code>. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is <code>100</code>. The default is <code>100</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"bal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8694.2179403378290202"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"balChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0219338232210000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"billId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"623950854533513219"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"execType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"T"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.000021955779"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillFwdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillIdxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27104.1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillMarkPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillMarkVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillPxUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillPxVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fillTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695033476166"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"interest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"623950854525124608"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"posBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"posBalChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27105.9"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.021955779"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"586760148"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695033476167"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre></div><h4 id="trading-account-rest-api-get-bills-details-last-3-months-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">billId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill ID</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill type</td>
+</tr>
+<tr>
+<td style="text-align: left">subType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill subtype</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The time when the balance complete update, Unix timestamp format in milliseconds, e.g.<code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">balChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Change in balance amount at the account level</td>
+</tr>
+<tr>
+<td style="text-align: left">posBalChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Change in balance amount at the position level</td>
+</tr>
+<tr>
+<td style="text-align: left">bal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Balance at the account level</td>
+</tr>
+<tr>
+<td style="text-align: left">posBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Balance at the position level</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity<br/>For <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>, it is fill quantity or position quantity, the unit is contract. The value is always positive.<br/>For other scenarios. the unit is account balance currency(<code>ccy</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price which related to subType<br/><li>Trade filled price for</li><code>1</code>: Buy <code>2</code>: Sell <code>3</code>: Open long <code>4</code>: Open short <code>5</code>: Close long <code>6</code>: Close short <code>204</code>: block trade buy <code>205</code>: block trade sell <code>206</code>: block trade open long <code>207</code>: block trade open short  <code>208</code>: block trade close long <code>209</code>: block trade close short <code>114</code>: Forced repayment buy <code>115</code>: Forced repayment sell<br/><li>Liquidation Price for</li><code>100</code>: Partial liquidation close long <code>101</code>: Partial liquidation close short <code>102</code>: Partial liquidation buy <code>103</code>: Partial liquidation sell <code>104</code>: Liquidation long <code>105</code>: Liquidation short <code>106</code>: Liquidation buy <code>107</code>: Liquidation sell <code>16</code>: Repay forcibly <code>17</code>: Repay interest by borrowing forcibly <code>110</code>: Liquidation transfer in <code>111</code>: Liquidation transfer out<br/><li>Delivery price for</li><code>112</code>: Delivery long <code>113</code>: Delivery short<br/><li>Exercise price for</li><code>170</code>: Exercised <code>171</code>: Counterparty exercised <code>172</code>: Expired OTM<br/><li>Mark price for</li><code>173</code>: Funding fee expense <code>174</code>: Funding fee income</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Account balance currency</td>
+</tr>
+<tr>
+<td style="text-align: left">pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fee<br/>Negative number represents the user transaction fee charged by the platform. <br/>Positive number represents rebate.<br/><a href="/en/fees">Trading fee rule</a></td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin mode<br/><code>isolated</code> <code>cross</code> <code>cash</code><br/>When bills are not generated by trading, the field returns ""</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order ID<br/>Return order ID when the type is <code>2</code>/<code>5</code>/<code>9</code><br/>Return "" when there is no order.</td>
+</tr>
+<tr>
+<td style="text-align: left">execType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidity taker or maker<br/><code>T</code>: taker <code>M</code>: maker</td>
+</tr>
+<tr>
+<td style="text-align: left">from</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The remitting account<br/><code>6</code>: Funding account<br/><code>18</code>: Trading account<br/>Only applicable to <code>transfer</code>. When bill type is not <code>transfer</code>, the field returns "".</td>
+</tr>
+<tr>
+<td style="text-align: left">to</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The beneficiary account<br/><code>6</code>: Funding account<br/><code>18</code>: Trading account<br/>Only applicable to <code>transfer</code>. When bill type is not <code>transfer</code>, the field returns "".</td>
+</tr>
+<tr>
+<td style="text-align: left">notes</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Notes</td>
+</tr>
+<tr>
+<td style="text-align: left">interest</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Interest</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">fillTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled time</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last traded ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Order ID as assigned by the client <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">fillIdxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Index price at the moment of trade execution <br/>For cross currency spot pairs, it returns baseCcy-USDT index price. For example, for LTC-ETH, this field returns the index price of LTC-USDT.</td>
+</tr>
+<tr>
+<td style="text-align: left">fillMarkPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark price when filled <br/>Applicable to FUTURES/SWAP/OPTIONS, return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPxVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Implied volatility when filled <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPxUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Options price when filled, in the unit of USD <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillMarkVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark volatility when filled <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillFwdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Forward price when filled <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+<strong>Funding Fee expense (subType = 173)</strong><br/>
+You may refer to "pnl" for the fee payment
+</aside>

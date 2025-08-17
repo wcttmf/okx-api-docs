@@ -1,0 +1,121 @@
+<h3 id="sub-account-rest-api-create-an-api-key-for-a-sub-account">Create an API Key for a sub-account</h3>
+<p>Applies to master accounts only and master accounts API Key must be linked to IP addresses.</p>
+<h4 id="sub-account-rest-api-create-an-api-key-for-a-sub-account-rate-limit-1-request-per-second">Rate limit：1 request per second</h4><h4 id="sub-account-rest-api-create-an-api-key-for-a-sub-account-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="sub-account-rest-api-create-an-api-key-for-a-sub-account-permission-trade">Permission: Trade</h4><h4 id="sub-account-rest-api-create-an-api-key-for-a-sub-account-http-request">HTTP request</h4>
+<p><code>POST /api/v5/users/subaccount/apikey</code></p>
+<blockquote>
+<p>Request sample</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/users/subaccount/apikey
+body
+<span class="o">{</span>
+    <span class="s2">"subAcct"</span>:<span class="s2">"panpanBroker2"</span>,
+    <span class="s2">"label"</span>:<span class="s2">"broker3"</span>,
+    <span class="s2">"passphrase"</span>: <span class="s2">"******"</span>,
+    <span class="s2">"perm"</span>:<span class="s2">"trade"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="sub-account-rest-api-create-an-api-key-for-a-sub-account-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Sub-account name, supports 6 to 20 characters that include numbers and letters (case sensitive, space symbol is not supported).</td>
+</tr>
+<tr>
+<td style="text-align: left">label</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">API Key note</td>
+</tr>
+<tr>
+<td style="text-align: left">passphrase</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">API Key password, supports 8 to 32 alphanumeric characters containing at least 1 number, 1 uppercase letter, 1 lowercase letter and 1 special character.</td>
+</tr>
+<tr>
+<td style="text-align: left">perm</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">API Key permissions <br/><code>read_only</code>: Read only <br/><code>trade</code>: Trade</td>
+</tr>
+<tr>
+<td style="text-align: left">ip</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Link IP addresses, separate with commas if more than one. Support up to 20 addresses.<br/><font color="red"><b>For security reasons, it is recommended to bind IP addresses.</b></font><br/><font color="red"><b>API keys with trading or withdrawal permissions that are not bound to IPs will expire after 14 days of inactivity. (API keys in demo trading will not be deleted.)</b></font></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Returned result</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"subAcct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test-1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"******"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"secretKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"******"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"passphrase"</span><span class="p">:</span><span class="w"> </span><span class="s2">"******"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"perm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read_only,trade"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1,2.2.2.2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="sub-account-rest-api-create-an-api-key-for-a-sub-account-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter name</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account name</td>
+</tr>
+<tr>
+<td style="text-align: left">label</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">API Key note</td>
+</tr>
+<tr>
+<td style="text-align: left">apiKey</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">API public key</td>
+</tr>
+<tr>
+<td style="text-align: left">secretKey</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">API private key</td>
+</tr>
+<tr>
+<td style="text-align: left">passphrase</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">API Key password</td>
+</tr>
+<tr>
+<td style="text-align: left">perm</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">API Key access <br/><code>read_only</code> : Read only  <code>trade</code> : Trade</td>
+</tr>
+<tr>
+<td style="text-align: left">ip</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">IP address that linked with API Key</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Creation time</td>
+</tr>
+</tbody></table>

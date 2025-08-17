@@ -1,0 +1,133 @@
+<h3 id="trading-account-rest-api-preset-account-mode-switch">Preset account mode switch</h3>
+<p>Pre-set the required information for account mode switching. When switching from <code>Portfolio margin mode</code> back to <code>Futures mode</code> / <code>Multi-currency margin mode</code>, and if there are existing cross-margin contract positions, it is mandatory to pre-set leverage.</p>
+<p>If the user does not follow the required settings, they will receive an error message during the pre-check or when setting the account mode.</p>
+<h4 id="trading-account-rest-api-preset-account-mode-switch-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-preset-account-mode-switch-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-preset-account-mode-switch-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-preset-account-mode-switch-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/account-level-switch-preset</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># 1. Futures mode -&gt; Multi-currency margin mode</span>
+POST /api/v5/account/account-level-switch-preset
+<span class="o">{</span>
+    <span class="s2">"acctLv"</span>: <span class="s2">"3"</span>
+<span class="o">}</span>
+
+<span class="c"># 2. Multi-currency margin mode -&gt; Futures mode</span>
+POST /api/v5/account/account-level-switch-preset
+<span class="o">{</span>
+    <span class="s2">"acctLv"</span>: <span class="s2">"2"</span>
+<span class="o">}</span>
+
+<span class="c"># 3. Portfolio margin mode -&gt; Futures mode/Multi-currency margin mode, the user have cross-margin contract position and lever is required</span>
+POST /api/v5/account/account-level-switch-preset
+<span class="o">{</span>
+    <span class="s2">"acctLv"</span>: <span class="s2">"2"</span>,
+    <span class="s2">"lever"</span>: <span class="s2">"10"</span>
+<span class="o">}</span>
+
+<span class="c"># 4. Portfolio margin mode -&gt; Futures mode/Multi-currency margin mode, the user doesn't have cross-margin contract position and lever is not required</span>
+POST /api/v5/account/account-level-switch-preset
+<span class="o">{</span>
+    <span class="s2">"acctLv"</span>: <span class="s2">"3"</span>
+<span class="o">}</span>
+
+</code></pre></div><h4 id="trading-account-rest-api-preset-account-mode-switch-request-parameters">Request parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Required</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>acctLv</td>
+<td>String</td>
+<td>Yes</td>
+<td>Account mode<br/> <code>2</code>: Futures mode<br/> <code>3</code>: Multi-currency margin code<br/> <code>4</code>: Portfolio margin mode</td>
+</tr>
+<tr>
+<td>lever</td>
+<td>String</td>
+<td>Optional</td>
+<td>Leverage<br/> Required when switching from Portfolio margin mode to <code>Futures mode</code> or <code>Multi-currency margin mode</code>, and the user holds cross-margin positions.</td>
+</tr>
+<tr>
+<td>riskOffsetType</td>
+<td>String</td>
+<td>Optional</td>
+<td><del>Risk offset type<br/> <code>1</code>: Spot-derivatives (USDT) risk offset<br/> <code>2</code>: Spot-derivatives (Crypto) risk offset<br/> <code>3</code>: Derivatives only mode<br/> <code>4</code>: Spot-derivatives (USDC) risk offset<br/> Applicable when switching from Futures mode or Multi-currency margin mode to Portfolio margin mode.</del>(Deprecated)</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example 1. Futures mode -&gt; Multi-currency margin mode</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example 2. Multi-currency margin mode -&gt; Futures mode</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example 3. Portfolio margin mode -&gt; Futures mode/Multi-currency margin mode</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response example 4. Portfolio margin mode -&gt; Futures mode/Multi-currency margin mode</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"curAcctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"riskOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-preset-account-mode-switch-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>curAcctLv</td>
+<td>String</td>
+<td>Current account mode</td>
+</tr>
+<tr>
+<td>acctLv</td>
+<td>String</td>
+<td>Account mode after switch</td>
+</tr>
+<tr>
+<td>lever</td>
+<td>String</td>
+<td>The leverage user preset for cross-margin positions</td>
+</tr>
+<tr>
+<td>riskOffsetType</td>
+<td>String</td>
+<td><del>The risk offset type user preset</del>(Deprecated)</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+<br/>
+lever: When switching from Portfolio margin mode to Futures mode or Multi-currency margin mode, if the user holds cross-margin positions, this parameter must be provided; otherwise, error code 50014 will occur. The maximum allowable value for this parameter is determined by the smallest maximum leverage based on current position sizes under the target mode. For example, if a user in PM mode holds three cross-margin positions, with maximum allowable leverage of 20x, 50x, and 100x respectively, the maximum leverage it can set is 20x.
+</aside>

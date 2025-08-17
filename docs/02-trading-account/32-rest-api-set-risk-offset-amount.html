@@ -1,0 +1,69 @@
+<h3 id="trading-account-rest-api-set-risk-offset-amount">Set risk offset amount</h3>
+<p>Set risk offset amount. This does not represent the actual spot risk offset amount. Only applicable to Portfolio Margin Mode.</p>
+<h4 id="trading-account-rest-api-set-risk-offset-amount-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="trading-account-rest-api-set-risk-offset-amount-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-set-risk-offset-amount-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-set-risk-offset-amount-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/set-riskOffset-amt</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Set spot risk offset amount</span>
+POST /api/v5/account/set-riskOffset-amt
+body
+<span class="o">{</span>
+   <span class="s2">"ccy"</span>: <span class="s2">"BTC"</span>,
+   <span class="s2">"clSpotInUseAmt"</span>: <span class="s2">"0.5"</span>
+<span class="o">}</span>
+
+</code></pre></div><h4 id="trading-account-rest-api-set-risk-offset-amount-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Yes</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>clSpotInUseAmt</td>
+<td>String</td>
+<td>Yes</td>
+<td>Spot risk offset amount defined by users</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"clSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-set-risk-offset-amount-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameters</th>
+<th>Types</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>clSpotInUseAmt</td>
+<td>String</td>
+<td>Spot risk offset amount defined by users</td>
+</tr>
+</tbody></table>

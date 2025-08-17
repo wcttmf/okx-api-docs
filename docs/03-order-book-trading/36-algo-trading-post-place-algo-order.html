@@ -1,0 +1,514 @@
+<h3 id="order-book-trading-algo-trading-post-place-algo-order">POST / Place algo order</h3>
+<p>The algo order includes <code>trigger</code> order, <code>oco</code> order, <code>chase</code> order, <code>conditional</code> order, <code>twap</code> order and trailing order.</p>
+<h4 id="order-book-trading-algo-trading-post-place-algo-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-algo-trading-post-place-algo-order-rate-limit-of-lead-trader-lead-instruments-for-copy-trading-1-request-per-2-seconds">Rate Limit of lead trader lead instruments for Copy Trading: 1 request per 2 seconds</h4><h4 id="order-book-trading-algo-trading-post-place-algo-order-rate-limit-rule-except-options-user-id-instrument-id">Rate limit rule (except Options): User ID + Instrument ID</h4><h4 id="order-book-trading-algo-trading-post-place-algo-order-rate-limit-rule-options-only-user-id-instrument-family">Rate limit rule (Options only): User ID + Instrument Family</h4><h4 id="order-book-trading-algo-trading-post-place-algo-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-algo-trading-post-place-algo-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/trade/order-algo</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Place Take Profit / Stop Loss Order</span>
+POST /api/v5/trade/order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT"</span>,
+    <span class="s2">"tdMode"</span>:<span class="s2">"cross"</span>,
+    <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+    <span class="s2">"ordType"</span>:<span class="s2">"conditional"</span>,
+    <span class="s2">"sz"</span>:<span class="s2">"2"</span>,
+    <span class="s2">"tpTriggerPx"</span>:<span class="s2">"15"</span>,
+    <span class="s2">"tpOrdPx"</span>:<span class="s2">"18"</span>
+<span class="o">}</span>
+
+<span class="c"># Place Trigger Order</span>
+POST /api/v5/trade/order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+    <span class="s2">"tdMode"</span>: <span class="s2">"cross"</span>,
+    <span class="s2">"posSide"</span>: <span class="s2">"net"</span>,
+    <span class="s2">"sz"</span>: <span class="s2">"1"</span>,
+    <span class="s2">"ordType"</span>: <span class="s2">"trigger"</span>,
+    <span class="s2">"triggerPx"</span>: <span class="s2">"25920"</span>,
+    <span class="s2">"triggerPxType"</span>: <span class="s2">"last"</span>,
+    <span class="s2">"orderPx"</span>: <span class="s2">"-1"</span>,
+    <span class="s2">"attachAlgoOrds"</span>: <span class="o">[{</span>
+        <span class="s2">"attachAlgoClOrdId"</span>: <span class="s2">""</span>,
+        <span class="s2">"slTriggerPx"</span>: <span class="s2">"100"</span>,
+        <span class="s2">"slOrdPx"</span>: <span class="s2">"600"</span>,
+        <span class="s2">"tpTriggerPx"</span>: <span class="s2">"25921"</span>,
+        <span class="s2">"tpOrdPx"</span>: <span class="s2">"2001"</span>
+    <span class="o">}]</span>
+<span class="o">}</span>
+
+<span class="c"># Place Trailing Stop Order</span>
+POST /api/v5/trade/order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"tdMode"</span>: <span class="s2">"cross"</span>,
+    <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+    <span class="s2">"ordType"</span>: <span class="s2">"move_order_stop"</span>,
+    <span class="s2">"sz"</span>: <span class="s2">"10"</span>,
+    <span class="s2">"posSide"</span>: <span class="s2">"net"</span>,
+    <span class="s2">"callbackRatio"</span>: <span class="s2">"0.05"</span>,
+    <span class="s2">"reduceOnly"</span>: <span class="nb">true</span>
+<span class="o">}</span>
+
+<span class="c"># Place TWAP Order</span>
+POST /api/v5/trade/order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"tdMode"</span>: <span class="s2">"cross"</span>,
+    <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+    <span class="s2">"ordType"</span>: <span class="s2">"twap"</span>,
+    <span class="s2">"sz"</span>: <span class="s2">"10"</span>,
+    <span class="s2">"posSide"</span>: <span class="s2">"net"</span>,
+    <span class="s2">"szLimit"</span>: <span class="s2">"10"</span>,
+    <span class="s2">"pxLimit"</span>: <span class="s2">"100"</span>,
+    <span class="s2">"timeInterval"</span>: <span class="s2">"10"</span>,
+    <span class="s2">"pxSpread"</span>: <span class="s2">"10"</span>
+<span class="o">}</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Trade</span> <span class="k">as</span> <span class="n">Trade</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">tradeAPI</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">.</span><span class="n">TradeAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># One-way stop order
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">tradeAPI</span><span class="p">.</span><span class="n">place_algo_order</span><span class="p">(</span>
+    <span class="n">instId</span><span class="o">=</span><span class="s">"BTC-USDT"</span><span class="p">,</span>
+    <span class="n">tdMode</span><span class="o">=</span><span class="s">"cross"</span><span class="p">,</span>
+    <span class="n">side</span><span class="o">=</span><span class="s">"buy"</span><span class="p">,</span>
+    <span class="n">ordType</span><span class="o">=</span><span class="s">"conditional"</span><span class="p">,</span>
+    <span class="n">sz</span><span class="o">=</span><span class="s">"2"</span><span class="p">,</span>
+    <span class="n">tpTriggerPx</span><span class="o">=</span><span class="s">"15"</span><span class="p">,</span>
+    <span class="n">tpOrdPx</span><span class="o">=</span><span class="s">"18"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="order-book-trading-algo-trading-post-place-algo-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trade mode<br/>Margin mode <code>cross</code> <code>isolated</code><br/>Non-Margin mode <code>cash</code><br/><code>spot_isolated</code> (only applicable to SPOT lead trading)<br/>Note: <code>isolated</code> is not available in multi-currency margin mode and portfolio margin mode.</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Margin currency <br/>Applicable to all <code>isolated</code> <code>MARGIN</code> orders and <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order side, <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Position side <br/>Required in <code>long/short</code> mode and only be <code>long</code> or <code>short</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order type  <br/><code>conditional</code>: One-way stop order<br/><code>oco</code>: One-cancels-the-other order<br/><code>chase</code>: chase order, only applicable to FUTURES and SWAP<br/><code>trigger</code>: Trigger order<br/><code>move_order_stop</code>: Trailing order<br/><code>twap</code>: TWAP order</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Quantity to buy or sell<br/>Either <code>sz</code> or <code>closeFraction</code> is required.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag  <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order quantity unit setting for <code>sz</code><br/><code>base_ccy</code>: Base currency ,<code>quote_ccy</code>: Quote currency  <br/>Only applicable to <code>SPOT</code> traded with Market buy <code>conditional</code> order<br/>Default is <code>quote_ccy</code> for buy, <code>base_ccy</code> for sell</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied Algo ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">closeFraction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Fraction of position to be closed when the algo order is triggered. <br/>Currently the system supports fully closing the position only so the only accepted value is <code>1</code>. For the same position, only one TPSL pending order for fully closing the position is supported. <br/>This is only applicable to <code>FUTURES</code> or <code>SWAP</code> instruments.<br/>If <code>posSide</code> is <code>net</code>, <code>reduceOnly</code> must be <code>true</code>.<br/>This is only applicable if <code>ordType</code> is <code>conditional</code> or <code>oco</code>.<br/>This is only applicable if the stop loss and take profit order is executed as market order.<br/>This is not supported in Portfolio Margin mode.<br/>Either <code>sz</code> or <code>closeFraction</code> is required.</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The quote currency used for trading. Only applicable to <code>SPOT</code>. <br/> The default value is the quote currency of the <code>instId</code>, for example: for <code>BTC-USD</code>, the default is <code>USD</code>.</td>
+</tr>
+</tbody></table>
+<p><b>Take Profit / Stop Loss Order</b></p>
+<aside class="notice">
+Predefine the price you want the order to trigger a market order to execute immediately or it will place a limit order. <br/>This type of order will not freeze your free margin in advance.
+</aside>
+<p>learn more about <a href="/help/11015447687437">Take Profit / Stop Loss Order</a></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price<br/>If you fill in this parameter, you should fill in the take-profit order price as well.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit order price <br/>For condition TP order, if you fill in this parameter, you should fill in the take-profit trigger price as well.<br/>For limit TP order, you need to fill in this parameter, but the take-profit trigger price doesn’t need to be filled. <br/>If the price is <code>-1</code>, take-profit will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpOrdKind</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">TP order kind<br/><code>condition</code><br/><code>limit</code><br/> The default is <code>condition</code></td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price <br/>If you fill in this parameter, you should fill in the stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss order price <br/>If you fill in this parameter, you should fill in the stop-loss trigger price. <br/>If the price is <code>-1</code>, stop-loss will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">cxlOnClosePos</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the TP/SL order placed by the user is associated with the corresponding position of the instrument. If it is associated, the TP/SL order will be canceled when the position is fully closed; if it is not, the TP/SL order will not be affected when the position is fully closed. <br/>Valid values: <br/><code>true</code>: Place a TP/SL order associated with the position <br/><code>false</code>: Place a TP/SL order that is not associated with the position <br/>The default value is <code>false</code>. If <code>true</code> is passed in, users must pass reduceOnly = true as well, indicating that when placing a TP/SL order associated with a position, it must be a reduceOnly order. <br/>Only applicable to <code>Futures mode</code> and <code>Multi-currency margin</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the order can only reduce the position size. <br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Take Profit / Stop Loss Order<br/>
+When placing net TP/SL order (ordType=conditional) and both take-profit and stop-loss parameters are sent, only stop-loss logic will be performed and take-profit logic will be ignored.
+</aside>
+<p><b>Chase order</b>
+<aside class="notice">
+It will place a Post Only order immediately and amend it continuously<br/> 
+Chase order and corresponding Post Only order can't be amended.
+</aside></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">chaseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Chase type.<br/><code>distance</code>: distance from best bid/ask price, the default value.<br/><code>ratio</code>: ratio.</td>
+</tr>
+<tr>
+<td style="text-align: left">chaseVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Chase value.<br/>It represents distance from best bid/ask price when <code>chaseType</code> is distance. <br/>For USDT-margined contract, the unit is USDT. <br/>For USDC-margined contract, the unit is USDC. <br/>For Crypto-margined contract, the unit is USD. <br/>It represents ratio when <code>chaseType</code> is ratio. 0.1 represents 10%.<br/> The default value is 0.</td>
+</tr>
+<tr>
+<td style="text-align: left">maxChaseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Maximum chase type.<br/><code>distance</code>: maximum distance from best bid/ask price<br/><code>ratio</code>: the ratio. <br/><br/> maxChaseTyep and maxChaseVal need to be used together or none of them.</td>
+</tr>
+<tr>
+<td style="text-align: left">maxChaseVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Maximum chase value.<br/>It represents maximum distance when <code>maxChaseType</code> is distance.<br/>It represents ratio when <code>maxChaseType</code> is ratio. 0.1 represents 10%.</td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the order can only reduce the position size. <br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>.</td>
+</tr>
+</tbody></table>
+<p><b>Trigger Order</b></p>
+<aside class="notice">
+Use a trigger order to place a market or limit order when a specific price level is crossed. <br/>When a Trigger Order is triggered, if your account balance is lower than the order amount, the system will automatically place the order based on your current balance. <br/>Trigger orders do not freeze assets when placed.<br/> Only applicable to SPOT/FUTURES/SWAP  
+</aside>
+<p>learn more about <a href="/help/11015447687437">Trigger Order</a></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">triggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trigger price</td>
+</tr>
+<tr>
+<td style="text-align: left">orderPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order Price <br/>If the price is <code>-1</code>, the order will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger price type <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">attachAlgoOrds</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Attached SL/TP orders info<br/>Applicable to <code>Futures mode/Multi-currency margin/Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; attachAlgoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied Algo ID when placing order attaching TP/SL.<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.<br/>It will be posted to algoClOrdId when placing TP/SL order once the general order is filled completely.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price<br/>If you fill in this parameter, you should fill in the take-profit order price as well.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price<br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit order price<br/>If you fill in this parameter, you should fill in the take-profit trigger price as well. <br/>If the price is <code>-1</code>, take-profit will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price<br/>If you fill in this parameter, you should fill in the stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>The default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss order price <br/>If you fill in this parameter, you should fill in the stop-loss trigger price. <br/>If the price is <code>-1</code>, stop-loss will be executed at the market price.</td>
+</tr>
+</tbody></table>
+<p><b>Trailing Stop Order</b></p>
+<aside class="notice">
+A trailing stop order is a stop order that tracks the market price. Its trigger price changes with the market price. Once the trigger price is reached, a market order is placed.<br/>
+Actual trigger price for sell orders and short positions = Highest price after order placement – Trail variance (Var.), or Highest price after placement × (1 – Trail variance) (Ratio).<br/>
+Actual trigger price for buy orders and long positions = Lowest price after order placement + Trail variance, or Lowest price after order placement × (1 + Trail variance).<br/>
+You can use the activation price to set the activation condition for a trailing stop order.
+</aside>
+<p>learn more about <a href="/help/11015447687437">Trailing Stop Order</a></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">callbackRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Callback price ratio, e.g. <code>0.01</code> represents <code>1%</code><br/>Either <code>callbackRatio</code> or <code>callbackSpread</code> is allowed to be passed.</td>
+</tr>
+<tr>
+<td style="text-align: left">callbackSpread</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Callback price variance</td>
+</tr>
+<tr>
+<td style="text-align: left">activePx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Active price<br/>The system will only start tracking the market and calculating your trigger price after the activation price is reached. If you don’t set a price, your order will be activated as soon as it’s placed.</td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the order can only reduce the position size. <br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>.<br/>This parameter is only valid in the <code>FUTRUES</code>/<code>SWAP</code> net mode, and is ignored in the long/short mode.</td>
+</tr>
+</tbody></table>
+<p><b>TWAP Order</b></p>
+<aside class="notice">
+Time-weighted average price (TWAP) strategy splits your order and places smaller orders at regular time intervals.<br/>
+It is a strategy that will attempt to execute an order which trades in slices of order quantity at regular intervals of time as specified by users.<br/>
+</aside>
+<p>learn more about <a href="/help/xiii-time-weighted-average-price-twap">TWAP Order</a></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">pxVar</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Price variance by percentage, range between [0.0001 ~ 0.01], e.g. <code>0.01</code> represents <code>1%</code><br/>Take buy orders as an example. When the market price is lower than the limit price, small buy orders will be placed above the best bid price within a certain range. This parameter determines the range by percentage.<br/>Either <code>pxVar</code> or <code>pxSpread</code> is allowed to be passed.</td>
+</tr>
+<tr>
+<td style="text-align: left">pxSpread</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Price variance by constant, should be no less then 0 (no upper limit)<br/>Take buy orders as an example. When the market price is lower than the limit price, small buy orders will be placed above the best bid price within a certain range. This parameter determines the range by constant.</td>
+</tr>
+<tr>
+<td style="text-align: left">szLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Average amount<br/>Take buy orders as an example. When the market price is lower than the limit price, a certain amount of buy orders will be placed above the best bid price within a certain range. This parameter determines the amount.</td>
+</tr>
+<tr>
+<td style="text-align: left">pxLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Price Limit, should be no less then 0 (no upper limit)<br/>Take buy orders as an example. When the market price is lower than the limit price, small buy orders will be placed above the best bid price within a certain range. This parameter represents the limit price.</td>
+</tr>
+<tr>
+<td style="text-align: left">timeInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Time interval in unit of <code>second</code><br/>ake buy orders as an example. When the market price is lower than the limit price, small buy orders will be placed above the best bid price within a certain range based on the time cycle. This parameter represents the time cycle.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order1234"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1836487817828872192"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-algo-trading-post-place-algo-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Client Order ID as assigned by the client</del>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">sCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The code of the event execution result, <code>0</code> means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">sMsg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rejection message if the request is unsuccessful.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

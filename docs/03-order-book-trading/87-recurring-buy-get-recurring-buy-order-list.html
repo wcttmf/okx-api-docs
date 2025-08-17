@@ -1,0 +1,223 @@
+<h3 id="order-book-trading-recurring-buy-get-recurring-buy-order-list">GET / Recurring buy order list</h3><h4 id="order-book-trading-recurring-buy-get-recurring-buy-order-list-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-recurring-buy-get-recurring-buy-order-list-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-recurring-buy-get-recurring-buy-order-list-permission-read">Permission: Read</h4><h4 id="order-book-trading-recurring-buy-get-recurring-buy-order-list-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/recurring/orders-algo-pending</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/recurring/orders-algo-pending
+</code></pre></div><h4 id="order-book-trading-recurring-buy-get-recurring-buy-order-list-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested <code>algoId</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested <code>algoId</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is 100. The default is 100</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"644497312047435776"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"recurring"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1699932133373"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cycles"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"investmentAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"investmentCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mktCap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hourly"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recurringDay"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recurringHour"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recurringList"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.8"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"recurringTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"running"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stgyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stg1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"timeZone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalAnnRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1699952473152"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-recurring-buy-get-recurring-buy-order-list-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order created time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order updated time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order type<br/><code>recurring</code>: recurring buy</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order state<br/><code>running</code><br/><code>stopping</code><br/><code>pause</code></td>
+</tr>
+<tr>
+<td style="text-align: left">stgyName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Custom name for trading bot, no more than 40 characters</td>
+</tr>
+<tr>
+<td style="text-align: left">recurringList</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Recurring buy info</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Recurring currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ratio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Proportion of recurring currency assets, e.g. "0.2" representing 20%</td>
+</tr>
+<tr>
+<td style="text-align: left">period</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Period<br/><code>monthly</code><br/><code>weekly</code><br/><code>daily</code><br/><code>hourly</code></td>
+</tr>
+<tr>
+<td style="text-align: left">recurringDay</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Recurring buy date<br/>When the period is <code>monthly</code>, the value range is an integer of [1,28]<br/>When the period is <code>weekly</code>, the value range is an integer of [1,7]</td>
+</tr>
+<tr>
+<td style="text-align: left">recurringHour</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Recurring buy by hourly<br/><code>1</code>/<code>4</code>/<code>8</code>/<code>12</code>, e.g. <code>4</code> represents "recurring buy every 4 hour"</td>
+</tr>
+<tr>
+<td style="text-align: left">recurringTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Recurring buy time, the value range is an integer of [0,23]</td>
+</tr>
+<tr>
+<td style="text-align: left">timeZone</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">UTC time zone, the value range is an integer of [-12,14]<br/>e.g. "8" representing UTC+8 (East 8 District), Beijing Time</td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity invested per cycle</td>
+</tr>
+<tr>
+<td style="text-align: left">investmentAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulate quantity invested</td>
+</tr>
+<tr>
+<td style="text-align: left">investmentCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The invested quantity unit, can only be <code>USDT</code>/<code>USDC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">totalPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">totalAnnRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total annualized rate of yield</td>
+</tr>
+<tr>
+<td style="text-align: left">pnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rate of yield</td>
+</tr>
+<tr>
+<td style="text-align: left">mktCap</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Market value in unit of <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">cycles</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulate recurring buy cycles</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The quote currency for trading.</td>
+</tr>
+</tbody></table>

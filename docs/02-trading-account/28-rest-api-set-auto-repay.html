@@ -1,0 +1,66 @@
+<h3 id="trading-account-rest-api-set-auto-repay">Set auto repay</h3>
+<p>Only applicable to <code>Spot mode</code> (enabled borrowing)</p>
+<h4 id="trading-account-rest-api-set-auto-repay-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-set-auto-repay-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-set-auto-repay-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-set-auto-repay-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/set-auto-repay</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/account/set-auto-repay
+body
+<span class="o">{</span>
+    <span class="s2">"autoRepay"</span>: <span class="nb">true</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span><span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">set_auto_repay</span><span class="p">(</span><span class="n">autoRepay</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-set-auto-repay-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">autoRepay</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Whether auto repay is allowed or not under <code>Spot mode</code><br/><code>true</code>: Enable auto repay<br/><code>false</code>: Disable auto repay</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"autoRepay"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-set-auto-repay-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">autoRepay</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether auto repay is allowed or not under <code>Spot mode</code><br/><code>true</code>: Enable auto repay<br/><code>false</code>: Disable auto repay</td>
+</tr>
+</tbody></table>

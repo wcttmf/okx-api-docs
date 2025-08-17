@@ -1,0 +1,68 @@
+<h3 id="order-book-trading-copy-trading-post-stop-copying">POST / Stop copying</h3>
+<p>You need to use this endpoint to stop copy trading</p>
+<h4 id="order-book-trading-copy-trading-post-stop-copying-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-post-stop-copying-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-post-stop-copying-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-copy-trading-post-stop-copying-http-request">HTTP request</h4>
+<p><code>POST /api/v5/copytrading/stop-copy-trading</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST /api/v5/copytrading/stop-copy-trading
+body
+{
+    "instType": "SWAP",
+    "uniqueCode": "25CD5A80241D6FE6",
+    "subPosCloseType": "manual_close"
+}
+</code></pre></div><h4 id="order-book-trading-copy-trading-post-stop-copying-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead trader unique code<br/>A combination of case-sensitive alphanumerics, all numbers and the length is 16 characters, e.g. 213E8C92DC61EFAC</td>
+</tr>
+<tr>
+<td style="text-align: left">subPosCloseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Action type for open positions, it is required if you have related copy position<br/><code>market_close</code>: immediately close at market price<br/><code>copy_close</code>：close when trader closes<br/><code>manual_close</code>: close manually</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-post-stop-copying-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">result</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">The result of setting <br/><code>true</code></td>
+</tr>
+</tbody></table>

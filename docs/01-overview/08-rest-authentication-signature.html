@@ -1,0 +1,24 @@
+<h3 id="overview-rest-authentication-signature">Signature</h3>
+<blockquote>
+<p>Signing Messages</p>
+</blockquote>
+<p>The <code>OK-ACCESS-SIGN</code> header is generated as follows:</p>
+<ul>
+<li>Create a pre-hash string of timestamp + method + requestPath + body (where + represents String concatenation).</li>
+<li>Prepare the SecretKey.</li>
+<li>Sign the pre-hash string with the SecretKey using the HMAC SHA256.</li>
+<li>Encode the signature in the Base64 format.</li>
+</ul>
+<p>Example: <code>sign=CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256(timestamp + 'GET' + '/api/v5/account/balance?ccy=BTC', SecretKey))</code></p>
+<p>The <code>timestamp</code> value is the same as the <code>OK-ACCESS-TIMESTAMP</code> header with millisecond ISO format, e.g. <code>2020-12-08T09:08:57.715Z</code>.</p>
+<p>The request method should be in UPPERCASE: e.g. <code>GET</code> and <code>POST</code>.</p>
+<p>The <code>requestPath</code> is the path of requesting an endpoint.</p>
+<p>Example: <code>/api/v5/account/balance</code></p>
+<p>The <code>body</code> refers to the String of the request body. It can be omitted if there is no request body (frequently the case for <code>GET</code> requests).</p>
+<p>Example: <code>{"instId":"BTC-USDT","lever":"5","mgnMode":"isolated"}</code></p>
+<aside class="notice">
+`GET` request parameters are counted as requestpath, not body
+</aside>
+<p>The SecretKey is generated when you create an API key.</p>
+<p>Example: <code>22582BD0CFF14C41EDBF1AB98506286D</code></p>
+<h2 id="overview-websocket">WebSocket</h2>

@@ -1,0 +1,2793 @@
+<h3 id="error-code-rest-api-public">Public</h3>
+<p>Error Code from 50000 to 53999</p>
+<h4 id="error-code-rest-api-public-general-class">General Class</h4>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>HTTP Status Code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>200</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>200</td>
+<td>Operation failed.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>200</td>
+<td>Bulk operation partially succeeded.</td>
+</tr>
+<tr>
+<td>50000</td>
+<td>400</td>
+<td>Body for POST request cannot be empty.</td>
+</tr>
+<tr>
+<td>50001</td>
+<td>503</td>
+<td>Service temporarily unavailable. Please try again later.</td>
+</tr>
+<tr>
+<td>50002</td>
+<td>400</td>
+<td>JSON syntax error</td>
+</tr>
+<tr>
+<td>50004</td>
+<td>400</td>
+<td>API endpoint request timeout. (does not mean that the request was successful or failed, please check the request result).</td>
+</tr>
+<tr>
+<td>50005</td>
+<td>410</td>
+<td>API endpoint is inactive or unavailable.</td>
+</tr>
+<tr>
+<td>50006</td>
+<td>400</td>
+<td>Invalid Content-Type. Please use "application/JSON".</td>
+</tr>
+<tr>
+<td>50007</td>
+<td>200</td>
+<td>User blocked.</td>
+</tr>
+<tr>
+<td>50008</td>
+<td>200</td>
+<td>User doesn't exist.</td>
+</tr>
+<tr>
+<td>50009</td>
+<td>200</td>
+<td>Account is frozen due to stop-out.</td>
+</tr>
+<tr>
+<td>50010</td>
+<td>200</td>
+<td>User ID cannot be empty.</td>
+</tr>
+<tr>
+<td>50011</td>
+<td>200</td>
+<td>Rate limit reached. Please refer to API documentation and throttle requests accordingly.</td>
+</tr>
+<tr>
+<td>50011</td>
+<td>429</td>
+<td>Too Many Requests</td>
+</tr>
+<tr>
+<td>50012</td>
+<td>200</td>
+<td>Account status invalid. Check account status</td>
+</tr>
+<tr>
+<td>50013</td>
+<td>429</td>
+<td>Systems are busy. Please try again later.</td>
+</tr>
+<tr>
+<td>50014</td>
+<td>400</td>
+<td>Parameter {param0} can not be empty.</td>
+</tr>
+<tr>
+<td>50015</td>
+<td>400</td>
+<td>Either parameter {param0} or {param1} is required</td>
+</tr>
+<tr>
+<td>50016</td>
+<td>400</td>
+<td>Parameter {param0} does not match parameter {param1}</td>
+</tr>
+<tr>
+<td>50017</td>
+<td>200</td>
+<td>Position frozen and related operations restricted due to auto-deleveraging (ADL). Please try again later.</td>
+</tr>
+<tr>
+<td>50018</td>
+<td>200</td>
+<td>Currency {param0} is frozen due to ADL. Operation restricted.</td>
+</tr>
+<tr>
+<td>50019</td>
+<td>200</td>
+<td>Account frozen and related operations restricted due to auto-deleveraging (ADL). Please try again later.</td>
+</tr>
+<tr>
+<td>50020</td>
+<td>200</td>
+<td>Position frozen and related operations restricted due to forced liquidation. Please try again later.</td>
+</tr>
+<tr>
+<td>50021</td>
+<td>200</td>
+<td>Currency {param0} is frozen due to liquidation. Operation restricted.</td>
+</tr>
+<tr>
+<td>50022</td>
+<td>200</td>
+<td>Account frozen and related operations restricted due to forced liquidation. Please try again later.</td>
+</tr>
+<tr>
+<td>50023</td>
+<td>200</td>
+<td>Funding fees frozen and related operations are restricted. Please try again later.</td>
+</tr>
+<tr>
+<td>50024</td>
+<td>200</td>
+<td>Parameter {param0} and {param1} can not exist at the same time.</td>
+</tr>
+<tr>
+<td>50025</td>
+<td>200</td>
+<td>Parameter {param0} count exceeds the limit {param1}.</td>
+</tr>
+<tr>
+<td>50026</td>
+<td>500</td>
+<td>System error. Try again later</td>
+</tr>
+<tr>
+<td>50027</td>
+<td>200</td>
+<td>This account is restricted from trading. Please contact customer support for assistance.</td>
+</tr>
+<tr>
+<td>50028</td>
+<td>200</td>
+<td>Unable to place the order. Please contact the customer service for details.</td>
+</tr>
+<tr>
+<td>50029</td>
+<td>200</td>
+<td>Your account has triggered OKX risk control and is temporarily restricted from conducting transactions. Please check your email registered with OKX for contact from our customer support team.</td>
+</tr>
+<tr>
+<td>50030</td>
+<td>200</td>
+<td>You don't have permission to use this API endpoint</td>
+</tr>
+<tr>
+<td>50032</td>
+<td>200</td>
+<td>Your account has been set to prohibit transactions in this currency. Please confirm and try again</td>
+</tr>
+<tr>
+<td>50033</td>
+<td>200</td>
+<td>Instrument blocked. Please verify trading this instrument is allowed under account settings and try again.</td>
+</tr>
+<tr>
+<td>50035</td>
+<td>403</td>
+<td>This endpoint requires that APIKey must be bound to IP</td>
+</tr>
+<tr>
+<td>50036</td>
+<td>200</td>
+<td>The expTime can't be earlier than the current system time. Please adjust the expTime and try again.</td>
+</tr>
+<tr>
+<td>50037</td>
+<td>200</td>
+<td>Order expired.</td>
+</tr>
+<tr>
+<td>50038</td>
+<td>200</td>
+<td>This feature is unavailable in demo trading</td>
+</tr>
+<tr>
+<td>50039</td>
+<td>200</td>
+<td>Parameter "before" isn't supported for timestamp pagination</td>
+</tr>
+<tr>
+<td>50040</td>
+<td>200</td>
+<td>Too frequent operations, please try again later</td>
+</tr>
+<tr>
+<td>50041</td>
+<td>200</td>
+<td>Your user ID hasn’t been allowlisted. Please contact customer service for assistance.</td>
+</tr>
+<tr>
+<td>50042</td>
+<td>200</td>
+<td>Repeated request</td>
+</tr>
+<tr>
+<td>50044</td>
+<td>200</td>
+<td>Must select one broker type</td>
+</tr>
+<tr>
+<td>50045</td>
+<td>200</td>
+<td>simPos should be empty because simulated positions cannot be counted when Position Builder is calculating under Spot-Derivatives risk offset mode</td>
+</tr>
+<tr>
+<td>50046</td>
+<td>200</td>
+<td>This feature is temporarily unavailable while we make some improvements to it. Please try again later.</td>
+</tr>
+<tr>
+<td>50047</td>
+<td>200</td>
+<td>{param0} has already settled. To check the relevant candlestick data, please use {param1}</td>
+</tr>
+<tr>
+<td>50048</td>
+<td>200</td>
+<td>Switching risk unit may lead position risk increases and be forced liquidated. Please adjust position size, make sure margin is in a safe status.</td>
+</tr>
+<tr>
+<td>50049</td>
+<td>200</td>
+<td>No information on the position tier. The current instrument doesn’t support margin trading.</td>
+</tr>
+<tr>
+<td>50050</td>
+<td>200</td>
+<td>You’ve already activated options trading. Please don’t activate it again.</td>
+</tr>
+<tr>
+<td>50051</td>
+<td>200</td>
+<td>Due to compliance restrictions in your country or region, you cannot use this feature.</td>
+</tr>
+<tr>
+<td>50052</td>
+<td>200</td>
+<td>Due to local laws and regulations, you cannot trade with your chosen crypto.</td>
+</tr>
+<tr>
+<td>50053</td>
+<td>200</td>
+<td>This feature is only available in demo trading.</td>
+</tr>
+<tr>
+<td>50055</td>
+<td>200</td>
+<td>Reset unsuccessful. Assets can only be reset up to 5 times per day.</td>
+</tr>
+<tr>
+<td>50056</td>
+<td>200</td>
+<td>You have pending orders or open positions with this currency. Please reset after canceling all the pending orders/closing all the open positions.</td>
+</tr>
+<tr>
+<td>50057</td>
+<td>200</td>
+<td>Reset unsuccessful. Try again later.</td>
+</tr>
+<tr>
+<td>50058</td>
+<td>200</td>
+<td>This crypto is not supported in an asset reset.</td>
+</tr>
+<tr>
+<td>50059</td>
+<td>200</td>
+<td>Before you continue, you'll need to complete additional steps as required by your local regulators. Please visit the website or app for more details.</td>
+</tr>
+<tr>
+<td>50060</td>
+<td>200</td>
+<td>For security and compliance purposes, please complete the identity verification process to continue using our services.</td>
+</tr>
+<tr>
+<td>50061</td>
+<td>200</td>
+<td>You've reached the maximum order rate limit for this account.</td>
+</tr>
+<tr>
+<td>50062</td>
+<td>200</td>
+<td>This feature is currently unavailable.</td>
+</tr>
+<tr>
+<td>50063</td>
+<td>200</td>
+<td>You can't activate the credits as they might have expired or are already activated.</td>
+</tr>
+<tr>
+<td>50064</td>
+<td>200</td>
+<td>The borrowing system is unavailable. Try again later.</td>
+</tr>
+<tr>
+<td>50067</td>
+<td>200</td>
+<td>The API doesn't support cross site trading feature</td>
+</tr>
+<tr>
+<td>50069</td>
+<td>200</td>
+<td>Margin ratio verification for this risk unit failed.</td>
+</tr>
+<tr>
+<td>50071</td>
+<td>200</td>
+<td>{param} already exists<br/>e.g. clOrdId already exists</td>
+</tr>
+<tr>
+<td>50072</td>
+<td>200</td>
+<td>Isolated margin mode is no longer supported in multi-currency margin mode and portfolio margin mode.</td>
+</tr>
+</tbody></table>
+<h4 id="error-code-rest-api-public-api-class">API Class</h4>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>HTTP Status Code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>50100</td>
+<td>400</td>
+<td>API frozen, please contact customer service.</td>
+</tr>
+<tr>
+<td>50101</td>
+<td>401</td>
+<td>APIKey does not match current environment.</td>
+</tr>
+<tr>
+<td>50102</td>
+<td>401</td>
+<td>Timestamp request expired.</td>
+</tr>
+<tr>
+<td>50103</td>
+<td>401</td>
+<td>Request header "OK-ACCESS-KEY" cannot be empty.</td>
+</tr>
+<tr>
+<td>50104</td>
+<td>401</td>
+<td>Request header "OK-ACCESS-PASSPHRASE" cannot be empty.</td>
+</tr>
+<tr>
+<td>50105</td>
+<td>401</td>
+<td>Request header "OK-ACCESS-PASSPHRASE" incorrect.</td>
+</tr>
+<tr>
+<td>50106</td>
+<td>401</td>
+<td>Request header "OK-ACCESS-SIGN" cannot be empty.</td>
+</tr>
+<tr>
+<td>50107</td>
+<td>401</td>
+<td>Request header "OK-ACCESS-TIMESTAMP" cannot be empty.</td>
+</tr>
+<tr>
+<td>50108</td>
+<td>401</td>
+<td>Exchange ID does not exist.</td>
+</tr>
+<tr>
+<td>50109</td>
+<td>401</td>
+<td>Exchange domain does not exist.</td>
+</tr>
+<tr>
+<td>50110</td>
+<td>401</td>
+<td>Your IP {param0} is not included in your API key's IP whitelist.</td>
+</tr>
+<tr>
+<td>50111</td>
+<td>401</td>
+<td>Invalid OK-ACCESS-KEY.</td>
+</tr>
+<tr>
+<td>50112</td>
+<td>401</td>
+<td>Invalid OK-ACCESS-TIMESTAMP.</td>
+</tr>
+<tr>
+<td>50113</td>
+<td>401</td>
+<td>Invalid signature.</td>
+</tr>
+<tr>
+<td>50114</td>
+<td>401</td>
+<td>Invalid authorization.</td>
+</tr>
+<tr>
+<td>50115</td>
+<td>405</td>
+<td>Invalid request method.</td>
+</tr>
+<tr>
+<td>50116</td>
+<td>200</td>
+<td>Fast API is allowed to create only one API key</td>
+</tr>
+<tr>
+<td>50118</td>
+<td>200</td>
+<td>To link the app using your API key, your broker needs to share their IP to be whitelisted</td>
+</tr>
+<tr>
+<td>50119</td>
+<td>200</td>
+<td>API key doesn't exist</td>
+</tr>
+<tr>
+<td>50120</td>
+<td>200</td>
+<td>This API key doesn't have permission to use this function</td>
+</tr>
+<tr>
+<td>50121</td>
+<td>200</td>
+<td>You can't access our services through the IP address ({param0})</td>
+</tr>
+<tr>
+<td>50122</td>
+<td>200</td>
+<td>Order amount must exceed minimum amount</td>
+</tr>
+</tbody></table>
+<h4 id="error-code-rest-api-public-trade-class">Trade Class</h4>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>HTTP Status code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>51000</td>
+<td>400</td>
+<td>Parameter {param0} error</td>
+</tr>
+<tr>
+<td>51001</td>
+<td>200</td>
+<td>Instrument ID or Spread ID doesn't exist.</td>
+</tr>
+<tr>
+<td>51002</td>
+<td>200</td>
+<td>Instrument ID doesn't match underlying index.</td>
+</tr>
+<tr>
+<td>51003</td>
+<td>200</td>
+<td>Either client order ID or order ID is required.</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For isolated long/short mode of {param0}, the sum of current order size, position quantity in the same direction, and pending orders in the same direction can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, current order size: {param3} contracts, position quantity in the same direction: {param4} contracts, pending orders in the same direction: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For cross long/short mode of {param0}, the sum of current order size, position quantity in the long and short directions, and pending orders in the long and short directions can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, current order size: {param3} contracts, position quantity in the long and short directions: {param4} contracts, pending orders in the long and short directions: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For cross buy/sell mode of {param0} and instFamily {param1}, the sum of current order size, current instId position quantity in the long and short directions, current instId pending orders in the long and short directions, and other contracts of the same instFamily can’t be more than {param2}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param3}×, current order size: {param4} contracts, current instId position quantity in the long and short directions: {param5} contracts, current instId pending orders in the long and short directions: {param6} contracts, other contracts of the same instFamily: {param7} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For buy/sell mode of {param0}, the sum of current buy order size, position quantity, and pending buy orders can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, current buy order size: {param3} contracts, position quantity: {param4} contracts, pending buy orders: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For buy/sell mode of {param0}, the sum of current sell order size, position quantity, and pending sell orders can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, current sell order size: {param3} contracts, position quantity: {param4} contracts, pending sell orders: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For cross buy/sell mode of {param0} and instFamily {param1}, the sum of current buy order size, current instId position quantity, current instId pending buy orders, and other contracts of the same instFamily can’t be more than {param2}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param3}×, current buy order size: {param4} contracts, current instId position quantity: {param5} contracts, current instId pending buy orders: {param6} contracts, other contracts of the same instFamily: {param7} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order failed. For cross buy/sell mode of {param0} and instFamily {param1}, the sum of current sell order size, current instId position quantity, current instId pending sell orders, and other contracts of the same instFamily can’t be more than {param2}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param3}×, current sell order size: {param4} contracts, current instId position quantity: {param5} contracts, current instId pending sell orders: {param6} contracts, other contracts of the same instFamily: {param7} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For isolated long/short mode of {param0}, the sum of increment order size by amendment, position quantity in the same direction, and pending orders in the same direction can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, increment order size by amendment: {param3} contracts, position quantity in the same direction: {param4} contracts, pending orders in the same direction: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For cross long/short mode of {param0}, the sum of increment order size by amendment, position quantity in the long and short directions, and pending orders in the long and short directions can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, increment order size by amendment: {param3} contracts, position quantity in the long and short directions: {param4} contracts, pending orders in the same direction: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For cross buy/sell mode of {param0} and instFamily {param1}, the sum of increment order size by amendment, current instId position quantity in the long and short directions, current instId pending orders in the long and short directions, and other contracts of the same instFamily can’t be more than {param2}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param3}×, increment order size by amendment: {param4} contracts, current instId position quantity in the long and short directions: {param5} contracts, current instId pending orders in the long and short directions: {param6} contracts, other contracts of the same instFamily: {param7} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For buy/sell mode of {param0}, the sum of increment order size by amending current buy order, position quantity, and pending buy orders can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, increment order size by amending current buy order: {param3} contracts, position quantity: {param4} contracts, pending buy orders: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For buy/sell mode of {param0}, the sum of increment order size by amending current sell order, position quantity, and pending sell orders can’t be more than {param1}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param2}×, increment order size by amending current sell order: {param3} contracts, position quantity: {param4} contracts, pending sell orders: {param5} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For cross buy/sell mode of {param0} and instFamily {param1}, the sum of increment order size by amending current buy order, current instId position quantity, current instId pending buy orders, and other contracts of the same instFamily can’t be more than {param2}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param3}×, increment order size by amending current buy order: {param4} contracts, current instId position quantity: {param5} contracts, current instId pending buy orders: {param6} contracts, other contracts of the same instFamily: {param7} contracts).</td>
+</tr>
+<tr>
+<td>51004</td>
+<td>200</td>
+<td>Order amendment failed. For cross buy/sell mode of {param0} and instFamily {param1}, the sum of increment order size by amending current sell order, current instId position quantity, current instId pending sell orders, and other contracts of the same instFamily can’t be more than {param2}(contracts) which is the maximum position amount under current leverage. Please lower the leverage or use a new sub-account to place the order again (current leverage: {param3}×, increment order size by amending current sell order: {param4} contracts, current instId position quantity: {param5} contracts, current instId pending sell orders: {param6} contracts, other contracts of the same instFamily: {param7} contracts).</td>
+</tr>
+<tr>
+<td>51005</td>
+<td>200</td>
+<td>Your order amount exceeds the max order amount.</td>
+</tr>
+<tr>
+<td>51006</td>
+<td>200</td>
+<td>Order price is not within the price limit (max buy price: {param0} , min sell price: {param1} )</td>
+</tr>
+<tr>
+<td>51007</td>
+<td>200</td>
+<td>Order failed. Please place orders of at least 1 contract or more.</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} balance in account</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} margin in account</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} balance in account, and Auto Borrow is not enabled</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} margin in account and auto-borrow is not enabled (Portfolio margin mode can try IOC orders to lower the risks)</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Insufficient {param0} available as your borrowing amount exceeds tier limit. Lower leverage appropriately. New and pending limit orders need borrowings {param1}, remaining quota {param2}, total limit {param3}, in use {param4}.</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Exceeds {param0} borrow limit (Limit of master account plus the allocated VIP quota for the current account) (Existing pending orders and the new order are required to borrow {param1}, Remaining limit {param2}, Limit {param3}, Limit used {param4})</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} borrowing quota results in an insufficient amount available to borrow.</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} available in loan pool to borrow.</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Insufficient account balance, and the adjusted equity in <code>USD</code> is less than IMR (Portfolio margin mode can try IOC orders to lower the risks)</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. The order didn't pass delta verification because if the order were to succeed, the change in adjEq would be smaller than the change in IMR. Increase adjEq or reduce IMR (Portfolio margin mode can try IOC orders to lower the risks)</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Your available margin (in USD) is too low. It excludes crypto ({param0}) exceeding the platform's collateral limit.</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Your available balance is insufficient. It excludes crypto ({param0}) exceeding the platform's collateral limit.</td>
+</tr>
+<tr>
+<td>51008</td>
+<td>200</td>
+<td>Order failed. Your available {param0} balance is insufficient, and your available margin (in USD) is too low for borrowing. This margin excludes crypto ({param1}) exceeding the platform's collateral limit.</td>
+</tr>
+<tr>
+<td>51009</td>
+<td>200</td>
+<td>Order blocked. Please contact customer support for assistance.</td>
+</tr>
+<tr>
+<td>51010</td>
+<td>200</td>
+<td>Request unsupported under current account mode</td>
+</tr>
+<tr>
+<td>51011</td>
+<td>200</td>
+<td>Order ID already exists.</td>
+</tr>
+<tr>
+<td>51012</td>
+<td>200</td>
+<td>Token doesn't exist.</td>
+</tr>
+<tr>
+<td>51014</td>
+<td>200</td>
+<td>Index doesn't exist.</td>
+</tr>
+<tr>
+<td>51015</td>
+<td>200</td>
+<td>Instrument ID doesn't match instrument type.</td>
+</tr>
+<tr>
+<td>51016</td>
+<td>200</td>
+<td>Client order ID already exists.</td>
+</tr>
+<tr>
+<td>51017</td>
+<td>200</td>
+<td>Loan amount exceeds borrowing limit.</td>
+</tr>
+<tr>
+<td>51018</td>
+<td>200</td>
+<td>Users with options accounts cannot hold net short positions.</td>
+</tr>
+<tr>
+<td>51019</td>
+<td>200</td>
+<td>No net long positions can be held under cross margin mode in options.</td>
+</tr>
+<tr>
+<td>51020</td>
+<td>200</td>
+<td>Your order should meet or exceed the minimum order amount.</td>
+</tr>
+<tr>
+<td>51021</td>
+<td>200</td>
+<td>The pair or contract is not yet listed</td>
+</tr>
+<tr>
+<td>51022</td>
+<td>200</td>
+<td>Contract suspended.</td>
+</tr>
+<tr>
+<td>51023</td>
+<td>200</td>
+<td>Position doesn't exist.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Trading account is blocked.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>In accordance with the terms of service, we regret to inform you that we cannot provide services for you. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>According to your request, this account has been frozen. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account has recently changed some security settings. To protect the security of your funds, this action is not allowed for now. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>You have withdrawn all assets in the account. To protect your personal information, the account has been permanently frozen. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your identity could not be verified. To protect the security of your funds, this action is not allowed. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your verified age doesn't meet the requirement. To protect the security of your funds, we cannot proceed with your request. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>In accordance with the terms of service, trading is currently unavailable in your verified country or region. Close all open positions or contact customer support if you have any questions.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>In accordance with the terms of service, multiple account is not allowed. To protect the security of your funds, this action is not allowed. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account is in judicial freezing, and this action is not allowed for now. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Based on your previous requests, this action is not allowed for now. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account has disputed deposit orders. To protect the security of your funds, this action is not allowed for now. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Unable to proceed. Please resolve your existing P2P disputes first.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account might have compliance risk. To protect the security of your funds, this action is not allowed for now. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Based on your trading requests, this action is not allowed for now. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account has triggered risk control. This action is not allowed for now. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>This account is temporarily unavailable. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Withdrawal function of this account is temporarily unavailable. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Transfer function of this account is temporarily unavailable. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>You violated the "Fiat Trading Rules" when you were doing fiat trade, so we'll no longer provide fiat trading-related services for you. The deposit and withdrawal of your account and other trading functions will not be affected.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Please kindly check your mailbox and reply to emails from the verification team.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>According to your request, this account has been closed. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account might have security risk. To protect the security of your funds, this action is not allowed for now. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Your account might have security risk. Convert is now unavailable. Please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Unable to proceed due to account restrictions. We've sent an email to your OKX registered email address regarding this matter, or you can contact customer support via Chat with AI chatbot on our support center page.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>In accordance with the terms of service, trading is currently unavailable in your verified country or region. Cancel all orders or contact customer support if you have any questions.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>In accordance with the terms of service, trading is not available in your verified country. If you have any questions, please contact our customer support.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>This product isn’t available in your country or region due to local laws and regulations. If you don’t reside in this area, you may continue using OKX Exchange products with a valid government-issued ID.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Please note that you may not be able to transfer or trade in the first 30 minutes after establishing custody trading sub-accounts. Please kindly wait and try again later.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Feature unavailable. Complete Advanced verification to access this feature.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>You can't trade or deposit now. Update your personal info to restore full account access immediately.</td>
+</tr>
+<tr>
+<td>51024</td>
+<td>200</td>
+<td>Sub-accounts exceeding the limit aren't allowed to open new positions and can only reduce or close existing ones. Please try again with a different account.</td>
+</tr>
+<tr>
+<td>51025</td>
+<td>200</td>
+<td>Order count exceeds the limit.</td>
+</tr>
+<tr>
+<td>51026</td>
+<td>200</td>
+<td>Instrument type doesn't match underlying index.</td>
+</tr>
+<tr>
+<td>51027</td>
+<td>200</td>
+<td>Contract expired.</td>
+</tr>
+<tr>
+<td>51028</td>
+<td>200</td>
+<td>Contract under delivery.</td>
+</tr>
+<tr>
+<td>51029</td>
+<td>200</td>
+<td>Contract is being settled.</td>
+</tr>
+<tr>
+<td>51030</td>
+<td>200</td>
+<td>Funding fee is being settled.</td>
+</tr>
+<tr>
+<td>51031</td>
+<td>200</td>
+<td>This order price is not within the closing price range.</td>
+</tr>
+<tr>
+<td>51032</td>
+<td>200</td>
+<td>Closing all the positions at the market price.</td>
+</tr>
+<tr>
+<td>51033</td>
+<td>200</td>
+<td>The total amount per order for this pair has reached the upper limit.</td>
+</tr>
+<tr>
+<td>51034</td>
+<td>200</td>
+<td>Fill rate exceeds the limit that you've set. Please reset the market maker protection to inactive for new trades.</td>
+</tr>
+<tr>
+<td>51035</td>
+<td>200</td>
+<td>This account doesn't have permission to submit MM quote order.</td>
+</tr>
+<tr>
+<td>51036</td>
+<td>200</td>
+<td>Only options instrument of the PM account supports MMP orders.</td>
+</tr>
+<tr>
+<td>51042</td>
+<td>200</td>
+<td>Under the Portfolio margin account, users can only place market maker protection orders in cross margin mode in Options.</td>
+</tr>
+<tr>
+<td>51043</td>
+<td>200</td>
+<td>This isolated position doesn't exist.</td>
+</tr>
+<tr>
+<td>59509</td>
+<td>200</td>
+<td>Account does not have permission to reset MMP status</td>
+</tr>
+<tr>
+<td>51037</td>
+<td>200</td>
+<td>This account only supports placing IOC orders to reduce account risk.</td>
+</tr>
+<tr>
+<td>51038</td>
+<td>200</td>
+<td>IOC order already exists under the current risk module.</td>
+</tr>
+<tr>
+<td>51039</td>
+<td>200</td>
+<td>Leverage cannot be adjusted for the cross positions of Expiry Futures and Perpetual Futures under the PM account.</td>
+</tr>
+<tr>
+<td>51040</td>
+<td>200</td>
+<td>Cannot adjust margins for long isolated options positions</td>
+</tr>
+<tr>
+<td>51041</td>
+<td>200</td>
+<td>Portfolio margin account only supports the Buy/Sell mode.</td>
+</tr>
+<tr>
+<td>51044</td>
+<td>200</td>
+<td>The order type {param0}, {param1} is not allowed to set stop loss and take profit</td>
+</tr>
+<tr>
+<td>51046</td>
+<td>200</td>
+<td>The take profit trigger price must be higher than the order price</td>
+</tr>
+<tr>
+<td>51047</td>
+<td>200</td>
+<td>The stop loss trigger price must be lower than the order price</td>
+</tr>
+<tr>
+<td>51048</td>
+<td>200</td>
+<td>The take profit trigger price must be lower than the order price</td>
+</tr>
+<tr>
+<td>51049</td>
+<td>200</td>
+<td>The stop loss trigger price must be higher than the order price</td>
+</tr>
+<tr>
+<td>51050</td>
+<td>200</td>
+<td>The take profit trigger price must be higher than the best ask price</td>
+</tr>
+<tr>
+<td>51051</td>
+<td>200</td>
+<td>The stop loss trigger price must be lower than the best ask price</td>
+</tr>
+<tr>
+<td>51052</td>
+<td>200</td>
+<td>The take profit trigger price must be lower than the best bid price</td>
+</tr>
+<tr>
+<td>51053</td>
+<td>200</td>
+<td>The stop loss trigger price must be higher than the best bid price</td>
+</tr>
+<tr>
+<td>51054</td>
+<td>500</td>
+<td>Request timed out. Please try again.</td>
+</tr>
+<tr>
+<td>51055</td>
+<td>200</td>
+<td>Futures Grid is not available in Portfolio Margin mode</td>
+</tr>
+<tr>
+<td>51056</td>
+<td>200</td>
+<td>Action not allowed</td>
+</tr>
+<tr>
+<td>51057</td>
+<td>200</td>
+<td>This bot isn’t available in current account mode. Switch mode in Settings &gt; Account mode to continue.</td>
+</tr>
+<tr>
+<td>51058</td>
+<td>200</td>
+<td>No available position for this algo order</td>
+</tr>
+<tr>
+<td>51059</td>
+<td>200</td>
+<td>Strategy for the current state does not support this operation</td>
+</tr>
+<tr>
+<td>51063</td>
+<td>200</td>
+<td>OrdId does not exist</td>
+</tr>
+<tr>
+<td>51065</td>
+<td>200</td>
+<td>algoClOrdId already exists.</td>
+</tr>
+<tr>
+<td>51066</td>
+<td>200</td>
+<td>Market orders unavailable for options trading. Place a limit order to close position.</td>
+</tr>
+<tr>
+<td>51068</td>
+<td>200</td>
+<td>{param0} already exists within algoClOrdId and attachAlgoClOrdId.</td>
+</tr>
+<tr>
+<td>51069</td>
+<td>200</td>
+<td>The option contracts related to current {param0} do not exist</td>
+</tr>
+<tr>
+<td>51070</td>
+<td>200</td>
+<td>You do not meet the requirements for switching to this account mode. Please upgrade the account mode on the OKX website or App</td>
+</tr>
+<tr>
+<td>51071</td>
+<td>200</td>
+<td>You've reached the maximum limit for tag level cancel all after timers.</td>
+</tr>
+<tr>
+<td>51072</td>
+<td>200</td>
+<td>As a spot lead trader, you need to set tdMode to spot_isolated when buying the configured lead trade pairs.</td>
+</tr>
+<tr>
+<td>51073</td>
+<td>200</td>
+<td>As a spot lead trader, you need to use '/copytrading/close-subposition' for selling assets through lead trades</td>
+</tr>
+<tr>
+<td>51074</td>
+<td>200</td>
+<td>Only the tdMode for lead trade pairs configured by spot lead traders can be set to 'spot_isolated'</td>
+</tr>
+<tr>
+<td>51075</td>
+<td>200</td>
+<td>Order modification failed. You can only modify the price of sell orders in spot copy trading.</td>
+</tr>
+<tr>
+<td>51076</td>
+<td>200</td>
+<td>TP/SL orders in Split TPs only support one-way TP/SL. You can't use slTriggerPx&amp;slOrdPx and tpTriggerPx&amp;tpOrdPx at the same time.</td>
+</tr>
+<tr>
+<td>51077</td>
+<td>200</td>
+<td>Setting multiple TP and cost-price SL orders isn’t supported for spot and margin trading.</td>
+</tr>
+<tr>
+<td>51078</td>
+<td>200</td>
+<td>You are a lead trader. Split TPs are not supported.</td>
+</tr>
+<tr>
+<td>51079</td>
+<td>200</td>
+<td>The number of TP orders with Split TPs attached in a same order cannot exceed {param0}</td>
+</tr>
+<tr>
+<td>51080</td>
+<td>200</td>
+<td>Take-profit trigger price types (tpTriggerPxType) must be the same in an order with Split TPs attached</td>
+</tr>
+<tr>
+<td>51081</td>
+<td>200</td>
+<td>Take-profit trigger prices (tpTriggerPx) cannot be the same in an order with Split TPs attached</td>
+</tr>
+<tr>
+<td>51082</td>
+<td>200</td>
+<td>TP trigger prices (tpOrdPx) in one order with multiple TPs must be market prices.</td>
+</tr>
+<tr>
+<td>51083</td>
+<td>200</td>
+<td>The total size of TP orders with Split TPs attached in a same order should equal the size of this order</td>
+</tr>
+<tr>
+<td>51084</td>
+<td>200</td>
+<td>The number of SL orders with Split TPs attached in a same order cannot exceed {param0}</td>
+</tr>
+<tr>
+<td>51085</td>
+<td>200</td>
+<td>The number of TP orders cannot be less than 2 when cost-price SL is enabled (amendPxOnTriggerType set as 1) for Split TPs</td>
+</tr>
+<tr>
+<td>51086</td>
+<td>200</td>
+<td>The number of orders with Split TPs attached in a same order cannot exceed {param0}</td>
+</tr>
+<tr>
+<td>51538</td>
+<td>200</td>
+<td>You need to use attachAlgoOrds if you used attachAlgoOrds when placing an order. attachAlgoOrds is not supported if you did not use attachAlgoOrds when placing this order.</td>
+</tr>
+<tr>
+<td>51539</td>
+<td>200</td>
+<td>attachAlgoId or attachAlgoClOrdId cannot be identical when modifying any TP/SL within your split TPs order</td>
+</tr>
+<tr>
+<td>51527</td>
+<td>200</td>
+<td>Order modification failed. At least 1 of the attached TP/SL orders does not exist.</td>
+</tr>
+<tr>
+<td>51087</td>
+<td>200</td>
+<td>Listing canceled for this crypto</td>
+</tr>
+<tr>
+<td>51088</td>
+<td>200</td>
+<td>You can only place 1 TP/SL order to close an entire position</td>
+</tr>
+<tr>
+<td>51089</td>
+<td>200</td>
+<td>The size of the TP order among split TPs attached cannot  be empty</td>
+</tr>
+<tr>
+<td>51090</td>
+<td>200</td>
+<td>You can't modify the amount of an SL order placed with a TP limit order.</td>
+</tr>
+<tr>
+<td>51091</td>
+<td>200</td>
+<td>All TP orders in one order must be of the same type.</td>
+</tr>
+<tr>
+<td>51092</td>
+<td>200</td>
+<td>TP order prices (tpOrdPx) in one order must be different.</td>
+</tr>
+<tr>
+<td>51093</td>
+<td>200</td>
+<td>TP limit order prices (tpOrdPx) in one order can't be –1 (market price).</td>
+</tr>
+<tr>
+<td>51094</td>
+<td>200</td>
+<td>You can't place TP limit orders in spot, margin, or options trading.</td>
+</tr>
+<tr>
+<td>51095</td>
+<td>200</td>
+<td>To place TP limit orders at this endpoint, you must place an SL order at the same time.</td>
+</tr>
+<tr>
+<td>51096</td>
+<td>200</td>
+<td>cxlOnClosePos needs to be true to place a TP limit order</td>
+</tr>
+<tr>
+<td>51098</td>
+<td>200</td>
+<td>You can't add a new TP order to an SL order placed with a TP limit order.</td>
+</tr>
+<tr>
+<td>51099</td>
+<td>200</td>
+<td>You can't place TP limit orders as a lead trader.</td>
+</tr>
+<tr>
+<td>51178</td>
+<td>200</td>
+<td>tpTriggerPx&amp;tpOrdPx or slTriggerPx&amp;slOrdPx can't be empty when using attachAlgoClOrdId.</td>
+</tr>
+<tr>
+<td>51100</td>
+<td>200</td>
+<td>Unable to place order. Take profit/Stop loss conditions cannot be added to reduce-only orders.</td>
+</tr>
+<tr>
+<td>51101</td>
+<td>200</td>
+<td>Order failed, the sz of the current order can’t be more than {param0} (contracts).</td>
+</tr>
+<tr>
+<td>51102</td>
+<td>200</td>
+<td>Order failed, the number of pending orders for this instId can’t be more than {param0} (orders)</td>
+</tr>
+<tr>
+<td>51103</td>
+<td>200</td>
+<td>Order failed, the number of pending orders across all instIds under the {param0} current instFamily can’t be more than {param1} (orders)</td>
+</tr>
+<tr>
+<td>51104</td>
+<td>200</td>
+<td>Order failed, the aggregated contract quantity for all pending orders across all instIds under the {param0} current instFamily can’t be more than {param1} (contracts)</td>
+</tr>
+<tr>
+<td>51105</td>
+<td>200</td>
+<td>Order failed, the maximal sum of position quantity and pending orders quantity with the same direction for current instId can’t be more than {param0} (contracts)</td>
+</tr>
+<tr>
+<td>51106</td>
+<td>200</td>
+<td>Order failed, the maximal sum of position quantity and pending orders quantity with the same direction across all instIds under the {param0} current instFamily can’t be more than {param1} (contracts)</td>
+</tr>
+<tr>
+<td>51107</td>
+<td>200</td>
+<td>Order failed, the maximal sum of position quantity and pending orders quantity in both directions across all instIds under the {param0} current instFamily can’t be more than {param1} (contracts)</td>
+</tr>
+<tr>
+<td>51108</td>
+<td>200</td>
+<td>Positions exceed the limit for closing out with the market price.</td>
+</tr>
+<tr>
+<td>51109</td>
+<td>200</td>
+<td>No available offers.</td>
+</tr>
+<tr>
+<td>51110</td>
+<td>200</td>
+<td>You can only place a limit order after Call Auction has started.</td>
+</tr>
+<tr>
+<td>51111</td>
+<td>200</td>
+<td>Maximum {param0} orders can be placed in bulk.</td>
+</tr>
+<tr>
+<td>51112</td>
+<td>200</td>
+<td>Close order size exceeds available size for this position.</td>
+</tr>
+<tr>
+<td>51113</td>
+<td>429</td>
+<td>Market-price liquidation requests too frequent.</td>
+</tr>
+<tr>
+<td>51115</td>
+<td>429</td>
+<td>Cancel all pending close-orders before liquidation.</td>
+</tr>
+<tr>
+<td>51116</td>
+<td>200</td>
+<td>Order price or trigger price exceeds {param0}.</td>
+</tr>
+<tr>
+<td>51117</td>
+<td>200</td>
+<td>Pending close-orders count exceeds limit.</td>
+</tr>
+<tr>
+<td>51120</td>
+<td>200</td>
+<td>Order amount is less than {param0}, please try again.</td>
+</tr>
+<tr>
+<td>51121</td>
+<td>200</td>
+<td>Order quantity must be a multiple of the lot size.</td>
+</tr>
+<tr>
+<td>51122</td>
+<td>200</td>
+<td>Order price should higher than the min price {param0}</td>
+</tr>
+<tr>
+<td>51123</td>
+<td>200</td>
+<td>Min price increment is null.</td>
+</tr>
+<tr>
+<td>51124</td>
+<td>200</td>
+<td>You can only place limit orders during call auction.</td>
+</tr>
+<tr>
+<td>51125</td>
+<td>200</td>
+<td>Currently there are pending reduce + reverse position orders in margin trading. Please cancel all pending reduce + reverse position orders and continue.</td>
+</tr>
+<tr>
+<td>51126</td>
+<td>200</td>
+<td>Currently there are pending reduce only orders in margin trading. Please cancel all pending reduce only orders and continue.</td>
+</tr>
+<tr>
+<td>51127</td>
+<td>200</td>
+<td>Available balance is 0.</td>
+</tr>
+<tr>
+<td>51128</td>
+<td>200</td>
+<td>Multi-currency margin accounts cannot do cross-margin trading.</td>
+</tr>
+<tr>
+<td>51129</td>
+<td>200</td>
+<td>The value of the position and buy order has reached the position limit. No further buying is allowed.</td>
+</tr>
+<tr>
+<td>51130</td>
+<td>200</td>
+<td>Fixed margin currency error.</td>
+</tr>
+<tr>
+<td>51131</td>
+<td>200</td>
+<td>Insufficient balance.</td>
+</tr>
+<tr>
+<td>51132</td>
+<td>200</td>
+<td>Your position amount is negative and less than the minimum trading amount.</td>
+</tr>
+<tr>
+<td>51133</td>
+<td>200</td>
+<td>Reduce-only feature is unavailable for spot transactions in multi-currency margin accounts.</td>
+</tr>
+<tr>
+<td>51134</td>
+<td>200</td>
+<td>Closing failed. Please check your margin holdings and pending orders. Turn off the Reduce-only to continue.</td>
+</tr>
+<tr>
+<td>51135</td>
+<td>200</td>
+<td>Your closing price has triggered the limit price, and the max buy price is {param0}.</td>
+</tr>
+<tr>
+<td>51136</td>
+<td>200</td>
+<td>Your closing price has triggered the limit price, and the min sell price is {param0}.</td>
+</tr>
+<tr>
+<td>51137</td>
+<td>200</td>
+<td>The highest price limit for buy orders is {param0}.</td>
+</tr>
+<tr>
+<td>51138</td>
+<td>200</td>
+<td>The lowest price limit for sell orders is {param0}.</td>
+</tr>
+<tr>
+<td>51139</td>
+<td>200</td>
+<td>Reduce-only feature is unavailable for the spot transactions by spot mode.</td>
+</tr>
+<tr>
+<td>51140</td>
+<td>200</td>
+<td>Purchase failed due to insufficient sell orders, please try later.</td>
+</tr>
+<tr>
+<td>51142</td>
+<td>200</td>
+<td>There is no valid quotation in the market, and the order cannot be filled in USDT mode, please try to switch to currency mode</td>
+</tr>
+<tr>
+<td>51143</td>
+<td>200</td>
+<td>Insufficient conversion amount</td>
+</tr>
+<tr>
+<td>51144</td>
+<td>200</td>
+<td>Please use {param0} for closing.</td>
+</tr>
+<tr>
+<td>51147</td>
+<td>200</td>
+<td>To trade options, make sure you have more than 10,000 USD worth of assets in your trading account first, then activate options trading</td>
+</tr>
+<tr>
+<td>51148</td>
+<td>200</td>
+<td>Failed to place order. The new order may execute an opposite trading direction of your existing reduce-only positions. Cancel or edit pending orders to continue order</td>
+</tr>
+<tr>
+<td>51149</td>
+<td>500</td>
+<td>Order timed out. Please try again.</td>
+</tr>
+<tr>
+<td>51150</td>
+<td>200</td>
+<td>The precision of the number of trades or the price exceeds the limit.</td>
+</tr>
+<tr>
+<td>51152</td>
+<td>200</td>
+<td>Unable to place an order that mixes automatic buy with automatic repayment or manual operation in Quick margin mode.</td>
+</tr>
+<tr>
+<td>51153</td>
+<td>200</td>
+<td>Unable to borrow manually in Quick margin mode. The amount you entered exceeds the upper limit.</td>
+</tr>
+<tr>
+<td>51154</td>
+<td>200</td>
+<td>Unable to repay manually in Quick margin mode. The amount you entered exceeds your available balance.</td>
+</tr>
+<tr>
+<td>51155</td>
+<td>200</td>
+<td>Trading of this pair or contract is restricted due to local compliance requirements.</td>
+</tr>
+<tr>
+<td>51158</td>
+<td>200</td>
+<td>Manual transfer unavailable. To proceed, please switch to Quick margin mode (isoMode = quick_margin)</td>
+</tr>
+<tr>
+<td>51164</td>
+<td>200</td>
+<td>As lead trader, you can't switch to portfolio margin mode.</td>
+</tr>
+<tr>
+<td>51169</td>
+<td>200</td>
+<td>Order failed because you don't have any positions in this direction for this contract to reduce or close.</td>
+</tr>
+<tr>
+<td>51170</td>
+<td>200</td>
+<td>Failed to place order. A reduce-only order can’t be the same trading direction as your existing positions.</td>
+</tr>
+<tr>
+<td>51171</td>
+<td>200</td>
+<td>Failed to edit order. The edited order may execute an opposite trading direction of your existing reduce-only positions. Cancel or edit pending orders to continue.</td>
+</tr>
+<tr>
+<td>51173</td>
+<td>200</td>
+<td>Unable to close all at market price. Your current positions don't have any liabilities.</td>
+</tr>
+<tr>
+<td>51174</td>
+<td>200</td>
+<td>Order failed, number of pending orders for {param0} exceed the limit of {param1}.</td>
+</tr>
+<tr>
+<td>51175</td>
+<td>200</td>
+<td>Parameters {param0} {param1} and {param2} cannot be empty at the same time</td>
+</tr>
+<tr>
+<td>51176</td>
+<td>200</td>
+<td>Only one parameter can be filled among Parameters {param0} {param1} and {param2}</td>
+</tr>
+<tr>
+<td>51177</td>
+<td>200</td>
+<td>Unavailable to amend {param1} because the price type of the current options order is {param0}</td>
+</tr>
+<tr>
+<td>51179</td>
+<td>200</td>
+<td>Unavailable to place options orders using {param0} in simple mode</td>
+</tr>
+<tr>
+<td>51180</td>
+<td>200</td>
+<td>The range of {param0} should be ({param1}~{param2})</td>
+</tr>
+<tr>
+<td>51181</td>
+<td>200</td>
+<td>ordType must be limit while placing {param0} orders</td>
+</tr>
+<tr>
+<td>51182</td>
+<td>200</td>
+<td>The total number of pending orders under price types pxUsd and pxVol for the current account cannot exceed {param0}</td>
+</tr>
+<tr>
+<td>51185</td>
+<td>200</td>
+<td>The maximum value allowed per order is {maxOrderValue} USD</td>
+</tr>
+<tr>
+<td>51186</td>
+<td>200</td>
+<td>Order failed. The leverage for {param0} in your current margin mode is {param1}x, which exceeds the platform limit of {param2}x.</td>
+</tr>
+<tr>
+<td>51187</td>
+<td>200</td>
+<td>Order failed. For {param0} {param1} in your current margin mode, the sum of your current order amount, position sizes, and open orders is {param2} contracts, which exceeds the platform limit of {param3} contracts. Reduce your order amount, cancel orders, or close positions.</td>
+</tr>
+<tr>
+<td>51192</td>
+<td>200</td>
+<td>The {param0} price corresponding to the IV level you entered is lower than the minimum allowed selling price of {param1} {param2}. Enter a higher IV level.</td>
+</tr>
+<tr>
+<td>51193</td>
+<td>200</td>
+<td>The {param0} price corresponding to the IV level you entered is higher than the maximum allowed buying price of {param1} {param2}. Enter a lower IV level.</td>
+</tr>
+<tr>
+<td>51194</td>
+<td>200</td>
+<td>The {param0} price corresponding to the USD price you entered is lower than the minimum allowed selling price of {param1} {param2}. Enter a higher USD price.</td>
+</tr>
+<tr>
+<td>51195</td>
+<td>200</td>
+<td>The {param0} price corresponding to the USD price you entered is higher than the maximum allowed buying price of {param1} {param2}. Enter a lower USD price.</td>
+</tr>
+<tr>
+<td>51196</td>
+<td>200</td>
+<td>You can only place limit orders during the pre-quote phase.</td>
+</tr>
+<tr>
+<td>51197</td>
+<td>200</td>
+<td>You can only place limit orders after the pre-quote phase begins.</td>
+</tr>
+<tr>
+<td>51201</td>
+<td>200</td>
+<td>The value of a market order can't exceed {param0}.</td>
+</tr>
+<tr>
+<td>51202</td>
+<td>200</td>
+<td>Market order amount exceeds the maximum amount.</td>
+</tr>
+<tr>
+<td>51203</td>
+<td>200</td>
+<td>Order amount exceeds the limit {param0}.</td>
+</tr>
+<tr>
+<td>51204</td>
+<td>200</td>
+<td>The price for the limit order cannot be empty.</td>
+</tr>
+<tr>
+<td>51205</td>
+<td>200</td>
+<td>Reduce Only is not available.</td>
+</tr>
+<tr>
+<td>51206</td>
+<td>200</td>
+<td>Please cancel the Reduce Only order before placing the current {param0} order to avoid opening a reverse position.</td>
+</tr>
+<tr>
+<td>51207</td>
+<td>200</td>
+<td>Trading amount exceeds the limit, and can't be all closed at the market price. You can try closing the position manually in batches.</td>
+</tr>
+<tr>
+<td>51220</td>
+<td>200</td>
+<td>Lead and follow bots only support “Sell” or “Close all positions” when bot stops</td>
+</tr>
+<tr>
+<td>51221</td>
+<td>200</td>
+<td>The profit-sharing ratio must be between 0% and 30%</td>
+</tr>
+<tr>
+<td>51222</td>
+<td>200</td>
+<td>Profit sharing isn’t supported for this type of bot</td>
+</tr>
+<tr>
+<td>51223</td>
+<td>200</td>
+<td>Only lead bot creators can set profit-sharing ratio</td>
+</tr>
+<tr>
+<td>51224</td>
+<td>200</td>
+<td>Profit sharing isn’t supported for this crypto pair</td>
+</tr>
+<tr>
+<td>51225</td>
+<td>200</td>
+<td>Instant trigger isn’t available for follow bots</td>
+</tr>
+<tr>
+<td>51226</td>
+<td>200</td>
+<td>Editing parameters isn’t available for follow bots</td>
+</tr>
+<tr>
+<td>51250</td>
+<td>200</td>
+<td>Algo order price is out of the available range.</td>
+</tr>
+<tr>
+<td>51251</td>
+<td>200</td>
+<td>Bot order type error occurred when placing iceberg order</td>
+</tr>
+<tr>
+<td>51252</td>
+<td>200</td>
+<td>Algo order amount is out of the available range.</td>
+</tr>
+<tr>
+<td>51253</td>
+<td>200</td>
+<td>Average amount exceeds the limit of per iceberg order.</td>
+</tr>
+<tr>
+<td>51254</td>
+<td>200</td>
+<td>Iceberg average amount error occurred.</td>
+</tr>
+<tr>
+<td>51255</td>
+<td>200</td>
+<td>Limit of per iceberg order: Total amount/1000 &lt; x &lt;= Total amount.</td>
+</tr>
+<tr>
+<td>51256</td>
+<td>200</td>
+<td>Iceberg order price variance error.</td>
+</tr>
+<tr>
+<td>51257</td>
+<td>200</td>
+<td>Trailing stop order callback rate error. The callback rate should be {min}&lt; x&lt;={max}%.</td>
+</tr>
+<tr>
+<td>51258</td>
+<td>200</td>
+<td>Trailing stop order placement failed. The trigger price of a sell order must be higher than the last transaction price.</td>
+</tr>
+<tr>
+<td>51259</td>
+<td>200</td>
+<td>Trailing stop order placement failed. The trigger price of a buy order must be lower than the last transaction price.</td>
+</tr>
+<tr>
+<td>51260</td>
+<td>200</td>
+<td>Maximum of {param0} pending trailing stop orders can be held at the same time.</td>
+</tr>
+<tr>
+<td>51261</td>
+<td>200</td>
+<td>Each user can hold up to {param0} pending stop orders at the same time.</td>
+</tr>
+<tr>
+<td>51262</td>
+<td>200</td>
+<td>Maximum {param0} pending iceberg orders can be held at the same time.</td>
+</tr>
+<tr>
+<td>51263</td>
+<td>200</td>
+<td>Maximum {param0} pending time-weighted orders can be held at the same time.</td>
+</tr>
+<tr>
+<td>51264</td>
+<td>200</td>
+<td>Average amount exceeds the limit of per time-weighted order.</td>
+</tr>
+<tr>
+<td>51265</td>
+<td>200</td>
+<td>Time-weighted order limit error.</td>
+</tr>
+<tr>
+<td>51267</td>
+<td>200</td>
+<td>Time-weighted order strategy initiative rate error.</td>
+</tr>
+<tr>
+<td>51268</td>
+<td>200</td>
+<td>Time-weighted order strategy initiative range error.</td>
+</tr>
+<tr>
+<td>51269</td>
+<td>200</td>
+<td>Time-weighted order interval error. Interval must be {%min}&lt;= x&lt;={%max}.</td>
+</tr>
+<tr>
+<td>51270</td>
+<td>200</td>
+<td>The limit of time-weighted order price variance is 0 &lt; x &lt;= 1%.</td>
+</tr>
+<tr>
+<td>51271</td>
+<td>200</td>
+<td>Sweep ratio must be 0 &lt; x &lt;= 100%.</td>
+</tr>
+<tr>
+<td>51272</td>
+<td>200</td>
+<td>Price variance must be 0 &lt; x &lt;= 1%.</td>
+</tr>
+<tr>
+<td>51273</td>
+<td>200</td>
+<td>Total amount must be greater than {param0}.</td>
+</tr>
+<tr>
+<td>51274</td>
+<td>200</td>
+<td>Total quantity of time-weighted order must be larger than single order limit.</td>
+</tr>
+<tr>
+<td>51275</td>
+<td>200</td>
+<td>The amount of single stop-market order cannot exceed the upper limit.</td>
+</tr>
+<tr>
+<td>51276</td>
+<td>200</td>
+<td>Prices cannot be specified for stop market orders.</td>
+</tr>
+<tr>
+<td>51277</td>
+<td>200</td>
+<td>TP trigger price cannot be higher than the last price.</td>
+</tr>
+<tr>
+<td>51278</td>
+<td>200</td>
+<td>SL trigger price cannot be lower than the last price.</td>
+</tr>
+<tr>
+<td>51279</td>
+<td>200</td>
+<td>TP trigger price cannot be lower than the last price.</td>
+</tr>
+<tr>
+<td>51280</td>
+<td>200</td>
+<td>SL trigger price cannot be higher than the last price.</td>
+</tr>
+<tr>
+<td>51281</td>
+<td>200</td>
+<td>Trigger order do not support the tgtCcy parameter.</td>
+</tr>
+<tr>
+<td>51282</td>
+<td>200</td>
+<td>The range of Price variance is {param0}~{param1}</td>
+</tr>
+<tr>
+<td>51283</td>
+<td>200</td>
+<td>The range of Time interval is {param0}~{param1}</td>
+</tr>
+<tr>
+<td>51284</td>
+<td>200</td>
+<td>The range of Average amount is {param0}~{param1}</td>
+</tr>
+<tr>
+<td>51285</td>
+<td>200</td>
+<td>The range of Total amount is {param0}~{param1}</td>
+</tr>
+<tr>
+<td>51286</td>
+<td>200</td>
+<td>The total amount should not be less than {param0}</td>
+</tr>
+<tr>
+<td>51287</td>
+<td>200</td>
+<td>This bot doesn't support current instrument</td>
+</tr>
+<tr>
+<td>51288</td>
+<td>200</td>
+<td>Bot is currently stopping. Do not make multiple attempts to stop.</td>
+</tr>
+<tr>
+<td>51289</td>
+<td>200</td>
+<td>Bot configuration does not exist. Please try again later</td>
+</tr>
+<tr>
+<td>51290</td>
+<td>200</td>
+<td>The Bot engine is being upgraded. Please try again later</td>
+</tr>
+<tr>
+<td>51291</td>
+<td>200</td>
+<td>This Bot does not exist or has been stopped</td>
+</tr>
+<tr>
+<td>51292</td>
+<td>200</td>
+<td>This Bot type does not exist</td>
+</tr>
+<tr>
+<td>51293</td>
+<td>200</td>
+<td>This Bot does not exist</td>
+</tr>
+<tr>
+<td>51294</td>
+<td>200</td>
+<td>This Bot cannot be created temporarily. Please try again later</td>
+</tr>
+<tr>
+<td>51295</td>
+<td>200</td>
+<td>Portfolio margin account does not support ordType {param0} in Trading bot mode</td>
+</tr>
+<tr>
+<td>51298</td>
+<td>200</td>
+<td>Trigger orders are not available in the net mode of Expiry Futures and Perpetual Futures</td>
+</tr>
+<tr>
+<td>51299</td>
+<td>200</td>
+<td>Order did not go through. You can hold a maximum of {param0} orders of this type.</td>
+</tr>
+<tr>
+<td>51300</td>
+<td>200</td>
+<td>TP trigger price cannot be higher than the mark price</td>
+</tr>
+<tr>
+<td>51302</td>
+<td>200</td>
+<td>SL trigger price cannot be lower than the mark price</td>
+</tr>
+<tr>
+<td>51303</td>
+<td>200</td>
+<td>TP trigger price cannot be lower than the mark price</td>
+</tr>
+<tr>
+<td>51304</td>
+<td>200</td>
+<td>SL trigger price cannot be higher than the mark price</td>
+</tr>
+<tr>
+<td>51305</td>
+<td>200</td>
+<td>TP trigger price cannot be higher than the index price</td>
+</tr>
+<tr>
+<td>51306</td>
+<td>200</td>
+<td>SL trigger price cannot be lower than the index price</td>
+</tr>
+<tr>
+<td>51307</td>
+<td>200</td>
+<td>TP trigger price cannot be lower than the index price</td>
+</tr>
+<tr>
+<td>51308</td>
+<td>200</td>
+<td>SL trigger price cannot be higher than the index price</td>
+</tr>
+<tr>
+<td>51309</td>
+<td>200</td>
+<td>Cannot create trading bot during call auction</td>
+</tr>
+<tr>
+<td>51310</td>
+<td>200</td>
+<td>Strategic orders with Iceberg and TWAP order type are not supported when margins are self-transferred in isolated mode.</td>
+</tr>
+<tr>
+<td>51311</td>
+<td>200</td>
+<td>Failed to place trailing stop order. Callback rate should be within {min}&lt;x&lt;={max}</td>
+</tr>
+<tr>
+<td>51312</td>
+<td>200</td>
+<td>Failed to place trailing stop order. Order amount should be within {min}&lt;x&lt;={max}</td>
+</tr>
+<tr>
+<td>51313</td>
+<td>200</td>
+<td>Manual transfer in isolated mode does not support bot trading</td>
+</tr>
+<tr>
+<td>51317</td>
+<td>200</td>
+<td>Trigger orders are not available by margin</td>
+</tr>
+<tr>
+<td>51327</td>
+<td>200</td>
+<td>closeFraction is only available for Expiry Futures and Perpetual Futures</td>
+</tr>
+<tr>
+<td>51328</td>
+<td>200</td>
+<td>closeFraction is only available for reduceOnly orders</td>
+</tr>
+<tr>
+<td>51329</td>
+<td>200</td>
+<td>closeFraction is only available in NET mode</td>
+</tr>
+<tr>
+<td>51330</td>
+<td>200</td>
+<td>closeFraction is only available for stop market orders</td>
+</tr>
+<tr>
+<td>51331</td>
+<td>200</td>
+<td>closeFraction is only available for close position orders</td>
+</tr>
+<tr>
+<td>51332</td>
+<td>200</td>
+<td>closeFraction is not applicable to Portfolio Margin</td>
+</tr>
+<tr>
+<td>51333</td>
+<td>200</td>
+<td>Close position order in hedge-mode or reduce-only order in one-way mode cannot attach TPSL</td>
+</tr>
+<tr>
+<td>51340</td>
+<td>200</td>
+<td>Used margin must be greater than {0}{1}</td>
+</tr>
+<tr>
+<td>51341</td>
+<td>200</td>
+<td>Position closing not allowed</td>
+</tr>
+<tr>
+<td>51342</td>
+<td>200</td>
+<td>Closing order already exists. Please try again later</td>
+</tr>
+<tr>
+<td>51343</td>
+<td>200</td>
+<td>TP price must be less than the lower price</td>
+</tr>
+<tr>
+<td>51344</td>
+<td>200</td>
+<td>SL price must be greater than the upper price</td>
+</tr>
+<tr>
+<td>51345</td>
+<td>200</td>
+<td>Policy type is not grid policy</td>
+</tr>
+<tr>
+<td>51346</td>
+<td>200</td>
+<td>The highest price cannot be lower than the lowest price</td>
+</tr>
+<tr>
+<td>51347</td>
+<td>200</td>
+<td>No profit available</td>
+</tr>
+<tr>
+<td>51348</td>
+<td>200</td>
+<td>Stop loss price must be less than the lower price in the range.</td>
+</tr>
+<tr>
+<td>51349</td>
+<td>200</td>
+<td>Take profit price must be greater than the highest price in the range.</td>
+</tr>
+<tr>
+<td>51350</td>
+<td>200</td>
+<td>No recommended parameters</td>
+</tr>
+<tr>
+<td>51351</td>
+<td>200</td>
+<td>Single income must be greater than 0</td>
+</tr>
+<tr>
+<td>51352</td>
+<td>200</td>
+<td>You can have {0} to {1} trading pairs</td>
+</tr>
+<tr>
+<td>51353</td>
+<td>200</td>
+<td>Trading pair {0} already exists</td>
+</tr>
+<tr>
+<td>51354</td>
+<td>200</td>
+<td>The percentages of all trading pairs should add up to 100%</td>
+</tr>
+<tr>
+<td>51355</td>
+<td>200</td>
+<td>Select a date within {0} - {1}</td>
+</tr>
+<tr>
+<td>51356</td>
+<td>200</td>
+<td>Select a time within {0} - {1}</td>
+</tr>
+<tr>
+<td>51357</td>
+<td>200</td>
+<td>Select a time zone within {0} - {1}</td>
+</tr>
+<tr>
+<td>51358</td>
+<td>200</td>
+<td>The investment amount of each crypto must be greater than {amount}</td>
+</tr>
+<tr>
+<td>51359</td>
+<td>200</td>
+<td>Recurring buy not supported for the selected crypto {0}</td>
+</tr>
+<tr>
+<td>51370</td>
+<td>200</td>
+<td>The range of lever is {0}~{1}</td>
+</tr>
+<tr>
+<td>51380</td>
+<td>200</td>
+<td>Market conditions do not meet the strategy running configuration. You can try again later or adjust your tp/sl configuration.</td>
+</tr>
+<tr>
+<td>51381</td>
+<td>200</td>
+<td>Per grid profit ratio must be larger than 0.1% and less or equal to 10%</td>
+</tr>
+<tr>
+<td>51382</td>
+<td>200</td>
+<td>Stop triggerAction is not supported by the current strategy</td>
+</tr>
+<tr>
+<td>51383</td>
+<td>200</td>
+<td>The min_price is lower than the last price</td>
+</tr>
+<tr>
+<td>51384</td>
+<td>200</td>
+<td>The trigger price must be greater than the min price</td>
+</tr>
+<tr>
+<td>51385</td>
+<td>200</td>
+<td>The take profit price needs to be greater than the min price</td>
+</tr>
+<tr>
+<td>51386</td>
+<td>200</td>
+<td>The min price needs to be greater than 1/2 of the last price</td>
+</tr>
+<tr>
+<td>51387</td>
+<td>200</td>
+<td>Stop loss price must be less than the bottom price</td>
+</tr>
+<tr>
+<td>51388</td>
+<td>200</td>
+<td>This Bot is in running status</td>
+</tr>
+<tr>
+<td>51389</td>
+<td>200</td>
+<td>Trigger price should be lower than {0}</td>
+</tr>
+<tr>
+<td>51390</td>
+<td>200</td>
+<td>Trigger price should be lower than the TP price</td>
+</tr>
+<tr>
+<td>51391</td>
+<td>200</td>
+<td>Trigger price should be higher than the SL price</td>
+</tr>
+<tr>
+<td>51392</td>
+<td>200</td>
+<td>TP price should be higher than the trigger price</td>
+</tr>
+<tr>
+<td>51393</td>
+<td>200</td>
+<td>SL price should be lower than the trigger price</td>
+</tr>
+<tr>
+<td>51394</td>
+<td>200</td>
+<td>Trigger price should be higher than the TP price</td>
+</tr>
+<tr>
+<td>51395</td>
+<td>200</td>
+<td>Trigger price should be lower than the SL price</td>
+</tr>
+<tr>
+<td>51396</td>
+<td>200</td>
+<td>TP price should be lower than the trigger price</td>
+</tr>
+<tr>
+<td>51397</td>
+<td>200</td>
+<td>SL price should be higher than the trigger price</td>
+</tr>
+<tr>
+<td>51398</td>
+<td>200</td>
+<td>Current market meets the stop condition. The bot cannot be created.</td>
+</tr>
+<tr>
+<td>51399</td>
+<td>200</td>
+<td>Max margin under current leverage: {amountLimit} {quoteCurrency}. Enter a smaller amount and try again.</td>
+</tr>
+<tr>
+<td>51400</td>
+<td>200</td>
+<td>Order cancellation failed as the order has been filled, canceled or does not exist.</td>
+</tr>
+<tr>
+<td>51400</td>
+<td>200</td>
+<td>Cancellation failed as the order does not exist. (Only applicable to Nitro Spread)</td>
+</tr>
+<tr>
+<td>51401</td>
+<td>200</td>
+<td>Cancellation failed as the order is already canceled. (Only applicable to Nitro Spread)</td>
+</tr>
+<tr>
+<td>51402</td>
+<td>200</td>
+<td>Cancellation failed as the order is already completed. (Only applicable to Nitro Spread)</td>
+</tr>
+<tr>
+<td>51403</td>
+<td>200</td>
+<td>Cancellation failed as the order type doesn't support cancellation.</td>
+</tr>
+<tr>
+<td>51404</td>
+<td>200</td>
+<td>Order cancellation unavailable during the second phase of call auction.</td>
+</tr>
+<tr>
+<td>51405</td>
+<td>200</td>
+<td>Cancellation failed as you don't have any pending orders.</td>
+</tr>
+<tr>
+<td>51406</td>
+<td>400</td>
+<td>Canceled - order count exceeds the limit {param0}.</td>
+</tr>
+<tr>
+<td>51407</td>
+<td>200</td>
+<td>Either order ID or client order ID is required.</td>
+</tr>
+<tr>
+<td>51408</td>
+<td>200</td>
+<td>Pair ID or name doesn't match the order info.</td>
+</tr>
+<tr>
+<td>51409</td>
+<td>200</td>
+<td>Either pair ID or pair name ID is required.</td>
+</tr>
+<tr>
+<td>51410</td>
+<td>200</td>
+<td>Cancellation failed as the order is already in canceling status or pending settlement.</td>
+</tr>
+<tr>
+<td>51411</td>
+<td>200</td>
+<td>Account does not have permission for mass cancellation.</td>
+</tr>
+<tr>
+<td>51412</td>
+<td>200</td>
+<td>Cancellation timed out, please try again later.</td>
+</tr>
+<tr>
+<td>51412</td>
+<td>200</td>
+<td>The order has been triggered and can't be canceled.</td>
+</tr>
+<tr>
+<td>51413</td>
+<td>200</td>
+<td>Cancellation failed as the order type is not supported by endpoint.</td>
+</tr>
+<tr>
+<td>51415</td>
+<td>200</td>
+<td>Unable to place order. Spot trading only supports using the last price as trigger price. Please select "Last" and try again.</td>
+</tr>
+<tr>
+<td>51416</td>
+<td>200</td>
+<td>Order has been triggered and can't be canceled</td>
+</tr>
+<tr>
+<td>51500</td>
+<td>200</td>
+<td>You must enter a price, quantity, or TP/SL</td>
+</tr>
+<tr>
+<td>51501</td>
+<td>400</td>
+<td>Maximum {param0} orders can be modified.</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Unable to edit order: insufficient balance or margin.</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} margin in account</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} balance in account and Auto Borrow is not enabled</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. Insufficient {param0} margin in account and Auto Borrow is not enabled (Portfolio margin mode can try IOC orders to lower the risks)</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. The requested borrowing amount is larger than the available {param0} borrowing amount of your position tier. Existing pending orders and the new order need to borrow {param1}, remaining quota {param2}, total quota {param3}, used {param4}</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. The requested borrowing amount is larger than the available {param0} borrowing amount of your position tier. Existing pending orders and the new order need to borrow {param1}, remaining quota {param2}, total quota {param3}, used {param4}</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. The requested borrowing amount is larger than the available {param0} borrowing amount of your main account and the allocated VIP quota. Existing pending orders and the new order need to borrow {param1}, remaining quota {param2}, total quota {param3}, used {param4}</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. Insufficient available borrowing amount in {param0} crypto pair</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. Insufficient available borrowing amount in {param0} loan pool</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. Insufficient account balance and the adjusted equity in USD is smaller than the IMR.</td>
+</tr>
+<tr>
+<td>51502</td>
+<td>200</td>
+<td>Order failed. The order didn't pass delta verification. If the order succeeded, the change in adjEq would be smaller than the change in IMR. Increase adjEq or reduce IMR (Portfolio margin mode can try IOC orders to lower the risks)</td>
+</tr>
+<tr>
+<td>51503</td>
+<td>200</td>
+<td>Your order has already been filled or canceled.</td>
+</tr>
+<tr>
+<td>51503</td>
+<td>200</td>
+<td>Order modification failed as the order does not exist. (Only applicable to Nitro Spread)</td>
+</tr>
+<tr>
+<td>51505</td>
+<td>200</td>
+<td>{instId} is not in call auction</td>
+</tr>
+<tr>
+<td>51506</td>
+<td>200</td>
+<td>Order modification unavailable for the order type.</td>
+</tr>
+<tr>
+<td>51507</td>
+<td>200</td>
+<td>You can only place market orders for this crypto at least 5 minutes after its listing.</td>
+</tr>
+<tr>
+<td>51508</td>
+<td>200</td>
+<td>Orders are not allowed to be modified during the call auction.</td>
+</tr>
+<tr>
+<td>51509</td>
+<td>200</td>
+<td>Modification failed as the order has been canceled. (Only applicable to Nitro Spread)</td>
+</tr>
+<tr>
+<td>51510</td>
+<td>200</td>
+<td>Modification failed as the order has been completed. (Only applicable to Nitro Spread)</td>
+</tr>
+<tr>
+<td>51511</td>
+<td>200</td>
+<td>Modification failed as the order price did not meet the requirement for Post Only.</td>
+</tr>
+<tr>
+<td>51512</td>
+<td>200</td>
+<td>Failed to amend orders in batches. You cannot have duplicate orders in the same amend-batch-orders request.</td>
+</tr>
+<tr>
+<td>51513</td>
+<td>200</td>
+<td>Number of modification requests that are currently in progress for an order cannot exceed 3 times.</td>
+</tr>
+<tr>
+<td>51514</td>
+<td>200</td>
+<td>Order modification failed. The price length must be 32 characters or shorter.</td>
+</tr>
+<tr>
+<td>51521</td>
+<td>200</td>
+<td>Failed to edit. Unable to edit reduce-only order because you don't have any positions of this contract.</td>
+</tr>
+<tr>
+<td>51522</td>
+<td>200</td>
+<td>Failed to edit. A reduce-only order can't be in the same trading direction as your existing positions.</td>
+</tr>
+<tr>
+<td>51523</td>
+<td>200</td>
+<td>Unable to modify the order price of a stop order that closes an entire position. Please modify the trigger price instead.</td>
+</tr>
+<tr>
+<td>51524</td>
+<td>200</td>
+<td>Unable to modify the order quantity of a stop order that closes an entire position. Please modify the trigger price instead.</td>
+</tr>
+<tr>
+<td>51525</td>
+<td>200</td>
+<td>Stop order modification is not available for quick margin</td>
+</tr>
+<tr>
+<td>51526</td>
+<td>200</td>
+<td>Order modification unsuccessful. Take profit/Stop loss conditions cannot be added to or removed from stop orders.</td>
+</tr>
+<tr>
+<td>51527</td>
+<td>200</td>
+<td>Order modification unsuccessful. The stop order does not exist.</td>
+</tr>
+<tr>
+<td>51528</td>
+<td>200</td>
+<td>Unable to modify trigger price type</td>
+</tr>
+<tr>
+<td>51529</td>
+<td>200</td>
+<td>Order modification unsuccessful. Stop order modification only applies to Expiry Futures and Perpetual Futures.</td>
+</tr>
+<tr>
+<td>51530</td>
+<td>200</td>
+<td>Order modification unsuccessful. Take profit/Stop loss conditions cannot be added to or removed from reduce-only orders.</td>
+</tr>
+<tr>
+<td>51531</td>
+<td>200</td>
+<td>Order modification unsuccessful. The stop order must have either take profit or stop loss attached.</td>
+</tr>
+<tr>
+<td>51532</td>
+<td>200</td>
+<td>Your TP/SL can't be modified because it was partially triggered</td>
+</tr>
+<tr>
+<td>51536</td>
+<td>200</td>
+<td>Unable to modify the size of the options order if the price type is pxUsd or pxVol.</td>
+</tr>
+<tr>
+<td>51537</td>
+<td>200</td>
+<td>pxUsd or pxVol are not supported by non-options instruments</td>
+</tr>
+<tr>
+<td>51543</td>
+<td>200</td>
+<td>When modifying take-profit or stop-loss orders for spot or margin trading, you can only adjust the price and quantity. Cancel the order and place a new one for other actions.</td>
+</tr>
+<tr>
+<td>51600</td>
+<td>200</td>
+<td>Status not found.</td>
+</tr>
+<tr>
+<td>51601</td>
+<td>200</td>
+<td>Order status and order id cannot exist at the same time.</td>
+</tr>
+<tr>
+<td>51602</td>
+<td>200</td>
+<td>Either order status or order ID is required.</td>
+</tr>
+<tr>
+<td>51603</td>
+<td>200</td>
+<td>Order does not exist.</td>
+</tr>
+<tr>
+<td>51604</td>
+<td>200</td>
+<td>Initiate a download request before obtaining the hyperlink</td>
+</tr>
+<tr>
+<td>51605</td>
+<td>200</td>
+<td>You can only download transaction data from the past 2 years</td>
+</tr>
+<tr>
+<td>51606</td>
+<td>200</td>
+<td>Transaction data for the current quarter is not available</td>
+</tr>
+<tr>
+<td>51607</td>
+<td>200</td>
+<td>Your previous download request is still being processed</td>
+</tr>
+<tr>
+<td>51608</td>
+<td>200</td>
+<td>No transaction data found for the current quarter</td>
+</tr>
+<tr>
+<td>51610</td>
+<td>200</td>
+<td>You can't download billing statements for the current quarter.</td>
+</tr>
+<tr>
+<td>51611</td>
+<td>200</td>
+<td>You can't download billing statements for the current quarter.</td>
+</tr>
+<tr>
+<td>51620</td>
+<td>200</td>
+<td>Only affiliates can perform this action</td>
+</tr>
+<tr>
+<td>51621</td>
+<td>200</td>
+<td>The user isn’t your invitee</td>
+</tr>
+<tr>
+<td>51156</td>
+<td>200</td>
+<td>You're leading trades in long/short mode and can't use this API endpoint to close positions</td>
+</tr>
+<tr>
+<td>51159</td>
+<td>200</td>
+<td>You're leading trades in buy/sell mode. If you want to place orders using this API endpoint, the orders must be in the same direction as your existing positions and open orders.</td>
+</tr>
+<tr>
+<td>51162</td>
+<td>200</td>
+<td>You have {instrument} open orders. Cancel these orders and try again</td>
+</tr>
+<tr>
+<td>51163</td>
+<td>200</td>
+<td>You hold {instrument} positions. Close these positions and try again</td>
+</tr>
+<tr>
+<td>51165</td>
+<td>200</td>
+<td>The number of {instrument} reduce-only orders reached the upper limit of {upLimit}. Cancel some orders to proceed.</td>
+</tr>
+<tr>
+<td>51166</td>
+<td>200</td>
+<td>Currently, we don't support leading trades with this instrument</td>
+</tr>
+<tr>
+<td>51167</td>
+<td>200</td>
+<td>Failed. You have block trading open order(s), please proceed after canceling existing order(s).</td>
+</tr>
+<tr>
+<td>51168</td>
+<td>200</td>
+<td>Failed. You have reduce-only type of open order(s), please proceed after canceling existing order(s)</td>
+</tr>
+<tr>
+<td>51320</td>
+<td>200</td>
+<td>The range of coin percentage is {0}%-{1}%</td>
+</tr>
+<tr>
+<td>51321</td>
+<td>200</td>
+<td>You're leading trades. Currently, we don't support leading trades with arbitrage, iceberg, or TWAP bots</td>
+</tr>
+<tr>
+<td>51322</td>
+<td>200</td>
+<td>You're leading trades that have been filled at market price. We've canceled your open stop orders to close your positions</td>
+</tr>
+<tr>
+<td>51323</td>
+<td>200</td>
+<td>You're already leading trades with take profit or stop loss settings. Cancel your existing stop orders to proceed</td>
+</tr>
+<tr>
+<td>51324</td>
+<td>200</td>
+<td>As a lead trader, you hold positions in {instrument}. To close your positions, place orders in the amount that equals the available amount for closing</td>
+</tr>
+<tr>
+<td>51325</td>
+<td>200</td>
+<td>As a lead trader, you must use market price when placing stop orders</td>
+</tr>
+<tr>
+<td>51326</td>
+<td>200</td>
+<td>As a lead trader, you must use market price when placing orders with take profit or stop loss settings</td>
+</tr>
+<tr>
+<td>51820</td>
+<td>200</td>
+<td>Request failed</td>
+</tr>
+<tr>
+<td>51821</td>
+<td>200</td>
+<td>The payment method is not supported</td>
+</tr>
+<tr>
+<td>51822</td>
+<td>200</td>
+<td>Quote expired</td>
+</tr>
+<tr>
+<td>51823</td>
+<td>200</td>
+<td>Parameter {param} of buy/sell trading is inconsistent with the quotation</td>
+</tr>
+<tr>
+<td>54000</td>
+<td>200</td>
+<td>Margin trading is not supported.</td>
+</tr>
+<tr>
+<td>54001</td>
+<td>200</td>
+<td>Only Multi-currency margin account can be set to borrow coins automatically.</td>
+</tr>
+<tr>
+<td>54004</td>
+<td>200</td>
+<td>Order placement or modification failed because one of the orders in the batch failed.</td>
+</tr>
+<tr>
+<td>54005</td>
+<td>200</td>
+<td>Switch to isolated margin mode to trade pre-market expiry futures.</td>
+</tr>
+<tr>
+<td>54006</td>
+<td>200</td>
+<td>Pre-market expiry future position limit is {posLimit}. Please cancel order or close position</td>
+</tr>
+<tr>
+<td>54007</td>
+<td>200</td>
+<td>Instrument {instId} is not supported</td>
+</tr>
+<tr>
+<td>54008</td>
+<td>200</td>
+<td>This operation is disabled by the 'mass cancel order' endpoint. Please enable it using this endpoint.</td>
+</tr>
+<tr>
+<td>54009</td>
+<td>200</td>
+<td>The range of {param0} should be [{param1}, {param2}].</td>
+</tr>
+<tr>
+<td>54011</td>
+<td>200</td>
+<td>Pre-market trading contracts are only allowed to reduce the number of positions within 1 hour before delivery. Please modify or cancel the order.</td>
+</tr>
+<tr>
+<td>54012</td>
+<td>200</td>
+<td>Due to insufficient order book depth, we are now taking measures to protect your positions. Currently, you can only cancel orders, add margin to your positions, and place post-only orders. Your positions will not be liquidated. Trade will resume once order book depth returns to a safe level.</td>
+</tr>
+<tr>
+<td>54018</td>
+<td>200</td>
+<td>Buy limit of {param0} USD exceeded. Your remaining limit is {param1} USD. (During the call auction)</td>
+</tr>
+<tr>
+<td>54019</td>
+<td>200</td>
+<td>Buy limit of {param0} USD exceeded. Your remaining limit is {param1} USD. (After the call auction)</td>
+</tr>
+<tr>
+<td>54024</td>
+<td>200</td>
+<td>Your order failed because you must enable {ccy} as collateral to trade expiry futures, perpetual futures, and options in cross-margin mode.</td>
+</tr>
+<tr>
+<td>54025</td>
+<td>200</td>
+<td>Your order failed because you must enable {ccy} as collateral to trade margin, expiry futures, perpetual futures, and options in isolated margin mode.</td>
+</tr>
+<tr>
+<td>54026</td>
+<td>200</td>
+<td>Your order failed because you must enable {ccy} and {ccy1} as collateral to trade the margin pair in isolated margin mode.</td>
+</tr>
+<tr>
+<td>54027</td>
+<td>200</td>
+<td>Your order failed because you must enable {ccy} as collateral to trade options.</td>
+</tr>
+<tr>
+<td>54028</td>
+<td>200</td>
+<td>Your order failed because you must enable {ccy} as collateral to trade spot in isolated margin mode.</td>
+</tr>
+<tr>
+<td>54029</td>
+<td>200</td>
+<td>{param0} doesn’t exist within {param1}.</td>
+</tr>
+<tr>
+<td>54030</td>
+<td>200</td>
+<td>Order failed. Your total value of same-direction {param0} open positions and orders can't exceed {param1} USD or {param2} of the platform's open interest.</td>
+</tr>
+<tr>
+<td>54031</td>
+<td>200</td>
+<td>Order failed. The {param1} USD open position limit for {param0} has been reached.</td>
+</tr>
+<tr>
+<td>54035</td>
+<td>200</td>
+<td>Order failed. The platform has reached the collateral limit for this crypto, so you can only place reduce-only orders.</td>
+</tr>
+<tr>
+<td>54036</td>
+<td>200</td>
+<td>You can't place fill or kill orders when self-trade prevention is set to both maker and taker orders.</td>
+</tr>
+</tbody></table>
+<h4 id="error-code-rest-api-public-data-class">Data class</h4>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>HTTP Status Code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>52000</td>
+<td>200</td>
+<td>No market data found.</td>
+</tr>
+</tbody></table>

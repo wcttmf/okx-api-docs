@@ -1,0 +1,182 @@
+<h3 id="funding-account-rest-api-get-buy-sell-quote">Get buy/sell quote</h3><h4 id="funding-account-rest-api-get-buy-sell-quote-rate-limit-10-requests-per-second">Rate Limit: 10 requests per second</h4><h4 id="funding-account-rest-api-get-buy-sell-quote-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-buy-sell-quote-rate-limit-1-request-per-5-seconds">Rate Limit: 1 request per 5 seconds</h4><h4 id="funding-account-rest-api-get-buy-sell-quote-rate-limit-rule-instrument-id">Rate limit rule: Instrument ID</h4><h4 id="funding-account-rest-api-get-buy-sell-quote-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-buy-sell-quote-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/fiat/buy-sell/quote</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Sell USD to buy 0.1 BTC</span>
+POST /api/v5/fiat/buy-sell/quote
+body
+<span class="o">{</span>
+    <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+    <span class="s2">"fromCcy"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"toCcy"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"rfqAmt"</span>: <span class="s2">"0.1"</span>,
+    <span class="s2">"rfqCcy"</span>: <span class="s2">"BTC"</span>
+<span class="o">}</span>
+
+<span class="c"># Sell 30 USD to buy BTC</span>
+POST /api/v5/fiat/buy-sell/quote
+body
+<span class="o">{</span>
+    <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+    <span class="s2">"fromCcy"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"toCcy"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"rfqAmt"</span>: <span class="s2">"30"</span>,
+    <span class="s2">"rfqCcy"</span>: <span class="s2">"USD"</span>
+<span class="o">}</span>
+
+<span class="c"># Sell BTC to buy 30 USD</span>
+POST /api/v5/fiat/buy-sell/quote
+body
+<span class="o">{</span>
+    <span class="s2">"side"</span>:<span class="s2">"sell"</span>,
+    <span class="s2">"fromCcy"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"toCcy"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"rfqAmt"</span>: <span class="s2">"30"</span>,
+    <span class="s2">"rfqCcy"</span>: <span class="s2">"USD"</span>
+<span class="o">}</span>
+
+<span class="c"># Sell 0.1 BTC to buy USD</span>
+POST /api/v5/fiat/buy-sell/quote
+body
+<span class="o">{</span>
+    <span class="s2">"side"</span>:<span class="s2">"sell"</span>,
+    <span class="s2">"fromCcy"</span>: <span class="s2">"BTC"</span>,
+    <span class="s2">"toCcy"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"rfqAmt"</span>: <span class="s2">"0.1"</span>,
+    <span class="s2">"rfqCcy"</span>: <span class="s2">"BTC"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="funding-account-rest-api-get-buy-sell-quote-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameters</th>
+<th style="text-align: left">Types</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Side  <br/> <code>buy</code>: Buy Crypto / Fiat with Fiat  <br/> <code>sell</code>: Sell Crypto to Crypto / Fiat</td>
+</tr>
+<tr>
+<td style="text-align: left">fromCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Currency to sell</td>
+</tr>
+<tr>
+<td style="text-align: left">toCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Currency to buy</td>
+</tr>
+<tr>
+<td style="text-align: left">rfqAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">RFQ amount</td>
+</tr>
+<tr>
+<td style="text-align: left">rfqCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">RFQ currency</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"quoteId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quoterBTC-USD16461885104612381"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fromCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"toCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rfqAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rfqCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quotePx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2932.40104429"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteFromAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteToAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1646188510461"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ttlMs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-buy-sell-quote-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>quoteId</td>
+<td>String</td>
+<td>Quote ID</td>
+</tr>
+<tr>
+<td>side</td>
+<td>String</td>
+<td>Side  <br/> <code>buy</code>: Buy Crypto / Fiat with Fiat  <br/> <code>sell</code>: Sell Crypto to Crypto / Fiat</td>
+</tr>
+<tr>
+<td>fromCcy</td>
+<td>String</td>
+<td>Currency to sell, e.g. <code>USD</code></td>
+</tr>
+<tr>
+<td>toCcy</td>
+<td>String</td>
+<td>Currency to buy, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>rfqAmt</td>
+<td>String</td>
+<td>RFQ amount</td>
+</tr>
+<tr>
+<td>rfqCcy</td>
+<td>String</td>
+<td>RFQ currency</td>
+</tr>
+<tr>
+<td>quotePx</td>
+<td>String</td>
+<td>Quote price</td>
+</tr>
+<tr>
+<td>quoteCcy</td>
+<td>String</td>
+<td>Quote price unit <br/> e.g. <code>USD</code></td>
+</tr>
+<tr>
+<td>quoteFromAmt</td>
+<td>String</td>
+<td>Quote amount, unit in <code>fromCcy</code></td>
+</tr>
+<tr>
+<td>quoteToAmt</td>
+<td>String</td>
+<td>Quote amount, unit in <code>toCcy</code></td>
+</tr>
+<tr>
+<td>quoteTime</td>
+<td>String</td>
+<td>Quotation generation time, Unix timestamp format in milliseconds, e.g. 1597026383085</td>
+</tr>
+<tr>
+<td>ttlMs</td>
+<td>String</td>
+<td>The validity period of quotation in milliseconds <br/> e.g. <code>10000</code> represents the quotation only valid for 10 seconds</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+This feature is only available to Bahamas institutional users at the moment.
+</aside>

@@ -1,0 +1,138 @@
+<h3 id="overview-rate-limits-fill-ratio-based-sub-account-rate-limit">Fill ratio based sub-account rate limit</h3>
+<p>This is only applicable to &gt;= VIP5 customers.
+<br/>
+As an incentive for more efficient trading, the exchange will offer a higher sub-account rate limit to clients with a high trade fill ratio. 
+<br/><br/>
+The exchange calculates two ratios based on the transaction data from the past 7 days at 00:00 UTC.</p>
+<ol>
+<li>Sub-account fill ratio: This ratio is determined by dividing (the trade volume in USDT of the sub-account) by (sum of (new and amendment request count per symbol * symbol multiplier) of the sub-account). Note that the master trading account itself is also considered as a sub-account in this context.</li>
+<li>Master account aggregated fill ratio: This ratio is calculated by dividing (the trade volume in USDT on the master account level) by (the sum (new and amendment count per symbol * symbol multiplier] of all sub-accounts).</li>
+</ol>
+<p><br/></p>
+<p>The symbol multiplier allows for fine-tuning the weight of each symbol. A smaller symbol multiplier (&lt;1) is used for smaller pairs that require more updates per trading volume. All instruments have a default symbol multiplier, and some instruments will have overridden symbol multipliers.</p>
+<table><thead>
+<tr>
+<th>InstType</th>
+<th>Override rule</th>
+<th>Overridden symbol multiplier</th>
+<th>Default symbol multiplier</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Perpetual Futures</td>
+<td>Per instrument ID</td>
+<td><code>1</code> <br/>Instrument ID: <br/>BTC-USDT-SWAP <br/>BTC-USD-SWAP <br/>ETH-USDT-SWAP <br/>ETH-USD-SWAP</td>
+<td><code>0.2</code></td>
+</tr>
+<tr>
+<td>Expiry Futures</td>
+<td>Per instrument Family</td>
+<td><code>0.3</code> <br/>Instrument Family: <br/>BTC-USDT <br/>BTC-USD <br/>ETH-USDT <br/>ETH-USD</td>
+<td><code>0.1</code></td>
+</tr>
+<tr>
+<td>Spot</td>
+<td>Per instrument ID</td>
+<td><code>0.5</code> <br/>Instrument ID: <br/>BTC-USDT <br/>ETH-USDT</td>
+<td><code>0.1</code></td>
+</tr>
+<tr>
+<td>Options</td>
+<td>Per instrument Family</td>
+<td></td>
+<td><code>0.1</code></td>
+</tr>
+</tbody></table>
+<p>The fill ratio computation excludes block trading, spread trading, MMP and fiat orders for order count; and excludes block trading, spread trading for trade volume. Only successful order requests (sCode=0) are considered.</p>
+<p><br/><br/></p>
+<p>At 08:00 UTC, the system will use the maximum value between the sub-account fill ratio and the master account aggregated fill ratio based on the data snapshot at 00:00 UTC to determine the sub-account rate limit based on the table below. For broker (non-disclosed) clients, the system considers the sub-account fill ratio only.</p>
+<table><thead>
+<tr>
+<th></th>
+<th>Fill ratio[x&lt;=ratio&lt;y)</th>
+<th>Sub-account rate limit per 2 seconds(new and amendment)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Tier 1</td>
+<td>[0,1)</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td>Tier 2</td>
+<td>[1,2)</td>
+<td>1,250</td>
+</tr>
+<tr>
+<td>Tier 3</td>
+<td>[2,3)</td>
+<td>1,500</td>
+</tr>
+<tr>
+<td>Tier 4</td>
+<td>[3,5)</td>
+<td>1,750</td>
+</tr>
+<tr>
+<td>Tier 5</td>
+<td>[5,10)</td>
+<td>2,000</td>
+</tr>
+<tr>
+<td>Tier 6</td>
+<td>[10,20)</td>
+<td>2,500</td>
+</tr>
+<tr>
+<td>Tier 7</td>
+<td>[20,50)</td>
+<td>3,000</td>
+</tr>
+<tr>
+<td>Tier 8</td>
+<td>&gt;= 50</td>
+<td>10,000</td>
+</tr>
+</tbody></table>
+<p>If there is an improvement in the fill ratio and rate limit to be uplifted, the uplift will take effect immediately at 08:00 UTC. However, if the fill ratio decreases and the rate limit needs to be lowered, a one-day grace period will be granted, and the lowered rate limit will only be implemented on T+1 at 08:00 UTC. On T+1, if the fill ratio improves, the higher rate limit will be applied accordingly. In the event of client demotion to VIP4, their rate limit will be downgraded to Tier 1, accompanied by a one-day grace period.</p>
+<p><br/></p>
+<p>If the 7-day trading volume of a sub-account is less than 1,000,000 USDT, the fill ratio of the master account will be applied to it.</p>
+<p><br/></p>
+<p>For newly created sub-accounts, the Tier 1 rate limit will be applied at creation until T+1 8am UTC, at which the normal rules will be applied.</p>
+<p><br/></p>
+<p>Block trading, spread trading, MMP and spot/margin orders are exempted from the sub-account rate limit.</p>
+<p><br/></p>
+<p>The exchange offers <a href="/docs-v5/en/#order-book-trading-trade-get-account-rate-limit">GET / Account rate limit</a> endpoint that provides ratio and rate limit data, which will be updated daily at 8am UTC. It will return the sub-account fill ratio, the master account aggregated fill ratio, current sub-account rate limit and sub-account rate limit on T+1 (applicable if the rate limit is going to be demoted).
+<br/><br/>
+The fill ratio and rate limit calculation example is shown below. Client has 3 accounts, symbol multiplier for BTC-USDT-SWAP = 1 and XRP-USDT = 0.1.</p>
+<ol>
+<li>Account A (master account):
+
+<ol>
+<li>BTC-USDT-SWAP trade volume = 100 USDT, order count = 10;</li>
+<li>XRP-USDT trade volume = 20 USDT, order count = 15;</li>
+<li>Sub-account ratio = (100+20) / (10 * 1 + 15 * 0.1) = 10.4</li>
+</ol></li>
+<li>Account B (sub-account):
+
+<ol>
+<li>BTC-USDT-SWAP trade volume = 200 USDT, order count = 100;</li>
+<li>XRP-USDT trade volume = 20 USDT, order count = 30;</li>
+<li>Sub-account ratio = (200+20) / (100 * 1 + 30 * 0.1) = 2.13</li>
+</ol></li>
+<li>Account C (sub-account):
+
+<ol>
+<li>BTC-USDT-SWAP trade volume = 300 USDT, order count = 1000;</li>
+<li>XRP-USDT trade volume = 20 USDT, order count = 45;</li>
+<li>Sub-account ratio = (300+20) / (100 * 1 + 45 * 0.1) = 3.06</li>
+</ol></li>
+<li>Master account aggregated fill ratio = (100+20+200+20+300+20) / (10 * 1 + 15 * 0.1 + 100 * 1 + 30 * 0.1 + 100 * 1 + 45 * 0.1) = 3.01</li>
+<li>Rate limit of accounts
+
+<ol>
+<li>Account A = max(10.4, 3.01) = 10.4 -&gt; 2500 order requests/2s</li>
+<li>Account B = max(2.13, 3.01) = 3.01 -&gt; 1750 order requests/2s</li>
+<li>Account C = max(3.06, 3.01) = 3.06 -&gt; 1750 order requests/2s</li>
+</ol></li>
+</ol>

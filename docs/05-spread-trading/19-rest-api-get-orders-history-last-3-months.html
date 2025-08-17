@@ -1,0 +1,218 @@
+<h3 id="spread-trading-rest-api-get-orders-history-last-3-months">Get orders history (last 3 months)</h3>
+<p>Retrieve the completed order data for the last 3 months, including those placed 3 months ago but completed in the last 3 months. Results are returned in counter chronological order.</p>
+<h4 id="spread-trading-rest-api-get-orders-history-last-3-months-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="spread-trading-rest-api-get-orders-history-last-3-months-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="spread-trading-rest-api-get-orders-history-last-3-months-permission-read">Permission: Read</h4><h4 id="spread-trading-rest-api-get-orders-history-last-3-months-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/sprd/orders-history-archive</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/sprd/orders-history-archive
+</code></pre></div><h4 id="spread-trading-rest-api-get-orders-history-last-3-months-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sprdId</td>
+<td>String</td>
+<td>No</td>
+<td>spread ID, e.g.</td>
+</tr>
+<tr>
+<td>ordType</td>
+<td>String</td>
+<td>No</td>
+<td>Order type<br/><code>market</code>: Market order <br/><code>limit</code>: limit order <br/><code>post_only</code>: Post-only order <br/><code>ioc</code>: Immediate-or-cancel order</td>
+</tr>
+<tr>
+<td>state</td>
+<td>String</td>
+<td>No</td>
+<td>State <br/><code>canceled</code> <br/><code>filled</code></td>
+</tr>
+<tr>
+<td>instType</td>
+<td>String</td>
+<td>No</td>
+<td>Instrument type<br/><code>SPOT</code><br/><code>FUTURES</code><br/><code>SWAP</code> <br/>Any orders with spreads containing the specified instrument type in any legs will be returned</td>
+</tr>
+<tr>
+<td>instFamily</td>
+<td>String</td>
+<td>No</td>
+<td>Instrument family, e.g. BTC-USDT. Any orders with spreads containing the specified instrument family in any legs will be returned</td>
+</tr>
+<tr>
+<td>beginId</td>
+<td>String</td>
+<td>No</td>
+<td>Start order ID the request to begin with. Pagination of data to return records newer than the requested order Id, not including beginId</td>
+</tr>
+<tr>
+<td>endId</td>
+<td>String</td>
+<td>No</td>
+<td>End order ID the request to end with. Pagination of data to return records earlier than the requested order Id, not including endId</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>String</td>
+<td>No</td>
+<td>Filter with a begin timestamp. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>end</td>
+<td>String</td>
+<td>No</td>
+<td>Filter with an end timestamp. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>String</td>
+<td>No</td>
+<td>Number of results per request. The maximum is 100. The default is 100</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+     </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"sprdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT_BTC-UST-SWAP"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"312269865356374016"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"999"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fillPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"accFillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pendingFillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pendingSettleSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"canceledSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"canceled"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cancelSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="spread-trading-rest-api-get-orders-history-last-3-months-response-example">Response Example</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sprdId</td>
+<td>String</td>
+<td>spread ID</td>
+</tr>
+<tr>
+<td>ordId</td>
+<td>String</td>
+<td>Order ID</td>
+</tr>
+<tr>
+<td>clOrdId</td>
+<td>String</td>
+<td>Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>String</td>
+<td>Order tag</td>
+</tr>
+<tr>
+<td>px</td>
+<td>String</td>
+<td>Price</td>
+</tr>
+<tr>
+<td>sz</td>
+<td>String</td>
+<td>Quantity to buy or sell</td>
+</tr>
+<tr>
+<td>ordType</td>
+<td>String</td>
+<td>Order type<br/><code>market</code>: Market order <br/><code>limit</code>: limit order <br/><code>post_only</code>: Post-only order <br/><code>ioc</code>: Immediate-or-cancel order</td>
+</tr>
+<tr>
+<td>side</td>
+<td>String</td>
+<td>Order side</td>
+</tr>
+<tr>
+<td>fillSz</td>
+<td>String</td>
+<td>Last fill quantity</td>
+</tr>
+<tr>
+<td>fillPx</td>
+<td>String</td>
+<td>Last fill price</td>
+</tr>
+<tr>
+<td>tradeId</td>
+<td>String</td>
+<td>Last trade ID</td>
+</tr>
+<tr>
+<td>accFillSz</td>
+<td>String</td>
+<td>Accumulated fill quantity</td>
+</tr>
+<tr>
+<td>pendingFillSz</td>
+<td>String</td>
+<td>Quantity still remaining to be filled, inluding pendingSettleSz</td>
+</tr>
+<tr>
+<td>pendingSettleSz</td>
+<td>String</td>
+<td>Quantity that's pending settlement</td>
+</tr>
+<tr>
+<td>canceledSz</td>
+<td>String</td>
+<td>Quantity canceled due order cancellations or trade rejections</td>
+</tr>
+<tr>
+<td>avgPx</td>
+<td>String</td>
+<td>Average filled price. If none is filled, it will return "0".</td>
+</tr>
+<tr>
+<td>state</td>
+<td>String</td>
+<td>State <br/><code>canceled</code> <br/><code>filled</code></td>
+</tr>
+<tr>
+<td>cancelSource</td>
+<td>String</td>
+<td>Source of the order cancellation. Valid values and the corresponding meanings are: <br/><code>0</code>: Order canceled by system <br/><code>1</code>: Order canceled by user <br/><code>14</code>: Order canceled: IOC order was partially canceled due to incompletely filled<br/><code>15</code>: Order canceled: The order price is beyond the limit<br/> <code>20</code>: Cancel all after triggered <br/><code>31</code>: The post-only order will take liquidity in maker orders<br/> <code>32</code>: Self trade prevention<br/><code>34</code>: Order failed to settle due to insufficient margin <br/><code>35</code>: Order cancellation due to insufficient margin from another order<br/><code>44</code>: Your order was canceled because your available balance of this crypto was insufficient for auto conversion. Auto conversion was triggered when the total collateralized liabilities for this crypto reached the platform’s risk control limit.</td>
+</tr>
+<tr>
+<td>uTime</td>
+<td>String</td>
+<td>Update time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>cTime</td>
+<td>String</td>
+<td>Creation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>

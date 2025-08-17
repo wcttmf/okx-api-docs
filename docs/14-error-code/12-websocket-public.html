@@ -1,0 +1,177 @@
+<h3 id="error-code-websocket-public">Public</h3>
+<p>Error Code from 60000 to 64002</p>
+<h4 id="error-code-websocket-public-general-class">General Class</h4>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>60004</td>
+<td>Invalid timestamp</td>
+</tr>
+<tr>
+<td>60005</td>
+<td>Invalid apiKey</td>
+</tr>
+<tr>
+<td>60006</td>
+<td>Timestamp request expired</td>
+</tr>
+<tr>
+<td>60007</td>
+<td>Invalid sign</td>
+</tr>
+<tr>
+<td>60008</td>
+<td>The current WebSocket endpoint does not support subscribing to {0} channels. Please check the WebSocket URL</td>
+</tr>
+<tr>
+<td>60009</td>
+<td>Login failure</td>
+</tr>
+<tr>
+<td>60011</td>
+<td>Please log in</td>
+</tr>
+<tr>
+<td>60012</td>
+<td>Invalid request</td>
+</tr>
+<tr>
+<td>60013</td>
+<td>Invalid args</td>
+</tr>
+<tr>
+<td>60014</td>
+<td>Requests too frequent</td>
+</tr>
+<tr>
+<td>60018</td>
+<td>Wrong URL or {0} doesn't exist. Please use the correct URL, channel and parameters referring to API document.</td>
+</tr>
+<tr>
+<td>60019</td>
+<td>Invalid op: {op}</td>
+</tr>
+<tr>
+<td>60023</td>
+<td>Bulk login requests too frequent</td>
+</tr>
+<tr>
+<td>60024</td>
+<td>Wrong passphrase</td>
+</tr>
+<tr>
+<td>60026</td>
+<td>Batch login by APIKey and token simultaneously is not supported.</td>
+</tr>
+<tr>
+<td>60027</td>
+<td>Parameter {0} can not be empty.</td>
+</tr>
+<tr>
+<td>60028</td>
+<td>The current operation is not supported by this URL. Please use the correct WebSocket URL for the operation.</td>
+</tr>
+<tr>
+<td>60029</td>
+<td>Only users who are VIP5 and above in trading fee tier are allowed to subscribe to this channel.</td>
+</tr>
+<tr>
+<td>60030</td>
+<td>Only users who are VIP4 and above in trading fee tier are allowed to subscribe to books50-l2-tbt channel.</td>
+</tr>
+<tr>
+<td>60031</td>
+<td>The WebSocket endpoint does not allow multiple or repeated logins.</td>
+</tr>
+<tr>
+<td>60032</td>
+<td>API key doesn't exist.</td>
+</tr>
+<tr>
+<td>63999</td>
+<td>Login failed due to internal error. Please try again later.</td>
+</tr>
+<tr>
+<td>64000</td>
+<td>Subscription parameter uly is unavailable anymore, please replace uly with instFamily. More details can refer to: https://www.okx.com/help-center/changes-to-v5-api-websocket-subscription-parameter-and-url.</td>
+</tr>
+<tr>
+<td>64001</td>
+<td>This channel has been migrated to the '/business' URL. Please subscribe using the new URL. More details can refer to: https://www.okx.com/help-center/changes-to-v5-api-websocket-subscription-parameter-and-url.</td>
+</tr>
+<tr>
+<td>64002</td>
+<td>This channel is not supported by "/business" URL. Please use "/private" URL(for private channels), or "/public" URL(for public channels). More details can refer to: https://www.okx.com/help-center/changes-to-v5-api-websocket-subscription-parameter-and-url.</td>
+</tr>
+<tr>
+<td>64003</td>
+<td>Your trading fee tier doesn't meet the requirement to access this channel</td>
+</tr>
+<tr>
+<td>64004</td>
+<td>Subscribe to both {channelName} and books-l2-tbt for {instId} is not allowed. Unsubscribe books-l2-tbt first.</td>
+</tr>
+<tr>
+<td>64007</td>
+<td>Operation {0} failed due to WebSocket internal error. Please try again later.</td>
+</tr>
+<tr>
+<td>64008</td>
+<td>The connection will soon be closed for a service upgrade. Please reconnect.</td>
+</tr>
+</tbody></table>
+<h4 id="error-code-websocket-public-close-frame">Close Frame</h4>
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Reason Text</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1009</td>
+<td>Request message exceeds the maximum frame length</td>
+</tr>
+<tr>
+<td>4001</td>
+<td>Login Failed</td>
+</tr>
+<tr>
+<td>4002</td>
+<td>Invalid Request</td>
+</tr>
+<tr>
+<td>4003</td>
+<td>APIKey subscription amount exceeds the limit 100</td>
+</tr>
+<tr>
+<td>4004</td>
+<td>No data received in 30s</td>
+</tr>
+<tr>
+<td>4005</td>
+<td>Buffer is full, cannot write data</td>
+</tr>
+<tr>
+<td>4006</td>
+<td>Abnormal disconnection</td>
+</tr>
+<tr>
+<td>4007</td>
+<td>API key has been updated or deleted. Please reconnect.</td>
+</tr>
+<tr>
+<td>4008</td>
+<td>The number of subscribed channels exceeds the maximum limit.</td>
+</tr>
+<tr>
+<td>4009</td>
+<td>The number of subscription channels for this connection exceeds the limit</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Disclaimer: The availability of products and services listed on this page will depend on your region. Please see your applicable Terms of Service for more detail.
+</aside>

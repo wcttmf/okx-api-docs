@@ -1,0 +1,164 @@
+<h3 id="funding-account-rest-api-estimate-quote">Estimate quote</h3><h4 id="funding-account-rest-api-estimate-quote-rate-limit-10-requests-per-second">Rate Limit: 10 requests per second</h4><h4 id="funding-account-rest-api-estimate-quote-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-estimate-quote-rate-limit-1-request-per-5-seconds">Rate Limit: 1 request per 5 seconds</h4><h4 id="funding-account-rest-api-estimate-quote-rate-limit-rule-instrument-id">Rate limit rule: Instrument ID</h4><h4 id="funding-account-rest-api-estimate-quote-permission-trade">Permission: Trade</h4><h4 id="funding-account-rest-api-estimate-quote-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/asset/convert/estimate-quote</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/asset/convert/estimate-quote
+body
+<span class="o">{</span>
+    <span class="s2">"baseCcy"</span>: <span class="s2">"ETH"</span>,
+    <span class="s2">"quoteCcy"</span>: <span class="s2">"USDT"</span>,
+    <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+    <span class="s2">"rfqSz"</span>: <span class="s2">"30"</span>,
+    <span class="s2">"rfqSzCcy"</span>: <span class="s2">"USDT"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="funding-account-rest-api-estimate-quote-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">baseCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Base currency, e.g. <code>BTC</code> in <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">quoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Quote currency, e.g. <code>USDT</code> in <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trade side based on <code>baseCcy</code><br/><code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">rfqSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">RFQ amount</td>
+</tr>
+<tr>
+<td style="text-align: left">rfqSzCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">RFQ currency</td>
+</tr>
+<tr>
+<td style="text-align: left">clQReqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client Order ID as assigned by the client<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag<br/>Applicable to broker user</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"baseCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"baseSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01023052"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clQReqId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cnvtPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2932.40104429"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"origRfqSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quoterETH-USDT16461885104612381"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1646188510461"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rfqSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rfqSzCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ttlMs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-estimate-quote-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">quoteTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quotation generation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ttlMs</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Validity period of quotation in milliseconds</td>
+</tr>
+<tr>
+<td style="text-align: left">clQReqId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td style="text-align: left">quoteId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quote ID</td>
+</tr>
+<tr>
+<td style="text-align: left">baseCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Base currency, e.g. <code>BTC</code> in <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">quoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quote currency, e.g. <code>USDT</code> in <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade side based on <code>baseCcy</code></td>
+</tr>
+<tr>
+<td style="text-align: left">origRfqSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Original RFQ amount</td>
+</tr>
+<tr>
+<td style="text-align: left">rfqSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Real RFQ amount</td>
+</tr>
+<tr>
+<td style="text-align: left">rfqSzCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">RFQ currency</td>
+</tr>
+<tr>
+<td style="text-align: left">cnvtPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Convert price based on quote currency</td>
+</tr>
+<tr>
+<td style="text-align: left">baseSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Convert amount of base currency</td>
+</tr>
+<tr>
+<td style="text-align: left">quoteSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Convert amount of quote currency</td>
+</tr>
+</tbody></table>

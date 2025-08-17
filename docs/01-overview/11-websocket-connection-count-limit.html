@@ -1,0 +1,41 @@
+<h3 id="overview-websocket-connection-count-limit">Connection count limit</h3>
+<p>The limit will be set at 30 WebSocket connections per specific WebSocket channel per sub-account. Each WebSocket connection is identified by the unique <code>connId</code>.</p>
+<p><br/></p>
+<p>The WebSocket channels subject to this limitation are as follows:</p>
+<ol>
+<li><a href="/docs-v5/en/#order-book-trading-trade-ws-order-channel">Orders channel</a></li>
+<li><a href="/docs-v5/en/#trading-account-websocket-account-channel">Account channel</a></li>
+<li><a href="/docs-v5/en/#trading-account-websocket-positions-channel">Positions channel</a></li>
+<li><a href="/docs-v5/en/#trading-account-websocket-balance-and-position-channel">Balance and positions channel</a></li>
+<li><a href="/docs-v5/en/#trading-account-websocket-position-risk-warning">Position risk warning channel</a></li>
+<li><a href="/docs-v5/en/#trading-account-websocket-account-greeks-channel">Account greeks channel</a></li>
+</ol>
+<p>If users subscribe to the same channel through the same WebSocket connection through multiple arguments, for example, by using <code>{"channel": "orders", "instType": "ANY"}</code> and <code>{"channel": "orders", "instType": "SWAP"}</code>, it will be counted once only. If users subscribe to the listed channels (such as orders and accounts) using either the same or different connections, it will not affect the counting, as these are considered as two different channels. The system calculates the number of WebSocket connections per channel.</p>
+<p><br/></p>
+<p>The platform will send the number of active connections to clients through the <code>channel-conn-count</code> event message <b>to new channel subscriptions</b>.</p>
+<blockquote>
+<p>Connection count update</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="s2">"channel-conn-count"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="s2">"orders"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"connCount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="s2">"abcd1234"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<p><br/></p>
+<p>When the limit is breached, generally the latest connection that sends the subscription request will be rejected. Client will receive the usual subscription acknowledgement followed by the <code>channel-conn-count-error</code> from the connection that the subscription has been terminated. In exceptional circumstances the platform may unsubscribe existing connections.</p>
+<blockquote>
+<p>Connection limit error</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"channel-conn-count-error"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"orders"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"connCount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<p><br/></p>
+<p>Order operations through WebSocket, including place, amend and cancel orders, are not impacted through this change.</p>

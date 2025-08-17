@@ -1,0 +1,614 @@
+<h3 id="order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel">WS / Contract grid algo orders channel</h3>
+<p>Retrieve contract grid algo orders. Data will be pushed when triggered by events such as placing/canceling order. It will also be pushed in regular interval according to subscription granularity.</p>
+<h4 id="order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel-url-path">URL Path</h4>
+<p>/ws/v5/business (required login)</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>: <span class="o">[{</span>
+        <span class="s2">"channel"</span>: <span class="s2">"grid-orders-contract"</span>,
+        <span class="s2">"instType"</span>: <span class="s2">"SWAP"</span>
+    <span class="o">}]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="s">"channel"</span><span class="p">:</span> <span class="s">"grid-orders-contract"</span><span class="p">,</span>
+        <span class="s">"instType"</span><span class="p">:</span> <span class="s">"SWAP"</span>
+    <span class="p">}]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div><h4 id="order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td>Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name<br/><code>grid-orders-contract</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Instrument type<br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Algo Order ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grid-orders-contract"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANY"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">grid-orders-contract</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instType</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">FUTURES</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Algo Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example: </p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grid-orders-contract"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4470****9584"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"actualLever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.3481494635276649"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"activeOrdNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"571039869070475264"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"algoOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contract_grid"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"annualizedRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"arbitrageNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"52.3015392887089673"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"basePos"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1682418514204"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"cancelType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"108.7945652387089673"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"floatProfit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.7945652387089673"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"gridNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"gridProfit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"investment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16370.482143120824"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"36437.3"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"minPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26931.9"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ordFrozen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5.38638"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1682492574068"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"perMaxProfitRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1687494513302446"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"perMinProfitRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1263869357706788"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0879456523870897"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"rebateTrans"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nl">"rebate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rebateCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
+        </span><span class="p">}],</span><span class="w">
+        </span><span class="nl">"runPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27306.9"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"runType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"singleAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"running"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"stopType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalAnnualizedRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38.52019574554529"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.7945652387089673"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tradeNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"triggerParams"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nl">"triggerAction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"start"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"delaySeconds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerStrategy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"price"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manual"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1682418561497"</span><span class="w">
+        </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"triggerAction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"delaySeconds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerStrategy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"instant"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stopType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manual"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+        </span><span class="p">}],</span><span class="w">
+        </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1682492552257"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profitSharingRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"copyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tpRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"slRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fundingFee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-ws-contract-grid-algo-orders-channel-response-parameters-when-data-is-pushed">Response parameters when data is pushed.</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uid</td>
+<td style="text-align: left">String</td>
+<td>User ID</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td>Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; cTime</td>
+<td style="text-align: left">String</td>
+<td>Algo order created time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uTime</td>
+<td style="text-align: left">String</td>
+<td>Algo order updated time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoOrdType</td>
+<td style="text-align: left">String</td>
+<td>Algo order type<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td>Algo order state<br/><code>starting</code><br/><code>running</code><br/><code>stopping</code><br/><code>no_close_position</code>: stopped algo order but hadn't close position yet<br/><code>stopped</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rebateTrans</td>
+<td style="text-align: left">Array of objects</td>
+<td>Rebate transfer info</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; rebate</td>
+<td style="text-align: left">String</td>
+<td>Rebate amount</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; rebateCcy</td>
+<td style="text-align: left">String</td>
+<td>Rebate currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerParams</td>
+<td style="text-align: left">Array of objects</td>
+<td>Trigger Parameters</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; triggerAction</td>
+<td style="text-align: left">String</td>
+<td>Trigger action<br/><code>start</code><br/><code>stop</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; triggerStrategy</td>
+<td style="text-align: left">String</td>
+<td>Trigger strategy<br/><code>instant</code><br/><code>price</code><br/><code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; delaySeconds</td>
+<td style="text-align: left">String</td>
+<td>Delay seconds after action triggered</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; triggerTime</td>
+<td style="text-align: left">String</td>
+<td>Actual action triggered time, unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; triggerType</td>
+<td style="text-align: left">String</td>
+<td>Actual action triggered type<br/><code>manual</code><br/><code>auto</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; timeframe</td>
+<td style="text-align: left">String</td>
+<td>K-line type<br/><code>3m</code>, <code>5m</code>, <code>15m</code>, <code>30m</code> (<code>m</code>: minute)<br/><code>1H</code>, <code>4H</code> (<code>H</code>: hour)<br/><code>1D</code> (<code>D</code>: day)<br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; thold</td>
+<td style="text-align: left">String</td>
+<td>Threshold<br/>The value should be an integer between 1 to 100<br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; triggerCond</td>
+<td style="text-align: left">String</td>
+<td>Trigger condition<br/><code>cross_up</code><br/><code>cross_down</code><br/><code>above</code><br/><code>below</code><br/><code>cross</code><br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; timePeriod</td>
+<td style="text-align: left">String</td>
+<td>Time Period<br/><code>14</code><br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; triggerPx</td>
+<td style="text-align: left">String</td>
+<td>Trigger Price<br/>This field is only valid when <code>triggerStrategy</code> is <code>price</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; stopType</td>
+<td style="text-align: left">String</td>
+<td>Stop type<br/>Spot grid <code>1</code>: Sell base currency <code>2</code>: Keep base currency<br/>Contract grid <code>1</code>: Market Close All positions <code>2</code>: Keep positions<br/>This field is only valid when <code>triggerAction</code> is <code>stop</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxPx</td>
+<td style="text-align: left">String</td>
+<td>Upper price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; minPx</td>
+<td style="text-align: left">String</td>
+<td>Lower price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; gridNum</td>
+<td style="text-align: left">String</td>
+<td>Grid quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; runType</td>
+<td style="text-align: left">String</td>
+<td>Grid type<br/><code>1</code>: Arithmetic, <code>2</code>: Geometric</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Take-profit trigger price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Stop-loss trigger price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tradeNum</td>
+<td style="text-align: left">String</td>
+<td>The number of trades executed</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; arbitrageNum</td>
+<td style="text-align: left">String</td>
+<td>The number of arbitrages executed</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; singleAmt</td>
+<td style="text-align: left">String</td>
+<td>Amount per grid</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; perMinProfitRate</td>
+<td style="text-align: left">String</td>
+<td>Estimated minimum Profit margin per grid</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; perMaxProfitRate</td>
+<td style="text-align: left">String</td>
+<td>Estimated maximum Profit margin per grid</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; runPx</td>
+<td style="text-align: left">String</td>
+<td>Price at launch</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; totalPnl</td>
+<td style="text-align: left">String</td>
+<td>Total P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pnlRatio</td>
+<td style="text-align: left">String</td>
+<td>P&amp;L ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; investment</td>
+<td style="text-align: left">String</td>
+<td>Accumulated investment amount<br/>Spot grid investment amount calculated on quote currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; gridProfit</td>
+<td style="text-align: left">String</td>
+<td>Grid profit</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; floatProfit</td>
+<td style="text-align: left">String</td>
+<td>Variable P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; totalAnnualizedRate</td>
+<td style="text-align: left">String</td>
+<td>Total annualized rate</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; annualizedRate</td>
+<td style="text-align: left">String</td>
+<td>Grid annualized rate</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; cancelType</td>
+<td style="text-align: left">String</td>
+<td>Algo order stop reason<br/><code>0</code>: None<br/><code>1</code>: Manual stop<br/><code>2</code>: Take profit<br/><code>3</code>: Stop loss<br/><code>4</code>: Risk control<br/><code>5</code>: Delivery<br/><code>6</code>: Signal</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; stopType</td>
+<td style="text-align: left">String</td>
+<td>Stop type<br/>Spot grid <code>1</code>: Sell base currency <code>2</code>: Keep base currency<br/>Contract grid <code>1</code>: Market Close All positions <code>2</code>: Keep positions</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; direction</td>
+<td style="text-align: left">String</td>
+<td>Contract grid type<br/><code>long</code>,<code>short</code>,<code>neutral</code><br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; basePos</td>
+<td style="text-align: left">Boolean</td>
+<td>Whether or not to open a position when the strategy is activated<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td>Used margin based on <code>USDT</code><br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lever</td>
+<td style="text-align: left">String</td>
+<td>Leverage<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; actualLever</td>
+<td style="text-align: left">String</td>
+<td>Actual Leverage<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; liqPx</td>
+<td style="text-align: left">String</td>
+<td>Estimated liquidation price<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordFrozen</td>
+<td style="text-align: left">String</td>
+<td>Margin used by pending orders<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; availEq</td>
+<td style="text-align: left">String</td>
+<td>Available margin<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; eq</td>
+<td style="text-align: left">String</td>
+<td>Total equity of strategy account<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; activeOrdNum</td>
+<td style="text-align: left">String</td>
+<td>Total count of pending sub orders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tag</td>
+<td style="text-align: left">String</td>
+<td>Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; profitSharingRatio</td>
+<td style="text-align: left">String</td>
+<td>Profit sharing ratio<br/>Value range [0, 0.3]<br/>If it is a normal order (neither copy order nor lead order), this field returns ""</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; copyType</td>
+<td style="text-align: left">String</td>
+<td>Profit sharing order type<br/><code>0</code>: Normal order<br/><code>1</code>: Copy order without profit sharing<br/><code>2</code>: Copy order with profit sharing<br/><code>3</code>: Lead order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpRatio</td>
+<td style="text-align: left">String</td>
+<td>Take profit ratio, 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slRatio</td>
+<td style="text-align: left">String</td>
+<td>Stop loss ratio, 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fee</td>
+<td style="text-align: left">String</td>
+<td>Accumulated fee. Only applicable to contract grid, or it will be ""</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fundingFee</td>
+<td style="text-align: left">String</td>
+<td>Accumulated funding fee. Only applicable to contract grid, or it will be ""</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pTime</td>
+<td style="text-align: left">String</td>
+<td>Push time of algo grid information, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>

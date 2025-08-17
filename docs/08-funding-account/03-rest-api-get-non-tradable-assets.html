@@ -1,0 +1,158 @@
+<h3 id="funding-account-rest-api-get-non-tradable-assets">Get non-tradable assets</h3>
+<p>Retrieve the funding account balances of all the assets and the amount that is available or on hold.</p>
+<h4 id="funding-account-rest-api-get-non-tradable-assets-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="funding-account-rest-api-get-non-tradable-assets-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-non-tradable-assets-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-non-tradable-assets-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/asset/non-tradable-assets</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/asset/non-tradable-assets
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Funding</span> <span class="k">as</span> <span class="n">Funding</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">fundingAPI</span> <span class="o">=</span> <span class="n">Funding</span><span class="p">.</span><span class="n">FundingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">fundingAPI</span><span class="p">.</span><span class="n">get_non_tradable_assets</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="funding-account-rest-api-get-non-tradable-assets-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Single currency or multiple currencies (no more than 20) separated with comma, e.g. <code>BTC</code> or <code>BTC,ETH</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"bal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"989.84719571"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"burningFeeRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"canWd"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CELT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CELT-OKTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ctAddr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f403fb"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"logoLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://static.coinall.ltd/cdn/assets/imgs/221/460DA8A592400393.png"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minWd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"needTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"wdAll"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"wdTickSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"bal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"burningFeeRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"canWd"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEME"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEME-ERC20"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ctAddr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"09b760"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"logoLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://static.coinall.ltd/cdn/assets/imgs/207/2E664E470103C613.png"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minWd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.001"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEME Inu"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"needTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"wdAll"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"wdTickSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-non-tradable-assets-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency, e.g. <code>CELT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">name</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Chinese name of currency. There is no related name when it is not shown.</td>
+</tr>
+<tr>
+<td style="text-align: left">logoLink</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Logo link of currency</td>
+</tr>
+<tr>
+<td style="text-align: left">bal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawable balance</td>
+</tr>
+<tr>
+<td style="text-align: left">canWd</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Availability to withdraw to chain. <br/><code>false</code>: not available  <code>true</code>: available</td>
+</tr>
+<tr>
+<td style="text-align: left">chain</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Chain for withdrawal</td>
+</tr>
+<tr>
+<td style="text-align: left">minWd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Minimum withdrawal amount of currency in a single transaction</td>
+</tr>
+<tr>
+<td style="text-align: left">wdAll</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether all assets in this currency must be withdrawn at one time</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fixed withdrawal fee</td>
+</tr>
+<tr>
+<td style="text-align: left">feeCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fixed withdrawal fee unit, e.g. <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">burningFeeRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Burning fee rate, e.g "0.05" represents "5%".<br/>Some currencies may charge combustion fees. The burning fee is deducted based on the withdrawal quantity (excluding gas fee) multiplied by the burning fee rate.</td>
+</tr>
+<tr>
+<td style="text-align: left">ctAddr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last 6 digits of contract address</td>
+</tr>
+<tr>
+<td style="text-align: left">wdTickSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal precision, indicating the number of digits after the decimal point</td>
+</tr>
+<tr>
+<td style="text-align: left">needTag</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether tag/memo information is required for withdrawal</td>
+</tr>
+</tbody></table>

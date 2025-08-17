@@ -1,0 +1,63 @@
+<h3 id="block-trading-rest-api-cancel-all-after">Cancel All After</h3>
+<p>Cancel all quotes after the countdown timeout.</p>
+<h4 id="block-trading-rest-api-cancel-all-after-rate-limit-1-request-per-second">Rate Limit: 1 request per second</h4><h4 id="block-trading-rest-api-cancel-all-after-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="block-trading-rest-api-cancel-all-after-permission-trade">Permission: Trade</h4><h4 id="block-trading-rest-api-cancel-all-after-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/rfq/cancel-all-after</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/rfq/cancel-all-after
+body
+<span class="o">{</span>
+   <span class="s2">"timeOut"</span>:<span class="s2">"60"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="block-trading-rest-api-cancel-all-after-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">timeOut</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The countdown for quotes cancellation, with second as the unit.<br/>Range of value can be 0, [10, 120]. <br/>Setting timeOut to 0 disables Cancel All After.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="s2">"1587971460"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="s2">"1587971400"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-rest-api-cancel-all-after-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">triggerTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The time the cancellation is triggered.<br/>triggerTime=0 means Cancel All After is disabled.</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The time the request is received.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Users are recommended to send a request to the exchange every second. When the cancel all after is triggered, the trading engine will cancel quotes on behalf of the client one by one and this operation may take up to a few seconds. This feature is intended as a protection mechanism for clients only and clients should not use this feature as part of their trading strategies.
+</aside>

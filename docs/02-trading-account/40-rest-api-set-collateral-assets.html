@@ -1,0 +1,88 @@
+<h3 id="trading-account-rest-api-set-collateral-assets">Set collateral assets</h3><h4 id="trading-account-rest-api-set-collateral-assets-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-set-collateral-assets-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-set-collateral-assets-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-set-collateral-assets-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/set-collateral-assets</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Set all assets to be collateral</span>
+POST /api/v5/account/set-collateral-assets
+body
+<span class="o">{</span>
+    <span class="s2">"type"</span>:<span class="s2">"all"</span>,
+    <span class="s2">"collateralEnabled"</span>:true
+<span class="o">}</span>
+
+
+<span class="c"># Set custom assets to be non-collateral</span>
+POST /api/v5/account/set-collateral-assets
+body
+<span class="o">{</span>
+    <span class="s2">"type"</span>:<span class="s2">"custom"</span>,
+    <span class="s2">"ccyList"</span>:[<span class="s2">"BTC"</span>,<span class="s2">"ETH"</span><span class="o">]</span>,
+    <span class="s2">"collateralEnabled"</span>:false
+<span class="o">}</span>
+</code></pre></div><h4 id="trading-account-rest-api-set-collateral-assets-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">true</td>
+<td style="text-align: left">Type<br/><code>all</code><br/><code>custom</code></td>
+</tr>
+<tr>
+<td style="text-align: left">collateralEnabled</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">true</td>
+<td style="text-align: left">Whether or not set the assets to be collateral<br/><code>true</code>: Set to be collateral<br/><code>false</code>: Set to be non-collateral</td>
+</tr>
+<tr>
+<td style="text-align: left">ccyList</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">conditional</td>
+<td style="text-align: left">Currency list, e.g. ["BTC","ETH"]<br/>If type=<code>custom</code>, the parameter is required.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="w"> </span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="s2">"all"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccyList"</span><span class="p">:[</span><span class="s2">"BTC"</span><span class="p">,</span><span class="s2">"ETH"</span><span class="p">],</span><span class="w">
+        </span><span class="nl">"collateralEnabled"</span><span class="p">:</span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">  
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-set-collateral-assets-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Type<br/><code>all</code><br/><code>custom</code></td>
+</tr>
+<tr>
+<td style="text-align: left">collateralEnabled</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether or not set the assets to be collateral<br/><code>true</code>: Set to be collateral<br/><code>false</code>: Set to be non-collateral</td>
+</tr>
+<tr>
+<td style="text-align: left">ccyList</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Currency list, e.g. ["BTC","ETH"]</td>
+</tr>
+</tbody></table>

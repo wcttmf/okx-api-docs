@@ -1,0 +1,181 @@
+<h3 id="trading-account-rest-api-position-builder-trend-graph">Position builder trend graph</h3><h4 id="trading-account-rest-api-position-builder-trend-graph-rate-limit-1-request-per-5-seconds">Rate limit: 1 request per 5 seconds</h4><h4 id="trading-account-rest-api-position-builder-trend-graph-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-position-builder-trend-graph-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-position-builder-trend-graph-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/position-builder-graph</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+   <span class="s2">"inclRealPosAndEq"</span>:false,
+   <span class="s2">"simPos"</span>:[
+      <span class="o">{</span>
+         <span class="s2">"pos"</span>:<span class="s2">"-10"</span>,
+         <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+         <span class="s2">"avgPx"</span>:<span class="s2">"100000"</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+         <span class="s2">"pos"</span>:<span class="s2">"10"</span>,
+         <span class="s2">"instId"</span>:<span class="s2">"LTC-USDT-SWAP"</span>,
+         <span class="s2">"avgPx"</span>:<span class="s2">"8000"</span>
+      <span class="o">}</span>
+   <span class="o">]</span>,
+   <span class="s2">"simAsset"</span>:[
+      <span class="o">{</span>
+         <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+         <span class="s2">"amt"</span>:<span class="s2">"100"</span>
+      <span class="o">}</span>
+   <span class="o">]</span>,
+   <span class="s2">"greeksType"</span>:<span class="s2">"CASH"</span>,
+   <span class="s2">"type"</span>:<span class="s2">"mmr"</span>,
+   <span class="s2">"mmrConfig"</span>:<span class="o">{</span>
+      <span class="s2">"acctLv"</span>:<span class="s2">"3"</span>,
+      <span class="s2">"lever"</span>:<span class="s2">"1"</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="trading-account-rest-api-position-builder-trend-graph-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Required</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>inclRealPosAndEq</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Whether to import existing positions and assets<br/> The default is <code>true</code></td>
+</tr>
+<tr>
+<td>simPos</td>
+<td>Array of objects</td>
+<td>No</td>
+<td>List of simulated positions</td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>Yes</td>
+<td>Instrument ID, e.g. <code>BTC-USDT-SWAP</code><br/> Applicable to <code>SWAP</code>/<code>FUTURES</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td>&gt; pos</td>
+<td>String</td>
+<td>Yes</td>
+<td>Quantity of positions</td>
+</tr>
+<tr>
+<td>&gt; avgPx</td>
+<td>String</td>
+<td>Yes</td>
+<td>Average open price</td>
+</tr>
+<tr>
+<td>&gt; lever</td>
+<td>String</td>
+<td>No</td>
+<td>leverage<br/> Only applicable to <code>Multi-currency margin</code><br/> The default is <code>1</code><br/> If the allowed leverage is exceeded, set according to the maximum leverage.</td>
+</tr>
+<tr>
+<td>simAsset</td>
+<td>Array of objects</td>
+<td>No</td>
+<td>List of simulated assets<br/> When <code>inclRealPosAndEq</code> is <code>true</code>, only real assets are considered and virtual assets are ignored</td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Yes</td>
+<td>Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>&gt; amt</td>
+<td>String</td>
+<td>Yes</td>
+<td>Currency amount</td>
+</tr>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>Yes</td>
+<td>Trending graph type<br/> <code>mmr</code></td>
+</tr>
+<tr>
+<td>mmrConfig</td>
+<td>Object</td>
+<td>Yes</td>
+<td>MMR configuration</td>
+</tr>
+<tr>
+<td>&gt; acctLv</td>
+<td>String</td>
+<td>No</td>
+<td>Switch to account mode<br/> <code>3</code>: Multi-currency margin<br/> <code>4</code>: Portfolio margin</td>
+</tr>
+<tr>
+<td>&gt; lever</td>
+<td>String</td>
+<td>No</td>
+<td>Cross margin leverage in Multi-currency margin mode, the default is <code>1</code>.<br/> If the allowed leverage is exceeded, set according to the maximum leverage.<br/> Only applicable to <code>Multi-currency margin</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mmr"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mmrData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+               </span><span class="err">......</span><span class="w">
+               </span><span class="p">{</span><span class="w">
+                     </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1415.0254039225917"</span><span class="p">,</span><span class="w">
+                     </span><span class="nl">"mmrRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-47.45603627655477"</span><span class="p">,</span><span class="w">
+                     </span><span class="nl">"shockFactor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.94"</span><span class="w">
+               </span><span class="p">},</span><span class="w">
+               </span><span class="p">{</span><span class="w">
+                     </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1417.732491243024"</span><span class="p">,</span><span class="w">
+                     </span><span class="nl">"mmrRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-47.436684685735386"</span><span class="p">,</span><span class="w">
+                     </span><span class="nl">"shockFactor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.93"</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+               </span><span class="err">......</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+         </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="trading-account-rest-api-position-builder-trend-graph-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameters</strong></th>
+<th><strong>Types</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>Graph type<br/> <code>mmr</code></td>
+</tr>
+<tr>
+<td>mmrData</td>
+<td>Array</td>
+<td>Array of mmrData<br/> Return data in shockFactor ascending order</td>
+</tr>
+<tr>
+<td>&gt; shockFactor</td>
+<td>String</td>
+<td>Price change ratio, data range -1 to 1.</td>
+</tr>
+<tr>
+<td>&gt; mmr</td>
+<td>String</td>
+<td>Mmr at specific price</td>
+</tr>
+<tr>
+<td>&gt; mmrRatio</td>
+<td>String</td>
+<td>Maintenance margin ratio at specific price</td>
+</tr>
+</tbody></table>

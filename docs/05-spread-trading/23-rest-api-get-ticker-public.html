@@ -1,0 +1,118 @@
+<h3 id="spread-trading-rest-api-get-ticker-public">Get ticker (Public)</h3>
+<p>Retrieve the latest price snapshot, best bid/ask price and quantity.</p>
+<h4 id="spread-trading-rest-api-get-ticker-public-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="spread-trading-rest-api-get-ticker-public-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="spread-trading-rest-api-get-ticker-public-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/market/sprd-ticker</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/market/sprd-ticker?sprdId<span class="o">=</span>BTC-USDT_BTC-USDT-SWAP
+
+</code></pre></div><h4 id="spread-trading-rest-api-get-ticker-public-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sprdId</td>
+<td>String</td>
+<td>Yes</td>
+<td>spread ID, e.g. BTC-USDT_BTC-USDT-SWAP</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"sprdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT_BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"14.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lastSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"askPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"askSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bidPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bidSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"open24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"high24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"14.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"low24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-2.2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vol24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6.67"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1715331406485"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="spread-trading-rest-api-get-ticker-public-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sprdId</td>
+<td>String</td>
+<td>spread ID</td>
+</tr>
+<tr>
+<td>last</td>
+<td>String</td>
+<td>Last traded price</td>
+</tr>
+<tr>
+<td>lastSz</td>
+<td>String</td>
+<td>Last traded size</td>
+</tr>
+<tr>
+<td>askPx</td>
+<td>String</td>
+<td>Best ask price</td>
+</tr>
+<tr>
+<td>askSz</td>
+<td>String</td>
+<td>Best ask size</td>
+</tr>
+<tr>
+<td>bidPx</td>
+<td>String</td>
+<td>Best bid price</td>
+</tr>
+<tr>
+<td>bidSz</td>
+<td>String</td>
+<td>Best bid size</td>
+</tr>
+<tr>
+<td>open24h</td>
+<td>String</td>
+<td>Open price in the past 24 hours</td>
+</tr>
+<tr>
+<td>high24h</td>
+<td>String</td>
+<td>Highest price in the past 24 hours</td>
+</tr>
+<tr>
+<td>low24h</td>
+<td>String</td>
+<td>Lowest price in the past 24 hours</td>
+</tr>
+<tr>
+<td>vol24h</td>
+<td>String</td>
+<td>24h trading volume<br/> The unit is USD for inverse spreads, and the corresponding baseCcy for linear and hybrid spreads.</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>String</td>
+<td>Ticker data generation time, Unix timestamp format in milliseconds, e.g. 1597026383085.</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,96 @@
+<h3 id="order-book-trading-copy-trading-get-account-configuration">GET / Account configuration</h3>
+<p>Retrieve current account configuration related to copy/lead trading.</p>
+<h4 id="order-book-trading-copy-trading-get-account-configuration-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-account-configuration-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-get-account-configuration-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-account-configuration-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/config</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/config
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-account-configuration-request-parameters">Request Parameters</h4>
+<p>None</p>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"copyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxCopyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profitSharingRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"roleType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"copyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxCopyTraderNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"profitSharingRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"roleType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"nickName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"155***9957"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"portLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uniqueCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5506D3681454A304"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-account-configuration-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">User unique code</td>
+</tr>
+<tr>
+<td style="text-align: left">nickName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Nickname</td>
+</tr>
+<tr>
+<td style="text-align: left">portLink</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Portrait link</td>
+</tr>
+<tr>
+<td style="text-align: left">details</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Details</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; roleType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Role type<br/><code>0</code>: General user<br/><code>1</code>: Leading trader<br/><code>2</code>: Copy trader</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; profitSharingRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit sharing ratio. <br/>Only applicable to lead trader, or it will be "". 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxCopyTraderNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum number of copy traders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; copyTraderNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current number of copy traders</td>
+</tr>
+</tbody></table>

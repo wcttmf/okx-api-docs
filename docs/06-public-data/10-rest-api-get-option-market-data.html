@@ -1,0 +1,196 @@
+<h3 id="public-data-rest-api-get-option-market-data">Get option market data</h3>
+<p>Retrieve option market data.</p>
+<h4 id="public-data-rest-api-get-option-market-data-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="public-data-rest-api-get-option-market-data-rate-limit-rule-ip-instfamily">Rate limit rule: IP + instFamily</h4><h4 id="public-data-rest-api-get-option-market-data-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/public/opt-summary</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/public/opt-summary?uly<span class="o">=</span>BTC-USD
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.PublicData</span> <span class="k">as</span> <span class="n">PublicData</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">publicDataAPI</span> <span class="o">=</span> <span class="n">PublicData</span><span class="p">.</span><span class="n">PublicAPI</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Retrieve option market data
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">publicDataAPI</span><span class="p">.</span><span class="n">get_opt_summary</span><span class="p">(</span>
+    <span class="n">uly</span><span class="o">=</span><span class="s">"BTC-USD"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="public-data-rest-api-get-option-market-data-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument family, only applicable to <code>OPTION</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">expTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Contract expiry date, the format is "YYMMDD", e.g. "200527"</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"askVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.7207056835937498"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bidVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.8310206676289528"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.9857332101544538"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fwdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"39016.8143629068452065"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1.1965483553276135"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.000011933182397798109"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-220309-33000-C"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OPTION"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.5551965233045728"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"realVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"volLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0014131955002093717"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-66.03526900575946"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1646733631242"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.000018173851073258973"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.7089307622132419"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"askVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.7968814062499998"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bidVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.014668822072611904"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"deltaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.01426678984554619"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fwdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"39016.8143629068452065"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.49483062407551576"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gammaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.000011933182397798109"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-220309-33000-P"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OPTION"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.5551965233045728"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"realVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"volLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.0014131955002093717"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"thetaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-54.93377294845015"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1646733631242"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.000018173851073258973"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"vegaBS"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.7089307622132419"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="public-data-rest-api-get-option-market-data-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type<br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USD-200103-5500-C</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Underlying</td>
+</tr>
+<tr>
+<td style="text-align: left">delta</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sensitivity of option price to <code>uly</code> price</td>
+</tr>
+<tr>
+<td style="text-align: left">gamma</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The delta is sensitivity to <code>uly</code> price</td>
+</tr>
+<tr>
+<td style="text-align: left">vega</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sensitivity of option price to implied volatility</td>
+</tr>
+<tr>
+<td style="text-align: left">theta</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sensitivity of option price to remaining maturity</td>
+</tr>
+<tr>
+<td style="text-align: left">deltaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sensitivity of option price to <code>uly</code> price in BS mode</td>
+</tr>
+<tr>
+<td style="text-align: left">gammaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The delta is sensitivity to <code>uly</code> price in BS mode</td>
+</tr>
+<tr>
+<td style="text-align: left">vegaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sensitivity of option price to implied volatility in BS mode</td>
+</tr>
+<tr>
+<td style="text-align: left">thetaBS</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sensitivity of option price to remaining maturity in BS mode</td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage</td>
+</tr>
+<tr>
+<td style="text-align: left">markVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark volatility</td>
+</tr>
+<tr>
+<td style="text-align: left">bidVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bid volatility</td>
+</tr>
+<tr>
+<td style="text-align: left">askVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Ask volatility</td>
+</tr>
+<tr>
+<td style="text-align: left">realVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Realized volatility (not currently used)</td>
+</tr>
+<tr>
+<td style="text-align: left">volLv</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Implied volatility of at-the-money options</td>
+</tr>
+<tr>
+<td style="text-align: left">fwdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Forward price</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Data update time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>

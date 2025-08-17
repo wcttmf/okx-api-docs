@@ -1,0 +1,394 @@
+<h3 id="trading-account-rest-api-move-positions">Move positions</h3>
+<p>Only applicable to users with a trading level greater than or equal to VIP5, and can only be called through the API Key of the master account. Users can check their trading level through the fee details table on the <a href="https://www.okx.com/balance/fee">My trading fees</a> page.<br/></p>
+<p>To move positions between different accounts under the same master account. Each source account can trigger up to fifteen move position requests every 24 hours. There is no limitation to the destination account to receive positions. Refer to the "Things to note" part for more details.</p>
+<h4 id="trading-account-rest-api-move-positions-rate-limit-1-request-per-second">Rate limit: 1 request per second</h4><h4 id="trading-account-rest-api-move-positions-rate-limit-rule-master-account-user-id">Rate limit rule: Master account User ID</h4><h4 id="trading-account-rest-api-move-positions-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/move-positions</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+   <span class="s2">"fromAcct"</span>:<span class="s2">"0"</span>,
+   <span class="s2">"toAcct"</span>:<span class="s2">"test"</span>,
+   <span class="s2">"legs"</span>:[
+      <span class="o">{</span>
+         <span class="s2">"from"</span>:<span class="o">{</span>
+            <span class="s2">"posId"</span>:<span class="s2">"2065471111340792832"</span>,
+            <span class="s2">"side"</span>:<span class="s2">"sell"</span>,
+            <span class="s2">"sz"</span>:<span class="s2">"1"</span>
+         <span class="o">}</span>,
+         <span class="s2">"to"</span>:<span class="o">{</span>
+            <span class="s2">"posSide"</span>:<span class="s2">"net"</span>,
+            <span class="s2">"tdMode"</span>:<span class="s2">"cross"</span>
+         <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+         <span class="s2">"from"</span>:<span class="o">{</span>
+            <span class="s2">"posId"</span>:<span class="s2">"2063111180412153856"</span>,
+            <span class="s2">"side"</span>:<span class="s2">"sell"</span>,
+            <span class="s2">"sz"</span>:<span class="s2">"1"</span>
+         <span class="o">}</span>,
+         <span class="s2">"to"</span>:<span class="o">{</span>
+            <span class="s2">"posSide"</span>:<span class="s2">"net"</span>,
+            <span class="s2">"tdMode"</span>:<span class="s2">"cross"</span>
+         <span class="o">}</span>
+      <span class="o">}</span>
+   <span class="o">]</span>,
+   <span class="s2">"clientId"</span>:<span class="s2">"test"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="trading-account-rest-api-move-positions-request-parameters">Request parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Required</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fromAcct</td>
+<td>String</td>
+<td>Yes</td>
+<td>Source account name. If it's a master account, it should be "0"</td>
+</tr>
+<tr>
+<td>toAcct</td>
+<td>String</td>
+<td>Yes</td>
+<td>Destination account name. If it's a master account, it should be "0"</td>
+</tr>
+<tr>
+<td>legs</td>
+<td>Array of Objects</td>
+<td>Yes</td>
+<td>An array of objects containing details of each position to be moved</td>
+</tr>
+<tr>
+<td>&gt;from</td>
+<td>Object</td>
+<td>yes</td>
+<td>Details of the position in the source account</td>
+</tr>
+<tr>
+<td>&gt;&gt;posId</td>
+<td>String</td>
+<td>Yes</td>
+<td>Position ID in the source account</td>
+</tr>
+<tr>
+<td>&gt;&gt;sz</td>
+<td>String</td>
+<td>Yes</td>
+<td>Number of contracts.</td>
+</tr>
+<tr>
+<td>&gt;&gt;side</td>
+<td>String</td>
+<td>Yes</td>
+<td>Trade side from the perspective of source account<br/> <code>buy</code><br/> <code>sell</code></td>
+</tr>
+<tr>
+<td>&gt;to</td>
+<td>Object</td>
+<td>Yes</td>
+<td>Details of the configuration of the destination account</td>
+</tr>
+<tr>
+<td>&gt;&gt;tdMode</td>
+<td>String</td>
+<td>No</td>
+<td>Trading mode in the destination account.<br/> <code>cross</code><br/> <code>isolated</code><br/> If not provided, tdMode will take the default values as shown below:<br/>Buy options in <code>Futures mode</code>/<code>Multi-currency margin mode</code>: <code>isolated</code><br/> Other cases: <code>cross</code></td>
+</tr>
+<tr>
+<td>&gt;&gt;posSide</td>
+<td>String</td>
+<td>No</td>
+<td>Position side<br/> <code>net</code><br/> <code>long</code><br/> <code>short</code><br/> This parameter is not mandatory if the destination sub-account is in <strong>net</strong> mode. If you pass it through, the only valid value is <code>net</code>.It can only be <code>long</code> or <code>short</code> if the destination sub-account is in long/short mode. If not specified, destination account in long/short mode always open new positions.</td>
+</tr>
+<tr>
+<td>&gt;&gt;ccy</td>
+<td>String</td>
+<td>No</td>
+<td>Margin currency in destination accountOnly applicable to cross margin positions in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>String</td>
+<td>Yes</td>
+<td>Client-supplied ID. A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"clientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"blockTdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065832911119076864"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1734069018526"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fromAcct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"toAcct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"legs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065471111340792832"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-SWAP"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100042.7"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-SWAP"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100042.7"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"posId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2063111180412153856"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100008.1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100008.1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>Response example:failure</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">destination</span><span class="w"> </span><span class="err">account</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w"> </span><span class="err">(net/longShort)</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">matched</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">posSide</span><span class="w"> </span><span class="err">field</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Incorrect type of posSide (leg with Instrument Id [BTC-USD-SWAP])"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">BTC</span><span class="w"> </span><span class="err">amount</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">destination</span><span class="w"> </span><span class="err">account</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">enough</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">open</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">position.</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51008"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Order failed. Insufficient BTC margin in account"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="trading-account-rest-api-move-positions-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td>String</td>
+<td>The result code, <code>0</code> means success</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>String</td>
+<td>The error message, empty if the code is 0</td>
+</tr>
+<tr>
+<td>blockTdId</td>
+<td>String</td>
+<td>Block trade ID</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>String</td>
+<td>Client-supplied ID</td>
+</tr>
+<tr>
+<td>state</td>
+<td>String</td>
+<td>Status of the order <code>filled</code>, <code>failed</code></td>
+</tr>
+<tr>
+<td>fromAcct</td>
+<td>String</td>
+<td>Source account name</td>
+</tr>
+<tr>
+<td>toAcct</td>
+<td>String</td>
+<td>Destination account name</td>
+</tr>
+<tr>
+<td>legs</td>
+<td>Array</td>
+<td>An array of objects containing details of each position to be moved</td>
+</tr>
+<tr>
+<td>&gt;from</td>
+<td>Object</td>
+<td>Object describing the "from" leg</td>
+</tr>
+<tr>
+<td>&gt;&gt;instId</td>
+<td>String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>&gt;&gt;posId</td>
+<td>String</td>
+<td>Position ID</td>
+</tr>
+<tr>
+<td>&gt;&gt;px</td>
+<td>String</td>
+<td>Transfer price, typically a 60-minute TWAP of the mark price</td>
+</tr>
+<tr>
+<td>&gt;&gt;side</td>
+<td>String</td>
+<td>Direction of the leg in the source account<br/> <code>buy</code><br/> <code>sell</code></td>
+</tr>
+<tr>
+<td>&gt;&gt;sz</td>
+<td>String</td>
+<td>Number of Contracts</td>
+</tr>
+<tr>
+<td>&gt;&gt;sCode</td>
+<td>String</td>
+<td>The code of the event execution result, 0 means success</td>
+</tr>
+<tr>
+<td>&gt;&gt;sMsg</td>
+<td>String</td>
+<td>Rejection message if the request is unsuccessful</td>
+</tr>
+<tr>
+<td>&gt;to</td>
+<td>Object</td>
+<td>Object describing the "to" leg</td>
+</tr>
+<tr>
+<td>&gt;&gt;instId</td>
+<td>String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>&gt;&gt; side</td>
+<td>String</td>
+<td>Trade side of the trade in the destination account</td>
+</tr>
+<tr>
+<td>&gt;&gt;posSide</td>
+<td>String</td>
+<td>Position side of the trade in the destination account</td>
+</tr>
+<tr>
+<td>&gt;&gt;tdMode</td>
+<td>String</td>
+<td>Trade mode</td>
+</tr>
+<tr>
+<td>&gt;&gt;px</td>
+<td>String</td>
+<td>Transfer price, typically a 60-minute TWAP of the mark price</td>
+</tr>
+<tr>
+<td>&gt;&gt;ccy</td>
+<td>String</td>
+<td>Margin currency</td>
+</tr>
+<tr>
+<td>&gt;&gt;sCode</td>
+<td>String</td>
+<td>The code of the event execution result, 0 means success</td>
+</tr>
+<tr>
+<td>&gt;&gt;sMsg</td>
+<td>String</td>
+<td>Rejection message if the request is unsuccessful</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>String</td>
+<td>Unix timestamp in milliseconds indicating when the transfer request was processed</td>
+</tr>
+</tbody></table>
+<h4 id="trading-account-rest-api-move-positions-things-to-note">Things to note</h4>
+<ol>
+<li>Only applicable to users with a trading level greater than or equal to VIP5, and can only be called through the API Key of the master account.</li>
+<li>The source and destination accounts for move positions must be accounts under the same master account and they must be different.</li>
+<li>For source account, a maximum of fifteen move position requests can be triggered within a 24-hour period. There is no limitation to the destination account to receive positions. Only successful requests are counted toward this limit.</li>
+<li>The maximum number of legs per move position request is 30.</li>
+<li>No move position fee will be charged at this time.</li>
+<li>Moving positions is not supported in margin trading now.</li>
+<li>The move position price is determined by the TWAP (Time-Weighted Average Price) of the mark price over the past 60 minutes, using the closing mark price per minute. If the symbol is newly listed and a 60-minute TWAP is unavailable, the move position will be rejected with error code 70065</li>
+<li>The move position will share the same price limit as those in the order book. The move position will fail if the 60-minute mark price TWAP is outside of the price limit.</li>
+<li>For the source account, move positions must be conducted in a reduce-only manner. You must choose the opposite side of your current position and specify a size equal to or smaller than your existing position size. The system will also process move position requests in a best-effort reduce-only manner.</li>
+<li>The side field of source account leg (from) should be <code>sell</code> if you are holding a long position while the side of destination account leg (to) should be <code>buy</code>, vice versa for a short position.</li>
+<li>The posSide field of destination account (to) should be <code>net</code> if it's in one-way mode; <code>long</code>/<code>short</code> if it's in hedge mode. If in hedge mode, you need to specify <code>long</code>/<code>short</code> to decide whether to close current positions or open reverse positions. Otherwise, it will always open new positions.
+
+<ol>
+<li>Open long: buy and open long (side: buy; posSide: long)</li>
+<li>Open short: sell and open short (side: sell; posSide: short)</li>
+<li>Close long: sell and close long (side: sell; posSide: long)</li>
+<li>Close short: buy and close short (side: buy; posSide: short)</li>
+</ol></li>
+<li>Historical records of move positions can be fetched from the <em>Get move positions history</em> endpoint but only for pending or successful requests.</li>
+<li>Move positions operation counting example.</li>
+</ol>
+<table><thead>
+<tr>
+<th>Transfer done within the day</th>
+<th>Account A count (total)</th>
+<th>Account B count (total)</th>
+<th>Account C count (total)</th>
+<th>Account D count (total)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Account A to Account B</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Account B to Account C</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Account B to Account D</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>

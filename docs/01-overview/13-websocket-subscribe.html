@@ -1,0 +1,165 @@
+<h3 id="overview-websocket-subscribe">Subscribe</h3>
+<p><strong>Subscription Instructions</strong></p>
+<blockquote>
+<p>Request format description</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span><span class="s2">"&lt;SubscriptionTopic&gt;"</span><span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>WebSocket channels are divided into two categories: <code>public</code> and <code>private</code> channels.</p>
+<p><code>Public channels</code> -- No authentication is required, include tickers channel, K-Line channel, limit price channel, order book channel, and mark price channel etc.</p>
+<p><code>Private channels</code> -- including account channel, order channel, and position channel, etc -- require log in.</p>
+<p>Users can choose to subscribe to one or more channels, and the total length of multiple channels cannot exceed 64 KB.</p>
+<p>Below is an example of subscription parameters. The requirement of subscription parameters for each channel is different. For details please refer to the specification of each channels.</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>:<span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"channel"</span>:<span class="s2">"tickers"</span>,
+            <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div>
+<p><strong>Request parameters</strong></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code><br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Instrument family<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Instrument ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tickers"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accb8e21"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Return parameters</strong></p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code><br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Instrument family<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>

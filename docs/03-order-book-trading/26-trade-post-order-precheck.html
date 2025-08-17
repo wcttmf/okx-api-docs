@@ -1,0 +1,278 @@
+<h3 id="order-book-trading-trade-post-order-precheck">POST / Order precheck</h3>
+<p>This endpoint is used to precheck the account information before and after placing the order. <br/>
+Only applicable to <code>Multi-currency margin mode</code>, and <code>Portfolio margin mode</code>.</p>
+<h4 id="order-book-trading-trade-post-order-precheck-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-trade-post-order-precheck-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-trade-post-order-precheck-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-trade-post-order-precheck-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/trade/order-precheck</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># place order for SPOT</span>
+POST /api/v5/trade/order-precheck
+ body
+ <span class="o">{</span>
+    <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT"</span>,
+    <span class="s2">"tdMode"</span>:<span class="s2">"cash"</span>,
+    <span class="s2">"clOrdId"</span>:<span class="s2">"b15"</span>,
+    <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+    <span class="s2">"ordType"</span>:<span class="s2">"limit"</span>,
+    <span class="s2">"px"</span>:<span class="s2">"2.15"</span>,
+    <span class="s2">"sz"</span>:<span class="s2">"2"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-trade-post-order-precheck-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trade mode<br/>Margin mode <code>cross</code> <code>isolated</code><br/>Non-Margin mode <code>cash</code><br/><code>spot_isolated</code> (only applicable to SPOT lead trading, <code>tdMode</code> should be <code>spot_isolated</code> for <code>SPOT</code> lead trading.)</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order side, <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Position side  <br/>The default is <code>net</code> in the <code>net</code> mode <br/>It is required in the <code>long/short</code> mode, and can only be <code>long</code> or <code>short</code>. <br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order type <br/><code>market</code>: Market order <br/><code>limit</code>: Limit order <br/><code>post_only</code>: Post-only order <br/><code>fok</code>: Fill-or-kill order <br/><code>ioc</code>: Immediate-or-cancel order  <br/><code>optimal_limit_ioc</code>: Market order with immediate-or-cancel order (applicable only to Expiry Futures and Perpetual Futures).</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Quantity to buy or sell</td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Order price. Only applicable to <code>limit</code>,<code>post_only</code>,<code>fok</code>,<code>ioc</code>,<code>mmp</code>,<code>mmp_and_post_only</code> order.</td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether orders can only reduce in position size.  <br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>.<br/>Only applicable to <code>MARGIN</code> orders, and <code>FUTURES</code>/<code>SWAP</code> orders in <code>net</code> mode <br/>Only applicable to <code>Futures mode</code> and <code>Multi-currency margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the target currency uses the quote or base currency.<br/><code>base_ccy</code>: Base currency ,<code>quote_ccy</code>: Quote currency  <br/>Only applicable to <code>SPOT</code> Market Orders<br/>Default is <code>quote_ccy</code> for buy, <code>base_ccy</code> for sell</td>
+</tr>
+<tr>
+<td style="text-align: left">attachAlgoOrds</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">TP/SL information attached when placing order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; attachAlgoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied Algo ID when placing order attaching TP/SL<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.<br/>It will be posted to <code>algoClOrdId</code> when placing TP/SL order once the general order is filled completely.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Take-profit trigger price<br/>For condition TP order, if you fill in this parameter, you should fill in the take-profit order price as well.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Take-profit order price <br/><br/>For condition TP order, if you fill in this parameter, you should fill in the take-profit trigger price as well. <br/>For limit TP order, you need to fill in this parameter, take-profit trigger needn‘t to be filled. <br/>If the price is -1, take-profit will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdKind</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">TP order kind<br/><code>condition</code><br/><code>limit</code><br/> The default is <code>condition</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Stop-loss trigger price<br/>If you fill in this parameter, you should fill in the stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Stop-loss order price<br/>If you fill in this parameter, you should fill in the stop-loss trigger price.<br/>If the price is -1, stop-loss will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price type<br/><code>last</code>: last price <br/><code>index</code>: index price <br/><code>mark</code>: mark price <br/>The default is last</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price <br/><code>index</code>: index price <br/><code>mark</code>: mark price <br/>The default is last</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Size. Only applicable to TP order of split TPs, and it is required for TP order of split TPs</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"adjEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41.94347460746277"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"adjEqChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-226.05616481626"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availBalChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"imrChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57.74709688430927"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liab"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liabChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liabChgCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6764.8556232031115"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPxDiff"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-57693.044376796888536773622035980224609375"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPxDiffRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.8950500152315991"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnRatioChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mmrChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posBalChg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-post-order-precheck-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">adjEq</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current adjusted / Effective equity in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">adjEqChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, changed quantity of adjusted / Effective equity in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">imr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current initial margin requirement in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">imrChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, changed quantity of initial margin requirement in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mmr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current Maintenance margin requirement in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mmrChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, changed quantity of maintenance margin requirement in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mgnRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current Maintenance margin ratio in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mgnRatioChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, changed quantity of Maintenance margin ratio in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">availBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current available balance in margin coin currency, only applicable to turn auto borrow off</td>
+</tr>
+<tr>
+<td style="text-align: left">availBalChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, changed quantity of available balance after placing order, only applicable to turn auto borrow off</td>
+</tr>
+<tr>
+<td style="text-align: left">liqPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current estimated liquidation price</td>
+</tr>
+<tr>
+<td style="text-align: left">liqPxDiff</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, the distance between estimated liquidation price and mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">liqPxDiffRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, the distance rate between estimated liquidation price and mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">posBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current positive asset, only applicable to margin isolated position</td>
+</tr>
+<tr>
+<td style="text-align: left">posBalChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, positive asset of margin isolated, only applicable to margin isolated position</td>
+</tr>
+<tr>
+<td style="text-align: left">liab</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current liabilities of currency<br/> For cross, it is cross liabilities<br/>For isolated position, it is isolated liabilities</td>
+</tr>
+<tr>
+<td style="text-align: left">liabChg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, changed quantity of liabilities<br/> For cross, it is cross liabilities<br/>For isolated position, it is isolated liabilities</td>
+</tr>
+<tr>
+<td style="text-align: left">liabChgCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">After placing order, the unit of changed liabilities quantity<br/> only applicable cross and in auto borrow</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unit type of positive asset, only applicable to margin isolated position<br/><code>1</code>: it is both base currency before and after placing order <br/> <code>2</code>: before plaing order, it is base currency. after placing order, it is quota currency.<br/><code>3</code>: before plaing order, it is quota currency. after placing order, it is base currency<br/> <code>4</code>: it is both quota currency before and after placing order</td>
+</tr>
+</tbody></table>

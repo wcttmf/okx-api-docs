@@ -1,0 +1,610 @@
+<h3 id="error-code-rest-api-funding">Funding</h3>
+<p>Error Code from 58000 to 58999</p>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>HTTP Status Code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>58002</td>
+<td>200</td>
+<td>Please activate Savings Account first.</td>
+</tr>
+<tr>
+<td>58003</td>
+<td>200</td>
+<td>Savings does not support this currency type</td>
+</tr>
+<tr>
+<td>58004</td>
+<td>200</td>
+<td>Account blocked.</td>
+</tr>
+<tr>
+<td>58005</td>
+<td>200</td>
+<td>The {behavior} amount must be equal to or less than {minNum}</td>
+</tr>
+<tr>
+<td>58006</td>
+<td>200</td>
+<td>Service unavailable for token {0}.</td>
+</tr>
+<tr>
+<td>58007</td>
+<td>200</td>
+<td>Assets interface is currently unavailable. Try again later</td>
+</tr>
+<tr>
+<td>58008</td>
+<td>200</td>
+<td>You do not have assets in this currency.</td>
+</tr>
+<tr>
+<td>58009</td>
+<td>200</td>
+<td>Crypto pair doesn't exist</td>
+</tr>
+<tr>
+<td>58010</td>
+<td>200</td>
+<td>Chain {chain} isn't supported</td>
+</tr>
+<tr>
+<td>58011</td>
+<td>200</td>
+<td>Due to local laws and regulations, our services are unavailable to unverified users in {region}. Please verify your account.</td>
+</tr>
+<tr>
+<td>58012</td>
+<td>200</td>
+<td>Due to local laws and regulations, OKX does not support asset transfers to unverified users in {region}. Please make sure your recipient has a verified account.</td>
+</tr>
+<tr>
+<td>58013</td>
+<td>200</td>
+<td>Withdrawals not supported yet, contact customer support for details</td>
+</tr>
+<tr>
+<td>58014</td>
+<td>200</td>
+<td>Deposits not supported yet, contact customer support for details</td>
+</tr>
+<tr>
+<td>58015</td>
+<td>200</td>
+<td>Transfers not supported yet, contact customer support for details</td>
+</tr>
+<tr>
+<td>58016</td>
+<td>200</td>
+<td>The API can only be accessed and used by the trading team's main account</td>
+</tr>
+<tr>
+<td>58100</td>
+<td>200</td>
+<td>The trading product triggers risk control, and the platform has suspended <br/>the fund transfer-out function with related users. Please wait patiently.</td>
+</tr>
+<tr>
+<td>58101</td>
+<td>200</td>
+<td>Transfer suspended</td>
+</tr>
+<tr>
+<td>58102</td>
+<td>429</td>
+<td>Rate limit reached. Please refer to API docs and throttle requests accordingly.</td>
+</tr>
+<tr>
+<td>58103</td>
+<td>200</td>
+<td>This account transfer function is temporarily unavailable. Please contact customer service for details.</td>
+</tr>
+<tr>
+<td>58104</td>
+<td>200</td>
+<td>Since your P2P transaction is abnormal, you are restricted from making<br/>fund transfers. Please contact customer support to remove the restriction.</td>
+</tr>
+<tr>
+<td>58105</td>
+<td>200</td>
+<td>Since your P2P transaction is abnormal, you are restricted from making<br/>fund transfers. Please transfer funds on our website or app to complete<br/>identity verification.</td>
+</tr>
+<tr>
+<td>58106</td>
+<td>200</td>
+<td>USD verification failed.</td>
+</tr>
+<tr>
+<td>58107</td>
+<td>200</td>
+<td>Crypto verification failed.</td>
+</tr>
+<tr>
+<td>58110</td>
+<td>200</td>
+<td>Transfers are suspended due to market risk control triggered by your {businessType} {instFamily} trades or positions. Please try again in a few minutes. Contact customer support if further assistance is needed.</td>
+</tr>
+<tr>
+<td>58111</td>
+<td>200</td>
+<td>Fund transfers are unavailable while perpetual contracts are charging funding fees. Try again later.</td>
+</tr>
+<tr>
+<td>58112</td>
+<td>200</td>
+<td>Transfer failed. Contact customer support for assistance</td>
+</tr>
+<tr>
+<td>58113</td>
+<td>200</td>
+<td>Unable to transfer this crypto</td>
+</tr>
+<tr>
+<td>58114</td>
+<td>400</td>
+<td>Transfer amount must be greater than 0</td>
+</tr>
+<tr>
+<td>58115</td>
+<td>200</td>
+<td>Sub-account does not exist.</td>
+</tr>
+<tr>
+<td>58116</td>
+<td>200</td>
+<td>Transfer exceeds the available amount.</td>
+</tr>
+<tr>
+<td>58117</td>
+<td>200</td>
+<td>Transfer failed. Resolve any negative assets before transferring again</td>
+</tr>
+<tr>
+<td>58119</td>
+<td>200</td>
+<td>{0} Sub-account has no permission to transfer out, please set first.</td>
+</tr>
+<tr>
+<td>58120</td>
+<td>200</td>
+<td>Transfers are currently unavailable. Try again later</td>
+</tr>
+<tr>
+<td>58121</td>
+<td>200</td>
+<td>This transfer will result in a high-risk level of your position, which may lead to forced liquidation. You need to re-adjust the transfer amount to make sure the position is at a safe level before proceeding with the transfer.</td>
+</tr>
+<tr>
+<td>58122</td>
+<td>200</td>
+<td>A portion of your spot is being used for Delta offset between positions. If the transfer amount exceeds the available amount, it may affect current spot-derivatives risk offset structure, which will result in an increased Maintenance Margin Requirement (MMR) rate. Please be aware of your risk level.</td>
+</tr>
+<tr>
+<td>58123</td>
+<td>200</td>
+<td>The From parameter cannot be the same as the To parameter.</td>
+</tr>
+<tr>
+<td>58124</td>
+<td>200</td>
+<td>Your transfer is being processed, transfer id:{trId}. Please check the latest state of your transfer from the endpoint (GET /api/v5/asset/transfer-state)</td>
+</tr>
+<tr>
+<td>58125</td>
+<td>200</td>
+<td>Non-tradable assets can only be transferred from sub-accounts to main accounts</td>
+</tr>
+<tr>
+<td>58126</td>
+<td>200</td>
+<td>Non-tradable assets can only be transferred between funding accounts</td>
+</tr>
+<tr>
+<td>58127</td>
+<td>200</td>
+<td>Main account API key does not support current transfer 'type' parameter. Please refer to the API documentation.</td>
+</tr>
+<tr>
+<td>58128</td>
+<td>200</td>
+<td>Sub-account API key does not support current transfer 'type' parameter. Please refer to the API documentation.</td>
+</tr>
+<tr>
+<td>58129</td>
+<td>200</td>
+<td>{param} is incorrect or {param} does not match with 'type'</td>
+</tr>
+<tr>
+<td>58131</td>
+<td>200</td>
+<td>For compliance, we're unable to provide services to unverified users. Verify your identity to make a transfer.</td>
+</tr>
+<tr>
+<td>58132</td>
+<td>200</td>
+<td>For compliance, we're unable to provide services to users with Basic verification (Level 1). Complete Advanced verification (Level 2) to make a transfer.</td>
+</tr>
+<tr>
+<td>58200</td>
+<td>200</td>
+<td>Withdrawal from {0} to {1} is currently not supported for this currency.</td>
+</tr>
+<tr>
+<td>58201</td>
+<td>200</td>
+<td>Withdrawal amount exceeds daily withdrawal limit.</td>
+</tr>
+<tr>
+<td>58202</td>
+<td>200</td>
+<td>The minimum withdrawal amount for NEO is 1, and the amount must be an integer.</td>
+</tr>
+<tr>
+<td>58203</td>
+<td>200</td>
+<td>Please add a withdrawal address.</td>
+</tr>
+<tr>
+<td>58204</td>
+<td>200</td>
+<td>Withdrawal suspended due to your account activity triggering risk control. Please contact customer support for assistance.</td>
+</tr>
+<tr>
+<td>58205</td>
+<td>200</td>
+<td>Withdrawal amount exceeds the upper limit.</td>
+</tr>
+<tr>
+<td>58206</td>
+<td>200</td>
+<td>Withdrawal amount is less than the lower limit.</td>
+</tr>
+<tr>
+<td>58207</td>
+<td>200</td>
+<td>Withdrawal address isn't on the verified address list. (The format for withdrawal addresses with a label is “address:label”.)</td>
+</tr>
+<tr>
+<td>58208</td>
+<td>200</td>
+<td>Withdrawal failed. Please link your email.</td>
+</tr>
+<tr>
+<td>58209</td>
+<td>200</td>
+<td>Sub-accounts don't support withdrawals or deposits. Please use your main account instead</td>
+</tr>
+<tr>
+<td>58210</td>
+<td>200</td>
+<td>You can't proceed with withdrawal as we're unable to verify your identity. Please withdraw via our app or website instead.</td>
+</tr>
+<tr>
+<td>58212</td>
+<td>200</td>
+<td>Withdrawal fee must be {0}% of the withdrawal amount</td>
+</tr>
+<tr>
+<td>58213</td>
+<td>200</td>
+<td>The internal transfer address is illegal. It must be an email, phone number, or account name</td>
+</tr>
+<tr>
+<td>58214</td>
+<td>200</td>
+<td>Withdrawals suspended due to {chainName} maintenance</td>
+</tr>
+<tr>
+<td>58215</td>
+<td>200</td>
+<td>Withdrawal ID does not exist.</td>
+</tr>
+<tr>
+<td>58216</td>
+<td>200</td>
+<td>Operation not allowed.</td>
+</tr>
+<tr>
+<td>58217</td>
+<td>200</td>
+<td>Withdrawals are temporarily suspended for your account due to a risk detected in your withdrawal address. Contact customer support for assistance</td>
+</tr>
+<tr>
+<td>58218</td>
+<td>200</td>
+<td>The internal withdrawal failed. Please check the parameters toAddr and areaCode.</td>
+</tr>
+<tr>
+<td>58219</td>
+<td>200</td>
+<td>You cannot withdraw crypto within 24 hours after changing your mobile number, email address, or Google Authenticator.</td>
+</tr>
+<tr>
+<td>58220</td>
+<td>200</td>
+<td>Withdrawal request already canceled.</td>
+</tr>
+<tr>
+<td>58221</td>
+<td>200</td>
+<td>The toAddr parameter format is incorrect, withdrawal address needs labels. The format should be "address:label".</td>
+</tr>
+<tr>
+<td>58222</td>
+<td>200</td>
+<td>Invalid withdrawal address</td>
+</tr>
+<tr>
+<td>58223</td>
+<td>200</td>
+<td>This is a contract address with higher withdrawal fees</td>
+</tr>
+<tr>
+<td>58224</td>
+<td>200</td>
+<td>This crypto currently doesn't support on-chain withdrawals to OKX addresses. Withdraw through internal transfers instead</td>
+</tr>
+<tr>
+<td>58225</td>
+<td>200</td>
+<td>Asset transfers to unverified users in {region} are not supported due to local laws and regulations.</td>
+</tr>
+<tr>
+<td>58226</td>
+<td>200</td>
+<td>{chainName} is delisted and not available for crypto withdrawal.</td>
+</tr>
+<tr>
+<td>58227</td>
+<td>200</td>
+<td>Withdrawal of non-tradable assets can be withdrawn all at once only</td>
+</tr>
+<tr>
+<td>58228</td>
+<td>200</td>
+<td>Withdrawal of non-tradable assets requires that the API key must be bound to an IP</td>
+</tr>
+<tr>
+<td>58229</td>
+<td>200</td>
+<td>Insufficient funding account balance to pay fees {fee} USDT</td>
+</tr>
+<tr>
+<td>58230</td>
+<td>200</td>
+<td>According to the OKX compliance policy, you will need to complete your identity verification (Level 1) in order to withdraw</td>
+</tr>
+<tr>
+<td>58231</td>
+<td>200</td>
+<td>The recipient has not completed personal info verification (Level 1) and cannot receive your transfer</td>
+</tr>
+<tr>
+<td>58232</td>
+<td>200</td>
+<td>You’ve reached the personal information verification (L1) withdrawal limit, complete photo verification (L2) to increase the withdrawal limit</td>
+</tr>
+<tr>
+<td>58233</td>
+<td>200</td>
+<td>For compliance, we're unable to provide services to unverified users. Verify your identity to withdraw.</td>
+</tr>
+<tr>
+<td>58234</td>
+<td>200</td>
+<td>For compliance, the recipient can't receive your transfer yet. They'll need to verify their identity to receive your transfer.</td>
+</tr>
+<tr>
+<td>58235</td>
+<td>200</td>
+<td>For compliance, we're unable to provide services to users with Basic verification (Level 1). Complete Advanced verification (Level 2) to withdraw.</td>
+</tr>
+<tr>
+<td>58236</td>
+<td>200</td>
+<td>For compliance, a recipient with Basic verification (Level 1) is unable to receive your transfer. They'll need to complete Advanced verification (Level 2) to receive it.</td>
+</tr>
+<tr>
+<td>58237</td>
+<td>200</td>
+<td>According to local laws and regulations, please provide accurate recipient information (rcvrInfo). For the exchange address, please also provide exchange information and recipient identity information ({consientParameters}).</td>
+</tr>
+<tr>
+<td>58238</td>
+<td>200</td>
+<td>Incomplete info. The info of the exchange and the recipient are required if you're withdrawing to an exchange platform.</td>
+</tr>
+<tr>
+<td>58239</td>
+<td>200</td>
+<td>You can't withdraw to a private wallet via API. Please withdraw via our app or website instead.</td>
+</tr>
+<tr>
+<td>58240</td>
+<td>200</td>
+<td>For security and compliance purposes, please complete the identity verification process to use our services. If you prefer not to verify, contact customer support for next steps. We're committed to ensuring a safe platform for users and appreciate your understanding.</td>
+</tr>
+<tr>
+<td>58241</td>
+<td>200</td>
+<td>Due to local compliance requirements, internal withdrawal is unavailable</td>
+</tr>
+<tr>
+<td>58242</td>
+<td>200</td>
+<td>The recipient can't receive your transfer due to their local compliance requirements</td>
+</tr>
+<tr>
+<td>58243</td>
+<td>200</td>
+<td>Your recipient can't receive your transfer as they haven't made a cash deposit yet</td>
+</tr>
+<tr>
+<td>58244</td>
+<td>200</td>
+<td>Make a cash deposit to proceed</td>
+</tr>
+<tr>
+<td>58248</td>
+<td>200</td>
+<td>Due to local regulations, API withdrawal isn't allowed. Withdraw using OKX app or web.</td>
+</tr>
+<tr>
+<td>58249</td>
+<td>200</td>
+<td>API withdrawal for this currency is currently unavailable. Try withdrawing via our app or website.</td>
+</tr>
+<tr>
+<td>58252</td>
+<td>200</td>
+<td>Withdrawal is restricted for 48h after your first TRY transaction for asset security.</td>
+</tr>
+<tr>
+<td>58254</td>
+<td>200</td>
+<td>Due to local compliance requirements, please complete the digital signature or satoshi test via our app or website first before withdrawing to a private wallet via API.</td>
+</tr>
+<tr>
+<td>58300</td>
+<td>200</td>
+<td>Deposit-address count exceeds the limit.</td>
+</tr>
+<tr>
+<td>58301</td>
+<td>200</td>
+<td>Deposit-address not exist.</td>
+</tr>
+<tr>
+<td>58302</td>
+<td>200</td>
+<td>Deposit-address needs tag.</td>
+</tr>
+<tr>
+<td>58303</td>
+<td>200</td>
+<td>Deposit for chain {chain} is currently unavailable</td>
+</tr>
+<tr>
+<td>58304</td>
+<td>200</td>
+<td>Failed to create invoice.</td>
+</tr>
+<tr>
+<td>58305</td>
+<td>200</td>
+<td>Unable to retrieve deposit address, please complete identity verification and generate deposit address first.</td>
+</tr>
+<tr>
+<td>58306</td>
+<td>200</td>
+<td>According to the OKX compliance policy, you will need to complete your identity verification (Level 1) in order to deposit</td>
+</tr>
+<tr>
+<td>58307</td>
+<td>200</td>
+<td>You've reached the personal information verification (L1) deposit limit, the excess amount has been frozen, complete photo verification (L2) to increase the deposit limit</td>
+</tr>
+<tr>
+<td>58308</td>
+<td>200</td>
+<td>For compliance, we're unable to provide services to unverified users. Verify your identity to deposit.</td>
+</tr>
+<tr>
+<td>58309</td>
+<td>200</td>
+<td>For compliance, we're unable to provide services to users with Basic verification (Level 1). Complete Advanced verification (Level 2) to deposit.</td>
+</tr>
+<tr>
+<td>58310</td>
+<td>200</td>
+<td>Unable to create new deposit address, try again later</td>
+</tr>
+<tr>
+<td>58350</td>
+<td>200</td>
+<td>Insufficient balance.</td>
+</tr>
+<tr>
+<td>58351</td>
+<td>200</td>
+<td>Invoice expired.</td>
+</tr>
+<tr>
+<td>58352</td>
+<td>200</td>
+<td>Invalid invoice.</td>
+</tr>
+<tr>
+<td>58353</td>
+<td>200</td>
+<td>Deposit amount must be within limits.</td>
+</tr>
+<tr>
+<td>58354</td>
+<td>200</td>
+<td>You have reached the daily limit of 10,000 invoices.</td>
+</tr>
+<tr>
+<td>58355</td>
+<td>200</td>
+<td>Permission denied. Please contact your account manager.</td>
+</tr>
+<tr>
+<td>58356</td>
+<td>200</td>
+<td>The accounts of the same node do not support the Lightning network deposit or withdrawal.</td>
+</tr>
+<tr>
+<td>58358</td>
+<td>200</td>
+<td>The fromCcy parameter cannot be the same as the toCcy parameter.</td>
+</tr>
+<tr>
+<td>58373</td>
+<td>200</td>
+<td>The minimum {ccy} conversion amount is {amount}</td>
+</tr>
+<tr>
+<td>58400</td>
+<td>200</td>
+<td>Request Failed</td>
+</tr>
+<tr>
+<td>58401</td>
+<td>200</td>
+<td>Payment method is not supported</td>
+</tr>
+<tr>
+<td>58402</td>
+<td>200</td>
+<td>Invalid payment account</td>
+</tr>
+<tr>
+<td>58403</td>
+<td>200</td>
+<td>Transaction cannot be canceled</td>
+</tr>
+<tr>
+<td>58404</td>
+<td>200</td>
+<td>ClientId already exists</td>
+</tr>
+<tr>
+<td>58405</td>
+<td>200</td>
+<td>Withdrawal suspended</td>
+</tr>
+<tr>
+<td>58406</td>
+<td>200</td>
+<td>Channel is not supported</td>
+</tr>
+<tr>
+<td>58407</td>
+<td>200</td>
+<td>API withdrawal isn't allowed for this payment method. Withdraw using OKX app or web</td>
+</tr>
+</tbody></table>

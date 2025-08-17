@@ -1,0 +1,136 @@
+<h3 id="block-trading-rest-api-get-quote-products">Get Quote products</h3>
+<p>Retrieve the products which makers want to quote and receive RFQs for, and the corresponding price and size limit. </p>
+<h4 id="block-trading-rest-api-get-quote-products-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="block-trading-rest-api-get-quote-products-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="block-trading-rest-api-get-quote-products-permission-read">Permission: Read</h4><h4 id="block-trading-rest-api-get-quote-products-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/rfq/maker-instrument-settings</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/rfq/maker-instrument-settings
+</code></pre></div><h4 id="block-trading-rest-api-get-quote-products-request-parameters">Request parameters</h4>
+<p>None</p>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OPTION"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"includeAll"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxBlockSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"makerPxBand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SOL-USD"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxBlockSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"makerPxBand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FUTURES"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"includeAll"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxBlockSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"makerPxBand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxBlockSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"makerPxBand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instType:"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"includeAll"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxBlockSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"makerPxBand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instType:"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"includeAll"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRX-USDT"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-rest-api-get-quote-products-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The result code, <code>0</code> means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The error message, not empty if the code is not <code>0</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Return data of the request.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Type of instrument. Valid value can be <code>FUTURES</code>, <code>OPTION</code>, <code>SWAP</code> or <code>SPOT</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; includeAll</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Receive all instruments or not under specific instType setting. <br/>Valid value can be boolean (<code>True</code>/<code>False</code>). By default, the value will be <code>false</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Elements of the instType.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument family. Required for <code>FUTURES</code>, <code>OPTION</code> and <code>SWAP</code> only.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID. Required for <code>SPOT</code> only.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; maxBlockSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Max trade quantity for the product(s). <br/>For <code>FUTURES</code>, <code>OPTION</code> and <code>SWAP</code>, the max quantity of the RFQ/Quote is in unit of contracts. For <code>SPOT</code>, this parameter is in base currency.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; makerPxBand</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price bands in unit of ticks, measured against mark price. <br/>Setting makerPxBand to 1 tick means: <br/>If Bid price &gt; Mark + 1 tick, it will be stopped <br/>If Ask price &lt; Mark - 1 tick, It will be stopped</td>
+</tr>
+</tbody></table>

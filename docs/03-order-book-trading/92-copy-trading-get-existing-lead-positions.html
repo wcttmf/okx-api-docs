@@ -1,0 +1,226 @@
+<h3 id="order-book-trading-copy-trading-get-existing-lead-positions">GET / Existing lead positions</h3>
+<p>Retrieve lead positions that are not closed.<br/></p>
+<p>Returns reverse chronological order with <code>openTime</code></p>
+<h4 id="order-book-trading-copy-trading-get-existing-lead-positions-rate-limit-20-requests-per-2-seconds">Rate limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-existing-lead-positions-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-get-existing-lead-positions-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-existing-lead-positions-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/current-subpositions</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/current-subpositions?instId<span class="o">=</span>BTC-USDT-SWAP
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-existing-lead-positions-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>SWAP</code><br/>It returns all types by default.</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested <code>subPosId</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested <code>subPosId</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. Maximum is 500. Default is 500.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.6417"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38205.8"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"openAvgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"37925.1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"openOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"openTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701231120479"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subPos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subPosId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"649945658862370816"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uniqueCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25CD5A80241D6FE6"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2807"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0222042921442527"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availSubPos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.6263333333333333"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38205.8"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"openAvgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"37879"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"openOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"openTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701225074786"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subPos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subPosId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"649920301388038144"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uniqueCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25CD5A80241D6FE6"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3268"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0258824150584758"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availSubPos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-existing-lead-positions-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td style="text-align: left">subPosId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side<br/><code>long</code> <br/><code>short</code> <br/><code>net</code><br/>(Long positions have positive subPos; short positions have negative subPos)</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin mode. <code>cross</code> <code>isolated</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage</td>
+</tr>
+<tr>
+<td style="text-align: left">openOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order ID for opening position, only applicable to lead position</td>
+</tr>
+<tr>
+<td style="text-align: left">openAvgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average open price</td>
+</tr>
+<tr>
+<td style="text-align: left">openTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Open time</td>
+</tr>
+<tr>
+<td style="text-align: left">subPos</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity of positions</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit order price, it is -1 for market price</td>
+</tr>
+<tr>
+<td style="text-align: left">slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss order price, it is -1 for market price</td>
+</tr>
+<tr>
+<td style="text-align: left">margin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin</td>
+</tr>
+<tr>
+<td style="text-align: left">upl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">uplRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">markPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest mark price, only applicable to contract</td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead trader unique code</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency</td>
+</tr>
+<tr>
+<td style="text-align: left">availSubPos</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity of positions that can be closed</td>
+</tr>
+</tbody></table>

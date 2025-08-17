@@ -1,0 +1,82 @@
+<h3 id="block-trading-rest-api-set-mmp">Set MMP</h3>
+<p>This endpoint is used to set MMP configure and only applicable to block trading makers<br/></p>
+<h4 id="block-trading-rest-api-set-mmp-rate-limit-1-request-per-10-seconds">Rate Limit: 1 request per 10 seconds</h4><h4 id="block-trading-rest-api-set-mmp-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="block-trading-rest-api-set-mmp-permission-trade">Permission: Trade</h4><h4 id="block-trading-rest-api-set-mmp-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/rfq/mmp-config</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/rfq/mmp-config
+body
+<span class="o">{</span>
+    <span class="s2">"timeInterval"</span>:<span class="s2">"5000"</span>,
+    <span class="s2">"frozenInterval"</span>:<span class="s2">"2000"</span>,
+    <span class="s2">"countLimit"</span>: <span class="s2">"100"</span>
+<span class="o">}</span>
+
+
+</code></pre></div><h4 id="block-trading-rest-api-set-mmp-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">timeInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Time window (ms). MMP interval where monitoring is done.<br/>"0" means disable MMP. Maximum time interval is 600,000.</td>
+</tr>
+<tr>
+<td style="text-align: left">frozenInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Frozen period (ms). <br/>"0" means the trade will remain frozen until you request "Reset MMP Status" to unfrozen.</td>
+</tr>
+<tr>
+<td style="text-align: left">countLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Limit in number of execution attempts.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"frozenInterval"</span><span class="p">:</span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"countLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeInterval"</span><span class="p">:</span><span class="s2">"5000"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-rest-api-set-mmp-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">timeInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time window (ms). MMP interval where monitoring is done</td>
+</tr>
+<tr>
+<td style="text-align: left">frozenInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Frozen period (ms).</td>
+</tr>
+<tr>
+<td style="text-align: left">countLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Limit in number of execution attempts</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,87 @@
+<h3 id="financial-product-simple-earn-flexible-get-public-borrow-info-public">GET / Public borrow info (public)</h3>
+<p>Authentication is not required for this public endpoint.</p>
+<h4 id="financial-product-simple-earn-flexible-get-public-borrow-info-public-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="financial-product-simple-earn-flexible-get-public-borrow-info-public-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="financial-product-simple-earn-flexible-get-public-borrow-info-public-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/finance/savings/lending-rate-summary</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/finance/savings/lending-rate-summary
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Finance.Savings</span> <span class="k">as</span> <span class="n">Savings</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">SavingsAPI</span> <span class="o">=</span> <span class="n">Savings</span><span class="p">.</span><span class="n">SavingsAPI</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">SavingsAPI</span><span class="p">.</span><span class="n">get_public_borrow_info</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="financial-product-simple-earn-flexible-get-public-borrow-info-public-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Currency, e.g. <code>BTC</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgAmtUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"avgRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.03"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"preRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.02"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"estRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="financial-product-simple-earn-flexible-get-public-borrow-info-public-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">avgAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>24H average borrowing amount</del>(deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">avgAmtUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>24H average borrowing amount in <code>USD</code> value</del>(deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">avgRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">24H average lending rate</td>
+</tr>
+<tr>
+<td style="text-align: left">preRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last annual interest rate</td>
+</tr>
+<tr>
+<td style="text-align: left">estRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Next estimate annual interest rate</td>
+</tr>
+</tbody></table>

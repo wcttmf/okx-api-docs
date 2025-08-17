@@ -1,0 +1,29 @@
+<h3 id="spread-trading-introduction-high-level-workflow">High Level Workflow</h3>
+<p>Nitro Spreads is centered around the familiar concept of a Central Limit Order Book (<strong>CLOB</strong>).</p>
+<ul>
+<li>Spreads consist of instruments sourced from OKX where they are cleared and settled.</li>
+<li>Anyone can act as a "Taker," who consumes an existing resting order, or a "Maker," whose order is consumed.</li>
+<li>Trades take place when orders are crossed. Trades are then sent for clearing and settlement on OKX.</li>
+</ul>
+<p>At a high level, the Nitro Spreads workflow is as follows:</p>
+<ol>
+<li><em>Maker</em> rests a Limit Order upon a Spread's Order Book.</li>
+<li><em>Taker</em> consumes a resting Order via a Limit Order.</li>
+<li>The crossed orders are sent for clearing and settlement.</li>
+<li>The <em>Taker</em> and <em>Maker</em> receive confirmation of the success or rejection of the Trade.</li>
+<li>All users are notified of successfully settled &amp; cleared Trades, minus the counterparties or sides (<code>buy</code> / <code>sell</code>) involved.</li>
+</ol>
+<p>Key aspects of Nitro Spreads:</p>
+<ul>
+<li>All Spreads have <strong>publicly accessible</strong> Central Limit Order Books <strong>(CLOB)</strong>.</li>
+<li>The availability of trading Spreads is determined by OKX. Typically, these Spreads encompass all possible combinations of delta one derivatives (Expiry Futures and Perpetual Futures) and SPOT within a specific instrument family (e.g. "BTC/USDT" or "ETH/USDC").</li>
+<li><strong>Partial fills</strong> and multiple orders can be consumed as part of a single trade.</li>
+<li><strong>Counterparties</strong> are <strong>NOT</strong> selected. All Spread Order Books can be engaged by anyone, effectively trading against the broader market.</li>
+<li>Anonymity is maintained throughout the process, with all orders and trades conducted on an <strong>anonymous basis</strong>.</li>
+<li>Users have the flexibility to place multiple orders on both the bid and ask sides of the Order Book, allowing for a <strong>ladder-style</strong> configuration.</li>
+</ul>
+<h2 id="spread-trading-comprehensive-api-workflow">Comprehensive API Workflow</h2>
+<aside class="notice">
+Notifications regarding Orders and Trades will be received by both the Taker and the Maker through the WebSocket Notification channels.
+</aside>
+<p>A user assumes the role of a <em>Maker</em> when their Order is executed upon by another Order. A user becomes a <em>Taker</em> when they submit an Order that crosses an existing Order in the Order Book.</p>

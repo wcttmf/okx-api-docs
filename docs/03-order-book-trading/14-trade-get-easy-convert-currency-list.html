@@ -1,0 +1,94 @@
+<h3 id="order-book-trading-trade-get-easy-convert-currency-list">GET / Easy convert currency list</h3>
+<p>Get list of small convertibles and mainstream currencies. Only applicable to the crypto balance less than $10.</p>
+<h4 id="order-book-trading-trade-get-easy-convert-currency-list-rate-limit-1-request-per-2-seconds">Rate Limit: 1 request per 2 seconds</h4><h4 id="order-book-trading-trade-get-easy-convert-currency-list-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-trade-get-easy-convert-currency-list-permission-read">Permission: Read</h4><h4 id="order-book-trading-trade-get-easy-convert-currency-list-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/trade/easy-convert-currency-list</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/trade/easy-convert-currency-list
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Trade</span> <span class="k">as</span> <span class="n">Trade</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">tradeAPI</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">.</span><span class="n">TradeAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get list of small convertibles and mainstream currencies
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">tradeAPI</span><span class="p">.</span><span class="n">get_easy_convert_currency_list</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="order-book-trading-trade-get-easy-convert-currency-list-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameters</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">source</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Funding source<br/><code>1</code>: Trading account<br/><code>2</code>: Funding account<br/>The default is <code>1</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"fromData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"fromAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6.580712708344864"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fromCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ADA"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"fromAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.9970000013055097"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fromCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDC"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"toCcy"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"OKB"</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-get-easy-convert-currency-list-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">fromData</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Currently owned and convertible small currency list</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fromCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Type of small payment currency convert from, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; fromAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Amount of small payment currency convert from</td>
+</tr>
+<tr>
+<td style="text-align: left">toCcy</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Type of mainstream currency convert to, e.g. <code>USDT</code></td>
+</tr>
+</tbody></table>

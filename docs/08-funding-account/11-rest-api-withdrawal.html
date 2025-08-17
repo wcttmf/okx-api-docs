@@ -1,0 +1,1214 @@
+<h3 id="funding-account-rest-api-withdrawal">Withdrawal</h3>
+<p>Only supported withdrawal of assets from funding account. Common sub-account does not support withdrawal. </p>
+<aside class="notice">
+The API can only make withdrawal to verified addresses/account, and verified addresses can be set by WEB/APP.
+</aside>
+<aside class="notice">
+About tag<br/>
+Some token deposits require a deposit address and a tag (e.g. Memo/Payment ID), which is a string that guarantees the uniqueness of your deposit address. Follow the deposit procedure carefully, or you may risk losing your assets.<br/>
+For currencies with labels, if it is a withdrawal between OKX users, please use internal transfer instead of online withdrawal
+</aside>
+<aside class="notice">
+The following content only applies to users residing in the United Arab Emirates<br/>
+Due to local laws and regulations in your country or region, a certain ratio of user assets must be stored in cold wallets. We will perform cold-to-hot wallet asset transfers from time to time. However, if assets in hot wallets are not sufficient to meet user withdrawal demands, an extra step is needed to transfer cold wallet assets to the hot wallet. This may cause delays of up to 24 hours to receive withdrawals.<br/>
+Learn more (https://www.okx.com/help/what-is-a-segregated-wallet-and-why-is-my-withdrawal-delayed)
+</aside>
+<aside class="notice">
+Users under certain entities need to provide additional information for withdrawal<br/>
+Bahamas entity users refer to https://www.okx.com/docs-v5/log_en/#2024-08-08-withdrawal-api-adjustment-for-bahama-entity-users
+</aside>
+<h4 id="funding-account-rest-api-withdrawal-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="funding-account-rest-api-withdrawal-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-withdrawal-permission-withdraw">Permission: Withdraw</h4><h4 id="funding-account-rest-api-withdrawal-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/asset/withdrawal</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># on-chain withdrawal</span>
+POST /api/v5/asset/withdrawal
+body
+<span class="o">{</span>
+    <span class="s2">"amt"</span>:<span class="s2">"1"</span>,
+    <span class="s2">"dest"</span>:<span class="s2">"4"</span>,
+    <span class="s2">"ccy"</span>:<span class="s2">"BTC"</span>,
+    <span class="s2">"chain"</span>:<span class="s2">"BTC-Bitcoin"</span>,
+    <span class="s2">"toAddr"</span>:<span class="s2">"17DKe3kkkkiiiiTvAKKi2vMPbm1Bz3CMKw"</span>
+<span class="o">}</span>
+
+<span class="c"># internal withdrawal </span>
+POST /api/v5/asset/withdrawal
+body
+<span class="o">{</span>
+    <span class="s2">"amt"</span>:<span class="s2">"10"</span>,
+    <span class="s2">"dest"</span>:<span class="s2">"3"</span>,
+    <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+    <span class="s2">"areaCode"</span>:<span class="s2">"86"</span>,
+    <span class="s2">"toAddr"</span>:<span class="s2">"15651000000"</span>
+<span class="o">}</span>
+
+<span class="c"># Specific entity users need to provide receiver's info</span>
+POST /api/v5/asset/withdrawal
+body
+<span class="o">{</span>
+    <span class="s2">"amt"</span>:<span class="s2">"1"</span>,
+    <span class="s2">"dest"</span>:<span class="s2">"4"</span>,
+    <span class="s2">"ccy"</span>:<span class="s2">"BTC"</span>,
+    <span class="s2">"chain"</span>:<span class="s2">"BTC-Bitcoin"</span>,
+    <span class="s2">"toAddr"</span>:<span class="s2">"17DKe3kkkkiiiiTvAKKi2vMPbm1Bz3CMKw"</span>,
+    <span class="s2">"rcvrInfo"</span>:<span class="o">{</span>
+        <span class="s2">"walletType"</span>:<span class="s2">"exchange"</span>,
+        <span class="s2">"exchId"</span>:<span class="s2">"did:ethr:0xfeb4f99829a9acdf52979abee87e83addf22a7e1"</span>,
+        <span class="s2">"rcvrFirstName"</span>:<span class="s2">"Bruce"</span>,
+        <span class="s2">"rcvrLastName"</span>:<span class="s2">"Wayne"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Funding</span> <span class="k">as</span> <span class="n">Funding</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">fundingAPI</span> <span class="o">=</span> <span class="n">Funding</span><span class="p">.</span><span class="n">FundingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Withdrawal
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">fundingAPI</span><span class="p">.</span><span class="n">withdrawal</span><span class="p">(</span>
+    <span class="n">ccy</span><span class="o">=</span><span class="s">"USDT"</span><span class="p">,</span>
+    <span class="n">toAddr</span><span class="o">=</span><span class="s">"TXtvfb7cdrn6VX9H49mgio8bUxZ3DGfvYF"</span><span class="p">,</span>
+    <span class="n">amt</span><span class="o">=</span><span class="s">"100"</span><span class="p">,</span>
+    <span class="n">dest</span><span class="o">=</span><span class="s">"4"</span><span class="p">,</span>
+    <span class="n">chain</span><span class="o">=</span><span class="s">"USDT-TRC20"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="funding-account-rest-api-withdrawal-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Currency, e.g. <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Withdrawal amount<br/>Withdrawal fee is not included in withdrawal amount. Please reserve sufficient transaction fees when withdrawing.<br/>You can get fee amount by <a href="/docs-v5/en/#funding-account-rest-api-get-currencies">Get currencies</a>.<br/>For <code>internal transfer</code>, transaction fee is always <code>0</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">dest</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Withdrawal method<br/><code>3</code>: internal transfer<br/><code>4</code>: on-chain withdrawal</td>
+</tr>
+<tr>
+<td style="text-align: left">toAddr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left"><code>toAddr</code> should be a trusted address/account. <br/>If your <code>dest</code> is <code>4</code>, some crypto currency addresses are formatted as <code>'address:tag'</code>, e.g. <code>'ARDOR-7JF3-8F2E-QUWZ-CAN7F:123456'</code><br/>If your <code>dest</code> is <code>3</code>,<code>toAddr</code> should be a recipient address which can be UID, email, phone or login account name (account name is only for sub-account).</td>
+</tr>
+<tr>
+<td style="text-align: left">toAddrType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Address type<br/><code>1</code>: wallet address, email, phone, or login account name<br/><code>2</code>: UID (only applicable for dest=<code>3</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left">chain</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Chain name<br/>There are multiple chains under some currencies, such as <code>USDT</code> has <code>USDT-ERC20</code>, <code>USDT-TRC20</code><br/>If the parameter is not filled in, the default will be the main chain.<br/>When you withdrawal the non-tradable asset, if the parameter is not filled in, the default will be the unique withdrawal chain.<br/>Apply to <code>on-chain withdrawal</code>.<br/>You can get supported chain name by the endpoint of <a href="/docs-v5/en/#funding-account-rest-api-get-currencies">Get currencies</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left">areaCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Area code for the phone number, e.g. <code>86</code><br/>If <code>toAddr</code> is a phone number, this parameter is required.<br/>Apply to <code>internal transfer</code></td>
+</tr>
+<tr>
+<td style="text-align: left">rcvrInfo</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Recipient information<br/>For the specific entity users to do on-chain withdrawal/lightning withdrawal, this information is required.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; walletType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Wallet Type<br/><code>exchange</code>: Withdraw to exchange wallet<br/><code>private</code>: Withdraw to private wallet<br/>For the wallet belongs to business recipient, <code>rcvrFirstName</code> may input the company name, <code>rcvrLastName</code> may input "N/A", location info may input the registered address of the company.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; exchId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Exchange ID<br/>You can query supported exchanges through the endpoint of <a href="/docs-v5/en/#funding-account-rest-api-get-exchange-list-public">Get exchange list (public)</a><br/>If the exchange is not in the exchange list, fill in '0' in this field. <br/>Apply to walletType = <code>exchange</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rcvrFirstName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Receiver's first name, e.g. <code>Bruce</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rcvrLastName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Receiver's last name, e.g. <code>Wayne</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rcvrCountry</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">The recipient's country, e.g. <code>United States</code><br/>You must enter an English country name or a two letter country code (ISO 3166-1). Please refer to the <code>Country Name</code> and <code>Country Code</code> in the country information table below.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rcvrCountrySubDivision</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">State/Province of the recipient, e.g. <code>California</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rcvrTownName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">The town/city where the recipient is located, e.g. <code>San Jose</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rcvrStreetName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Recipient's street address, e.g. <code>Clementi Avenue 1</code></td>
+</tr>
+<tr>
+<td style="text-align: left">clientId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"wdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67485"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-Bitcoin"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-withdrawal-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">chain</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Chain name, e.g. <code>USDT-ERC20</code>, <code>USDT-TRC20</code></td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal amount</td>
+</tr>
+<tr>
+<td style="text-align: left">wdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clientId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+</tbody></table>
+<h4 id="funding-account-rest-api-withdrawal-country-information">Country information</h4>
+<table><thead>
+<tr>
+<th>Country name</th>
+<th>Country code</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Afghanistan</td>
+<td>AF</td>
+</tr>
+<tr>
+<td>Albania</td>
+<td>AL</td>
+</tr>
+<tr>
+<td>Algeria</td>
+<td>DZ</td>
+</tr>
+<tr>
+<td>Andorra</td>
+<td>AD</td>
+</tr>
+<tr>
+<td>Angola</td>
+<td>AO</td>
+</tr>
+<tr>
+<td>Anguilla</td>
+<td>AI</td>
+</tr>
+<tr>
+<td>Antigua and Barbuda</td>
+<td>AG</td>
+</tr>
+<tr>
+<td>Argentina</td>
+<td>AR</td>
+</tr>
+<tr>
+<td>Armenia</td>
+<td>AM</td>
+</tr>
+<tr>
+<td>Australia</td>
+<td>AU</td>
+</tr>
+<tr>
+<td>Austria</td>
+<td>AT</td>
+</tr>
+<tr>
+<td>Azerbaijan</td>
+<td>AZ</td>
+</tr>
+<tr>
+<td>Bahamas</td>
+<td>BS</td>
+</tr>
+<tr>
+<td>Bahrain</td>
+<td>BH</td>
+</tr>
+<tr>
+<td>Bangladesh</td>
+<td>BD</td>
+</tr>
+<tr>
+<td>Barbados</td>
+<td>BB</td>
+</tr>
+<tr>
+<td>Belarus</td>
+<td>BY</td>
+</tr>
+<tr>
+<td>Belgium</td>
+<td>BE</td>
+</tr>
+<tr>
+<td>Belize</td>
+<td>BZ</td>
+</tr>
+<tr>
+<td>Benin</td>
+<td>BJ</td>
+</tr>
+<tr>
+<td>Bermuda</td>
+<td>BM</td>
+</tr>
+<tr>
+<td>Bhutan</td>
+<td>BT</td>
+</tr>
+<tr>
+<td>Bolivia</td>
+<td>BO</td>
+</tr>
+<tr>
+<td>Bosnia and Herzegovina</td>
+<td>BA</td>
+</tr>
+<tr>
+<td>Botswana</td>
+<td>BW</td>
+</tr>
+<tr>
+<td>Brazil</td>
+<td>BR</td>
+</tr>
+<tr>
+<td>British Virgin Islands</td>
+<td>VG</td>
+</tr>
+<tr>
+<td>Brunei</td>
+<td>BN</td>
+</tr>
+<tr>
+<td>Bulgaria</td>
+<td>BG</td>
+</tr>
+<tr>
+<td>Burkina Faso</td>
+<td>BF</td>
+</tr>
+<tr>
+<td>Burundi</td>
+<td>BI</td>
+</tr>
+<tr>
+<td>Cambodia</td>
+<td>KH</td>
+</tr>
+<tr>
+<td>Cameroon</td>
+<td>CM</td>
+</tr>
+<tr>
+<td>Canada</td>
+<td>CA</td>
+</tr>
+<tr>
+<td>Cape Verde</td>
+<td>CV</td>
+</tr>
+<tr>
+<td>Cayman Islands</td>
+<td>KY</td>
+</tr>
+<tr>
+<td>Central African Republic</td>
+<td>CF</td>
+</tr>
+<tr>
+<td>Chad</td>
+<td>TD</td>
+</tr>
+<tr>
+<td>Chile</td>
+<td>CL</td>
+</tr>
+<tr>
+<td>Colombia</td>
+<td>CO</td>
+</tr>
+<tr>
+<td>Comoros</td>
+<td>KM</td>
+</tr>
+<tr>
+<td>Congo (Republic)</td>
+<td>CG</td>
+</tr>
+<tr>
+<td>Congo (Democratic Republic)</td>
+<td>CD</td>
+</tr>
+<tr>
+<td>Costa Rica</td>
+<td>CR</td>
+</tr>
+<tr>
+<td>Cote d´Ivoire (Ivory Coast)</td>
+<td>CI</td>
+</tr>
+<tr>
+<td>Croatia</td>
+<td>HR</td>
+</tr>
+<tr>
+<td>Cuba</td>
+<td>CU</td>
+</tr>
+<tr>
+<td>Cyprus</td>
+<td>CY</td>
+</tr>
+<tr>
+<td>Czech Republic</td>
+<td>CZ</td>
+</tr>
+<tr>
+<td>Denmark</td>
+<td>DK</td>
+</tr>
+<tr>
+<td>Djibouti</td>
+<td>DJ</td>
+</tr>
+<tr>
+<td>Dominica</td>
+<td>DM</td>
+</tr>
+<tr>
+<td>Dominican Republic</td>
+<td>DO</td>
+</tr>
+<tr>
+<td>Ecuador</td>
+<td>EC</td>
+</tr>
+<tr>
+<td>Egypt</td>
+<td>EG</td>
+</tr>
+<tr>
+<td>El Salvador</td>
+<td>SV</td>
+</tr>
+<tr>
+<td>Equatorial Guinea</td>
+<td>GQ</td>
+</tr>
+<tr>
+<td>Eritrea</td>
+<td>ER</td>
+</tr>
+<tr>
+<td>Estonia</td>
+<td>EE</td>
+</tr>
+<tr>
+<td>Ethiopia</td>
+<td>ET</td>
+</tr>
+<tr>
+<td>Fiji</td>
+<td>FJ</td>
+</tr>
+<tr>
+<td>Finland</td>
+<td>FI</td>
+</tr>
+<tr>
+<td>France</td>
+<td>FR</td>
+</tr>
+<tr>
+<td>Gabon</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Gambia</td>
+<td>GM</td>
+</tr>
+<tr>
+<td>Georgia</td>
+<td>GE</td>
+</tr>
+<tr>
+<td>Germany</td>
+<td>DE</td>
+</tr>
+<tr>
+<td>Ghana</td>
+<td>GH</td>
+</tr>
+<tr>
+<td>Greece</td>
+<td>GR</td>
+</tr>
+<tr>
+<td>Grenada</td>
+<td>GD</td>
+</tr>
+<tr>
+<td>Guatemala</td>
+<td>GT</td>
+</tr>
+<tr>
+<td>Guinea</td>
+<td>GN</td>
+</tr>
+<tr>
+<td>Guinea-Bissau</td>
+<td>GW</td>
+</tr>
+<tr>
+<td>Guyana</td>
+<td>GY</td>
+</tr>
+<tr>
+<td>Haiti</td>
+<td>HT</td>
+</tr>
+<tr>
+<td>Honduras</td>
+<td>HN</td>
+</tr>
+<tr>
+<td>Hong Kong</td>
+<td>HK</td>
+</tr>
+<tr>
+<td>Hungary</td>
+<td>HU</td>
+</tr>
+<tr>
+<td>Iceland</td>
+<td>IS</td>
+</tr>
+<tr>
+<td>India</td>
+<td>IN</td>
+</tr>
+<tr>
+<td>Indonesia</td>
+<td>ID</td>
+</tr>
+<tr>
+<td>Iran</td>
+<td>IR</td>
+</tr>
+<tr>
+<td>Iraq</td>
+<td>IQ</td>
+</tr>
+<tr>
+<td>Ireland</td>
+<td>IE</td>
+</tr>
+<tr>
+<td>Israel</td>
+<td>IL</td>
+</tr>
+<tr>
+<td>Italy</td>
+<td>IT</td>
+</tr>
+<tr>
+<td>Jamaica</td>
+<td>JM</td>
+</tr>
+<tr>
+<td>Japan</td>
+<td>JP</td>
+</tr>
+<tr>
+<td>Jordan</td>
+<td>JO</td>
+</tr>
+<tr>
+<td>Kazakhstan</td>
+<td>KZ</td>
+</tr>
+<tr>
+<td>Kenya</td>
+<td>KE</td>
+</tr>
+<tr>
+<td>Kiribati</td>
+<td>KI</td>
+</tr>
+<tr>
+<td>North Korea</td>
+<td>KP</td>
+</tr>
+<tr>
+<td>South Korea</td>
+<td>KR</td>
+</tr>
+<tr>
+<td>Kuwait</td>
+<td>KW</td>
+</tr>
+<tr>
+<td>Kyrgyzstan</td>
+<td>KG</td>
+</tr>
+<tr>
+<td>Laos</td>
+<td>LA</td>
+</tr>
+<tr>
+<td>Latvia</td>
+<td>LV</td>
+</tr>
+<tr>
+<td>Lebanon</td>
+<td>LB</td>
+</tr>
+<tr>
+<td>Lesotho</td>
+<td>LS</td>
+</tr>
+<tr>
+<td>Liberia</td>
+<td>LR</td>
+</tr>
+<tr>
+<td>Libya</td>
+<td>LY</td>
+</tr>
+<tr>
+<td>Liechtenstein</td>
+<td>LI</td>
+</tr>
+<tr>
+<td>Lithuania</td>
+<td>LT</td>
+</tr>
+<tr>
+<td>Luxembourg</td>
+<td>LU</td>
+</tr>
+<tr>
+<td>Macau</td>
+<td>MO</td>
+</tr>
+<tr>
+<td>Macedonia</td>
+<td>MK</td>
+</tr>
+<tr>
+<td>Madagascar</td>
+<td>MG</td>
+</tr>
+<tr>
+<td>Malawi</td>
+<td>MW</td>
+</tr>
+<tr>
+<td>Malaysia</td>
+<td>MY</td>
+</tr>
+<tr>
+<td>Maldives</td>
+<td>MV</td>
+</tr>
+<tr>
+<td>Mali</td>
+<td>ML</td>
+</tr>
+<tr>
+<td>Malta</td>
+<td>MT</td>
+</tr>
+<tr>
+<td>Marshall Islands</td>
+<td>MH</td>
+</tr>
+<tr>
+<td>Mauritania</td>
+<td>MR</td>
+</tr>
+<tr>
+<td>Mauritius</td>
+<td>MU</td>
+</tr>
+<tr>
+<td>Mexico</td>
+<td>MX</td>
+</tr>
+<tr>
+<td>Micronesia</td>
+<td>FM</td>
+</tr>
+<tr>
+<td>Moldova</td>
+<td>MD</td>
+</tr>
+<tr>
+<td>Monaco</td>
+<td>MC</td>
+</tr>
+<tr>
+<td>Mongolia</td>
+<td>MN</td>
+</tr>
+<tr>
+<td>Montenegro</td>
+<td>ME</td>
+</tr>
+<tr>
+<td>Morocco</td>
+<td>MA</td>
+</tr>
+<tr>
+<td>Mozambique</td>
+<td>MZ</td>
+</tr>
+<tr>
+<td>Myanmar (Burma)</td>
+<td>MM</td>
+</tr>
+<tr>
+<td>Namibia</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>Nauru</td>
+<td>NR</td>
+</tr>
+<tr>
+<td>Nepal</td>
+<td>NP</td>
+</tr>
+<tr>
+<td>Netherlands</td>
+<td>NL</td>
+</tr>
+<tr>
+<td>New Zealand</td>
+<td>NZ</td>
+</tr>
+<tr>
+<td>Nicaragua</td>
+<td>NI</td>
+</tr>
+<tr>
+<td>Niger</td>
+<td>NE</td>
+</tr>
+<tr>
+<td>Nigeria</td>
+<td>NG</td>
+</tr>
+<tr>
+<td>Norway</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>Oman</td>
+<td>OM</td>
+</tr>
+<tr>
+<td>Pakistan</td>
+<td>PK</td>
+</tr>
+<tr>
+<td>Palau</td>
+<td>PW</td>
+</tr>
+<tr>
+<td>Panama</td>
+<td>PA</td>
+</tr>
+<tr>
+<td>Papua New Guinea</td>
+<td>PG</td>
+</tr>
+<tr>
+<td>Paraguay</td>
+<td>PY</td>
+</tr>
+<tr>
+<td>Peru</td>
+<td>PE</td>
+</tr>
+<tr>
+<td>Philippines</td>
+<td>PH</td>
+</tr>
+<tr>
+<td>Poland</td>
+<td>PL</td>
+</tr>
+<tr>
+<td>Portugal</td>
+<td>PT</td>
+</tr>
+<tr>
+<td>Qatar</td>
+<td>QA</td>
+</tr>
+<tr>
+<td>Romania</td>
+<td>RO</td>
+</tr>
+<tr>
+<td>Russia</td>
+<td>RU</td>
+</tr>
+<tr>
+<td>Rwanda</td>
+<td>RW</td>
+</tr>
+<tr>
+<td>Saint Kitts and Nevis</td>
+<td>KN</td>
+</tr>
+<tr>
+<td>Saint Lucia</td>
+<td>LC</td>
+</tr>
+<tr>
+<td>Saint Vincent and the Grenadines</td>
+<td>VC</td>
+</tr>
+<tr>
+<td>Samoa</td>
+<td>WS</td>
+</tr>
+<tr>
+<td>San Marino</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>Sao Tome and Principe</td>
+<td>ST</td>
+</tr>
+<tr>
+<td>Saudi Arabia</td>
+<td>SA</td>
+</tr>
+<tr>
+<td>Senegal</td>
+<td>SN</td>
+</tr>
+<tr>
+<td>Serbia</td>
+<td>RS</td>
+</tr>
+<tr>
+<td>Seychelles</td>
+<td>SC</td>
+</tr>
+<tr>
+<td>Sierra Leone</td>
+<td>SL</td>
+</tr>
+<tr>
+<td>Singapore</td>
+<td>SG</td>
+</tr>
+<tr>
+<td>Slovakia</td>
+<td>SK</td>
+</tr>
+<tr>
+<td>Slovenia</td>
+<td>SI</td>
+</tr>
+<tr>
+<td>Solomon Islands</td>
+<td>SB</td>
+</tr>
+<tr>
+<td>Somalia</td>
+<td>SO</td>
+</tr>
+<tr>
+<td>South Africa</td>
+<td>ZA</td>
+</tr>
+<tr>
+<td>Spain</td>
+<td>ES</td>
+</tr>
+<tr>
+<td>Sri Lanka</td>
+<td>LK</td>
+</tr>
+<tr>
+<td>Sudan</td>
+<td>SD</td>
+</tr>
+<tr>
+<td>Suriname</td>
+<td>SR</td>
+</tr>
+<tr>
+<td>Swaziland</td>
+<td>SZ</td>
+</tr>
+<tr>
+<td>Sweden</td>
+<td>SE</td>
+</tr>
+<tr>
+<td>Switzerland</td>
+<td>CH</td>
+</tr>
+<tr>
+<td>Syria</td>
+<td>SY</td>
+</tr>
+<tr>
+<td>Taiwan</td>
+<td>TW</td>
+</tr>
+<tr>
+<td>Tajikistan</td>
+<td>TJ</td>
+</tr>
+<tr>
+<td>Tanzania</td>
+<td>TZ</td>
+</tr>
+<tr>
+<td>Thailand</td>
+<td>TH</td>
+</tr>
+<tr>
+<td>Timor-Leste (East Timor)</td>
+<td>TL</td>
+</tr>
+<tr>
+<td>Togo</td>
+<td>TG</td>
+</tr>
+<tr>
+<td>Tonga</td>
+<td>TO</td>
+</tr>
+<tr>
+<td>Trinidad and Tobago</td>
+<td>TT</td>
+</tr>
+<tr>
+<td>Tunisia</td>
+<td>TN</td>
+</tr>
+<tr>
+<td>Turkey</td>
+<td>TR</td>
+</tr>
+<tr>
+<td>Turkmenistan</td>
+<td>TM</td>
+</tr>
+<tr>
+<td>Tuvalu</td>
+<td>TV</td>
+</tr>
+<tr>
+<td>U.S. Virgin Islands</td>
+<td>VI</td>
+</tr>
+<tr>
+<td>Uganda</td>
+<td>UG</td>
+</tr>
+<tr>
+<td>Ukraine</td>
+<td>UA</td>
+</tr>
+<tr>
+<td>United Arab Emirates</td>
+<td>AE</td>
+</tr>
+<tr>
+<td>United Kingdom</td>
+<td>GB</td>
+</tr>
+<tr>
+<td>United States</td>
+<td>US</td>
+</tr>
+<tr>
+<td>Uruguay</td>
+<td>UY</td>
+</tr>
+<tr>
+<td>Uzbekistan</td>
+<td>UZ</td>
+</tr>
+<tr>
+<td>Vanuatu</td>
+<td>VU</td>
+</tr>
+<tr>
+<td>Vatican City</td>
+<td>VA</td>
+</tr>
+<tr>
+<td>Venezuela</td>
+<td>VE</td>
+</tr>
+<tr>
+<td>Vietnam</td>
+<td>VN</td>
+</tr>
+<tr>
+<td>Yemen</td>
+<td>YE</td>
+</tr>
+<tr>
+<td>Zambia</td>
+<td>ZM</td>
+</tr>
+<tr>
+<td>Zimbabwe</td>
+<td>ZW</td>
+</tr>
+<tr>
+<td>Kosovo</td>
+<td>XK</td>
+</tr>
+<tr>
+<td>South Sudan</td>
+<td>SS</td>
+</tr>
+<tr>
+<td>China</td>
+<td>CN</td>
+</tr>
+<tr>
+<td>Palestine</td>
+<td>PS</td>
+</tr>
+<tr>
+<td>Curacao</td>
+<td>CW</td>
+</tr>
+<tr>
+<td>Dominican Republic</td>
+<td>DO</td>
+</tr>
+<tr>
+<td>Dominican Republic</td>
+<td>DO</td>
+</tr>
+<tr>
+<td>Gibraltar</td>
+<td>GI</td>
+</tr>
+<tr>
+<td>New Caledonia</td>
+<td>NC</td>
+</tr>
+<tr>
+<td>Cook Islands</td>
+<td>CK</td>
+</tr>
+<tr>
+<td>Reunion</td>
+<td>RE</td>
+</tr>
+<tr>
+<td>Guernsey</td>
+<td>GG</td>
+</tr>
+<tr>
+<td>Guadeloupe</td>
+<td>GP</td>
+</tr>
+<tr>
+<td>Martinique</td>
+<td>MQ</td>
+</tr>
+<tr>
+<td>French Polynesia</td>
+<td>PF</td>
+</tr>
+<tr>
+<td>Faroe Islands</td>
+<td>FO</td>
+</tr>
+<tr>
+<td>Greenland</td>
+<td>GL</td>
+</tr>
+<tr>
+<td>Jersey</td>
+<td>JE</td>
+</tr>
+<tr>
+<td>Aruba</td>
+<td>AW</td>
+</tr>
+<tr>
+<td>Puerto Rico</td>
+<td>PR</td>
+</tr>
+<tr>
+<td>Isle of Man</td>
+<td>IM</td>
+</tr>
+<tr>
+<td>Guam</td>
+<td>GU</td>
+</tr>
+<tr>
+<td>Sint Maarten</td>
+<td>SX</td>
+</tr>
+<tr>
+<td>Turks and Caicos</td>
+<td>TC</td>
+</tr>
+<tr>
+<td>Åland Islands</td>
+<td>AX</td>
+</tr>
+<tr>
+<td>Caribbean Netherlands</td>
+<td>BQ</td>
+</tr>
+<tr>
+<td>British Indian Ocean Territory</td>
+<td>IO</td>
+</tr>
+<tr>
+<td>Christmas  as Island</td>
+<td>CX</td>
+</tr>
+<tr>
+<td>Cocos (Keeling) Islands</td>
+<td>CC</td>
+</tr>
+<tr>
+<td>Falkland Islands (Islas Malvinas)</td>
+<td>FK</td>
+</tr>
+<tr>
+<td>Mayotte</td>
+<td>YT</td>
+</tr>
+<tr>
+<td>Niue</td>
+<td>NU</td>
+</tr>
+<tr>
+<td>Norfolk Island</td>
+<td>NF</td>
+</tr>
+<tr>
+<td>Northern Mariana Islands</td>
+<td>MP</td>
+</tr>
+<tr>
+<td>Pitcairn Islands</td>
+<td>PN</td>
+</tr>
+<tr>
+<td>Saint Helena, Ascension and Tristan da Cunha</td>
+<td>SH</td>
+</tr>
+<tr>
+<td>Collectivity of Saint Martin</td>
+<td>MF</td>
+</tr>
+<tr>
+<td>Saint Pierre and Miquelon</td>
+<td>PM</td>
+</tr>
+<tr>
+<td>Tokelau</td>
+<td>TK</td>
+</tr>
+<tr>
+<td>Wallis and Futuna</td>
+<td>WF</td>
+</tr>
+<tr>
+<td>American Samoa</td>
+<td>AS</td>
+</tr>
+</tbody></table>

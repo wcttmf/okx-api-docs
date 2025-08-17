@@ -1,0 +1,281 @@
+<h3 id="order-book-trading-trade-get-transaction-details-last-3-days">GET / Transaction details (last 3 days)</h3>
+<p>Retrieve recently-filled transaction details in the last 3 day.</p>
+<h4 id="order-book-trading-trade-get-transaction-details-last-3-days-rate-limit-60-requests-per-2-seconds">Rate Limit: 60 requests per 2 seconds</h4><h4 id="order-book-trading-trade-get-transaction-details-last-3-days-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-trade-get-transaction-details-last-3-days-permission-read">Permission: Read</h4><h4 id="order-book-trading-trade-get-transaction-details-last-3-days-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/trade/fills</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/trade/fills
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Trade</span> <span class="k">as</span> <span class="n">Trade</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">tradeAPI</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">.</span><span class="n">TradeAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Retrieve recently-filled transaction details
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">tradeAPI</span><span class="p">.</span><span class="n">get_fills</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="order-book-trading-trade-get-transaction-details-last-3-days-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument family<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">subType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Transaction type <br/><code>1</code>: Buy<br/><code>2</code>: Sell<br/><code>3</code>: Open long<br/><code>4</code>: Open short<br/><code>5</code>: Close long<br/><code>6</code>: Close short <br/><code>100</code>: Partial liquidation close long<br/><code>101</code>: Partial liquidation close short<br/><code>102</code>: Partial liquidation buy<br/><code>103</code>: Partial liquidation sell<br/><code>104</code>: Liquidation long<br/><code>105</code>: Liquidation short<br/><code>106</code>: Liquidation buy <br/><code>107</code>: Liquidation sell <br/><code>110</code>: Liquidation transfer in<br/><code>111</code>: Liquidation transfer out <br/><code>118</code>: System token conversion transfer in<br/><code>119</code>: System token conversion transfer out<br/> <code>112</code>: Delivery long<br/> <code>113</code>: Delivery short  <br/><code>125</code>: ADL close long<br/><code>126</code>: ADL close short<br/><code>127</code>: ADL buy<br/><code>128</code>: ADL sell <br/><code>212</code>: Auto borrow of quick margin<br/><code>213</code>: Auto repay of quick margin <br/><code>204</code>: block trade buy<br/><code>205</code>: block trade sell<br/><code>206</code>: block trade open long<br/><code>207</code>: block trade open short<br/><code>208</code>: block trade close long<br/><code>209</code>: block trade close short<br/><code>236</code>: Easy convert in<br/><code>237</code>: Easy convert out<br/><code>270</code>: Spread trading buy<br/><code>271</code>: Spread trading sell<br/><code>272</code>: Spread trading open long<br/><code>273</code>: Spread trading open short<br/><code>274</code>: Spread trading close long<br/><code>275</code>: Spread trading close short<br/> <code>324</code>: Move position buy<br/> <code>325</code>: Move position sell<br/> <code>326</code>: Move position open long<br/> <code>327</code>: Move position open short<br/> <code>328</code>: Move position close long<br/> <code>329</code>: Move position close short <br/><code>376</code>: Collateralized borrowing auto conversion buy<br/><code>377</code>: Collateralized borrowing auto conversion sell</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested <code>billId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested <code>billId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">begin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Filter with a begin timestamp  <code>ts</code>. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">end</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Filter with an end timestamp  <code>ts</code>. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is <code>100</code>; The default is <code>100</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00192834"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51858"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillPxVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillFwdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.00000192834"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"680800019749904384"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.001"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillPxUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"billId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"680800019754098688"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillMarkVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708587373361"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"execType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"T"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillIdxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"744876980"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillMarkPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708587373362"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-get-transaction-details-last-3-days-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td style="text-align: left">billId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bill ID</td>
+</tr>
+<tr>
+<td style="text-align: left">subType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Transaction type</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled price. It is the same as the px from "Get bills details".</td>
+</tr>
+<tr>
+<td style="text-align: left">fillSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">fillIdxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Index price at the moment of trade execution <br/>For cross currency spot pairs, it returns baseCcy-USDT index price. For example, for LTC-ETH, this field returns the index price of LTC-USDT.</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled profit and loss, applicable to orders which have a trade and aim to close position. It always is 0 in other conditions</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPxVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Implied volatility when filled <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPxUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Options price when filled, in the unit of USD <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillMarkVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark volatility when filled <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillFwdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Forward price when filled <br/>Only applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">fillMarkPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark price when filled <br/>Applicable to <code>FUTURES</code>, <code>SWAP</code>, <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order side,  <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side <br/><code>long</code> <code>short</code> <br/>it returns <code>net</code> in<code>net</code> mode.</td>
+</tr>
+<tr>
+<td style="text-align: left">execType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidity taker or maker<br/><code>T</code>: taker<br/><code>M</code>: maker<br/>Not applicable to system orders such as ADL and liquidation</td>
+</tr>
+<tr>
+<td style="text-align: left">feeCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trading fee or rebate currency</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The amount of trading fee or rebate. The trading fee deduction is negative, such as '-0.01'; the rebate is positive, such as '0.01'.</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Data generation time,  Unix timestamp format in milliseconds, e.g. <code>1597026383085</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">fillTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade time which is the same as <code>fillTime</code> for the order channel.</td>
+</tr>
+<tr>
+<td style="text-align: left">feeRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fee rate. This field is returned for <code>SPOT</code> and <code>MARGIN</code> only</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The quote currency for trading.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+tradeId<br/>
+For partial_liquidation, full_liquidation, or adl, when it comes to fill information, this field will be assigned a negative value to distinguish it from other matching transaction scenarios, when it comes to order information, this field will be 0.
+</aside>
+<aside class="notice">
+ordId<br/>
+Order ID, always "" for block trading.<br/>
+</aside>
+<aside class="notice">
+clOrdId<br/>
+Client-supplied order ID, always "" for block trading.
+</aside>

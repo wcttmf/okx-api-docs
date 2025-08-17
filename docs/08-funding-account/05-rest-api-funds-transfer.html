@@ -1,0 +1,187 @@
+<h3 id="funding-account-rest-api-funds-transfer">Funds transfer</h3>
+<p>Only API keys with <code>Trade</code> privilege can call this endpoint.</p>
+<p>This endpoint supports the transfer of funds between your funding account and trading account, and from the master account to sub-accounts.</p>
+<p>Sub-account can transfer out to master account by default. Need to call <a href="/docs-v5/en/#sub-account-rest-api-set-permission-of-transfer-out">Set permission of transfer out</a> to grant privilege first if you want sub-account transferring to another sub-account (sub-accounts need to belong to same master account.)</p>
+<aside class="notice">
+The success or failure of the request does not necessarily reflect the actual transfer result. Recommend checking the transfer status by calling "Get funds transfer state" to confirm the final result.
+</aside>
+<h4 id="funding-account-rest-api-funds-transfer-rate-limit-2-requests-per-second">Rate Limit: 2 requests per second</h4><h4 id="funding-account-rest-api-funds-transfer-rate-limit-rule-user-id-currency">Rate limit rule: User ID + Currency</h4><h4 id="funding-account-rest-api-funds-transfer-permission-trade">Permission: Trade</h4><h4 id="funding-account-rest-api-funds-transfer-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/asset/transfer</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Transfer 1.5 USDT from funding account to Trading account when current account is master-account</span>
+POST /api/v5/asset/transfer
+body
+<span class="o">{</span>
+    <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+    <span class="s2">"amt"</span>:<span class="s2">"1.5"</span>,
+    <span class="s2">"from"</span>:<span class="s2">"6"</span>,
+    <span class="s2">"to"</span>:<span class="s2">"18"</span>
+<span class="o">}</span>
+
+<span class="c"># Transfer 1.5 USDT from funding account to subAccount when current account is master-account</span>
+POST /api/v5/asset/transfer
+body
+<span class="o">{</span>
+    <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+    <span class="s2">"type"</span>:<span class="s2">"1"</span>,
+    <span class="s2">"amt"</span>:<span class="s2">"1.5"</span>,
+    <span class="s2">"from"</span>:<span class="s2">"6"</span>,
+    <span class="s2">"to"</span>:<span class="s2">"6"</span>,
+    <span class="s2">"subAcct"</span>:<span class="s2">"mini"</span>
+<span class="o">}</span>
+
+<span class="c"># Transfer 1.5 USDT from funding account to subAccount when current account is sub-account</span>
+POST /api/v5/asset/transfer
+body 
+<span class="o">{</span>
+    <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>,
+    <span class="s2">"type"</span>:<span class="s2">"4"</span>,
+    <span class="s2">"amt"</span>:<span class="s2">"1.5"</span>,
+    <span class="s2">"from"</span>:<span class="s2">"6"</span>,
+    <span class="s2">"to"</span>:<span class="s2">"6"</span>,
+    <span class="s2">"subAcct"</span>:<span class="s2">"mini"</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Funding</span> <span class="k">as</span> <span class="n">Funding</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">fundingAPI</span> <span class="o">=</span> <span class="n">Funding</span><span class="p">.</span><span class="n">FundingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Funds transfer
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">fundingAPI</span><span class="p">.</span><span class="n">funds_transfer</span><span class="p">(</span>
+    <span class="n">ccy</span><span class="o">=</span><span class="s">"USDT"</span><span class="p">,</span>
+    <span class="n">amt</span><span class="o">=</span><span class="s">"1.5"</span><span class="p">,</span>
+    <span class="n">from_</span><span class="o">=</span><span class="s">"6"</span><span class="p">,</span>
+    <span class="n">to</span><span class="o">=</span><span class="s">"18"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="funding-account-rest-api-funds-transfer-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Transfer type<br/><code>0</code>: transfer within account<br/><code>1</code>: master account to sub-account (Only applicable to API Key from master account)<br/><code>2</code>: sub-account to master account (Only applicable to API Key from master account)<br/><code>3</code>: sub-account to master account (Only applicable to APIKey from sub-account)<br/><code>4</code>: sub-account to sub-account (Only applicable to APIKey from sub-account, and target account needs to be another sub-account which belongs to same master account. Sub-account directly transfer out permission is disabled by default, set permission please refer to <a href="/docs-v5/en/#sub-account-rest-api-set-permission-of-transfer-out">Set permission of transfer out</a>)<br/>The default is <code>0</code>.<br/>If you want to make transfer between sub-accounts by master account API key, refer to <a href="/docs-v5/en/#sub-account-rest-api-master-accounts-manage-the-transfers-between-sub-accounts">Master accounts manage the transfers between sub-accounts</a></td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Transfer currency, e.g. <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Amount to be transferred</td>
+</tr>
+<tr>
+<td style="text-align: left">from</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The remitting account<br/><code>6</code>: Funding account<br/><code>18</code>: Trading account</td>
+</tr>
+<tr>
+<td style="text-align: left">to</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">The beneficiary account<br/><code>6</code>: Funding account<br/><code>18</code>: Trading account</td>
+</tr>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Name of the sub-account<br/>When <code>type</code> is <code>1</code>/<code>2</code>/<code>4</code>, this parameter is required.</td>
+</tr>
+<tr>
+<td style="text-align: left">loanTrans</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether or not borrowed coins can be transferred out under <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code><br/><code>true</code>: borrowed coins can be transferred out<br/><code>false</code>: borrowed coins cannot be transferred out<br/>the default is <code>false</code></td>
+</tr>
+<tr>
+<td style="text-align: left">omitPosRisk</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Ignore position risk<br/>Default is <code>false</code><br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">clientId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"transId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"754147"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"clientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-funds-transfer-response-parameters">Response Parameters</h4>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">transId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Transfer ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clientId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">from</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The remitting account</td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Transfer amount</td>
+</tr>
+<tr>
+<td style="text-align: left">to</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The beneficiary account</td>
+</tr>
+</tbody></table>

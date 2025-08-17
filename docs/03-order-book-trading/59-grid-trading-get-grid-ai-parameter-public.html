@@ -1,0 +1,158 @@
+<h3 id="order-book-trading-grid-trading-get-grid-ai-parameter-public">GET / Grid AI parameter (public)</h3>
+<p>Authentication is not required for this public endpoint.</p>
+<h4 id="order-book-trading-grid-trading-get-grid-ai-parameter-public-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-get-grid-ai-parameter-public-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-grid-trading-get-grid-ai-parameter-public-permission-read">Permission: Read</h4><h4 id="order-book-trading-grid-trading-get-grid-ai-parameter-public-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/grid/ai-param</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/grid/ai-param?instId<span class="o">=</span>BTC-USDT&amp;algoOrdType<span class="o">=</span>grid
+</code></pre></div><h4 id="order-book-trading-grid-trading-get-grid-ai-parameter-public-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">direction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Contract grid type<br/><code>long</code>,<code>short</code>,<code>neutral</code><br/>Required in the case of <code>contract_grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">duration</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Back testing duration<br/><code>7D</code>: 7 Days, <code>30D</code>: 30 Days, <code>180D</code>: 180 Days<br/>The default is <code>7D</code> for <code>Spot grid</code><br/>Only <code>7D</code> is available for <code>Contract grid</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grid"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"annualizedRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.5849"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7D"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gridNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21373.3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minInvestment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.89557758"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15544.2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"perGridProfitRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.566226200302574"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"perMaxProfitRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0733865364573281"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"perMinProfitRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0561101403446263"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"runType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sourceCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-get-grid-ai-parameter-public-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">duration</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Back testing duration<br/><code>7D</code>: 7 Days, <code>30D</code>: 30 Days, <code>180D</code>: 180 Days</td>
+</tr>
+<tr>
+<td style="text-align: left">gridNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Grid quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">maxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Upper price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">minPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lower price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">perMaxProfitRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated maximum Profit margin per grid</td>
+</tr>
+<tr>
+<td style="text-align: left">perMinProfitRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated minimum Profit margin per grid</td>
+</tr>
+<tr>
+<td style="text-align: left">perGridProfitRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Per grid profit ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">annualizedRate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Grid annualized rate</td>
+</tr>
+<tr>
+<td style="text-align: left">minInvestment</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The minimum invest amount</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The invest currency</td>
+</tr>
+<tr>
+<td style="text-align: left">runType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Grid type<br/><code>1</code>: Arithmetic, <code>2</code>: Geometric</td>
+</tr>
+<tr>
+<td style="text-align: left">direction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract grid type<br/><code>long</code>,<code>short</code>,<code>neutral</code><br/>Only applicable to contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage<br/>Only applicable to contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">sourceCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Source currency</td>
+</tr>
+</tbody></table>

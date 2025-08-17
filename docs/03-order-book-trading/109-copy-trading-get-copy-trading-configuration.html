@@ -1,0 +1,87 @@
+<h3 id="order-book-trading-copy-trading-get-copy-trading-configuration">GET / Copy trading configuration</h3>
+<p>Public endpoint. Retrieve copy trading parameter configuration information of copy settings</p>
+<h4 id="order-book-trading-copy-trading-get-copy-trading-configuration-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-copy-trading-configuration-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-copy-trading-get-copy-trading-configuration-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-copy-trading-configuration-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/public-config</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/public-config?instType<span class="o">=</span>SWAP
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-copy-trading-configuration-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"maxCopyAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxCopyRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxCopyTotalAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxSlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.75"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxTpRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minCopyAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minCopyRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-copy-trading-configuration-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">maxCopyAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum copy amount per order in USDT when you are using copy mode <code>fixed_amount</code></td>
+</tr>
+<tr>
+<td style="text-align: left">minCopyAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Minimum copy amount per order in USDT when you are using copy mode <code>fixed_amount</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maxCopyTotalAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum copy total amount under the certain lead trader, the minimum is the same with <code>minCopyAmt</code></td>
+</tr>
+<tr>
+<td style="text-align: left">minCopyRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Minimum ratio per order when you are using copy mode <code>ratio_copy</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maxCopyRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum ratio per order when you are using copy mode <code>ratio_copy</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maxTpRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum ratio of taking profit per order, the minimum is 0</td>
+</tr>
+<tr>
+<td style="text-align: left">maxSlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum ratio of stopping loss per order, the minimum is 0</td>
+</tr>
+</tbody></table>

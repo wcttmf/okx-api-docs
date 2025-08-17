@@ -1,0 +1,337 @@
+<h3 id="order-book-trading-trade-ws-fills-channel">WS / Fills channel</h3>
+<p>Retrieve transaction information. Data will not be pushed when first subscribed. Data will only be pushed when there are order book fill events, where tradeId &gt; 0.<br/></p>
+<p>The channel is exclusively available to users with trading fee tier VIP5 or above. For other users, please use <a href="/docs-v5/en/#order-book-trading-trade-ws-order-channel">WS / Order channel</a>.</p>
+<h4 id="order-book-trading-trade-ws-fills-channel-url-path">URL Path</h4>
+<p>/ws/v5/private (required login)</p>
+<blockquote>
+<p>Request Example: single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"channel"</span>: <span class="s2">"fills"</span>,
+            <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-SWAP"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/private"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"channel"</span><span class="p">:</span> <span class="s">"fills"</span><span class="p">,</span>
+            <span class="s">"instId"</span><span class="p">:</span> <span class="s">"BTC-USDT-SWAP"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"channel"</span>: <span class="s2">"fills"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/private"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"channel"</span><span class="p">:</span> <span class="s">"fills"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="order-book-trading-trade-ws-fills-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td>op</td>
+<td>String</td>
+<td>Yes</td>
+<td>Operation<br/><code>subscribe</code> <code>unsubscribe</code></td>
+</tr>
+<tr>
+<td>args</td>
+<td>Array of objects</td>
+<td>Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Yes</td>
+<td>Channel name <code>fills</code></td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example: single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fills"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fills"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="order-book-trading-trade-ws-fills-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td>event</td>
+<td>String</td>
+<td>Yes</td>
+<td>Event<br/> <code>subscribe</code> <code>unsubscribe</code> <code>error</code></td>
+</tr>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>code</td>
+<td>String</td>
+<td>No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>String</td>
+<td>No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td>connId</td>
+<td>String</td>
+<td>Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example: single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fills"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"614488474791111"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"70000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1705449605015"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"680800019749904384"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"execType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"T"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="order-book-trading-trade-ws-fills-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; uid</td>
+<td>String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td>&gt; instId</td>
+<td>String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td>&gt; fillSz</td>
+<td>String</td>
+<td>Filled quantity. If the trade is aggregated, the filled quantity will also be aggregated.</td>
+</tr>
+<tr>
+<td>&gt; fillPx</td>
+<td>String</td>
+<td>Last filled price</td>
+</tr>
+<tr>
+<td>&gt; side</td>
+<td>String</td>
+<td>Trade direction<br/> <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td>&gt; ts</td>
+<td>String</td>
+<td>Filled time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>&gt; ordId</td>
+<td>String</td>
+<td>Order ID</td>
+</tr>
+<tr>
+<td>&gt; clOrdId</td>
+<td>String</td>
+<td>Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td>&gt; tradeId</td>
+<td>String</td>
+<td>The last trade ID in the trades aggregation</td>
+</tr>
+<tr>
+<td>&gt; execType</td>
+<td>String</td>
+<td>Liquidity taker or maker, <code>T</code>: taker <code>M</code>: maker</td>
+</tr>
+<tr>
+<td>&gt; count</td>
+<td>String</td>
+<td>The count of trades aggregated</td>
+</tr>
+</tbody></table>
+<aside class="notice"> 
+- The channel is exclusively available to users with trading fee tier VIP5 or above. Others will receive error code 60029 when subscribing to it. <br/>
+- The channel only pushes partial information of the orders channel. Fill events of block trading, nitro spread, liquidation, ADL, and some other non order book events will not be pushed through this channel. Users should also subscribe to the orders channel for order confirmation. <br/>
+- When a fill event is received by this channel, the account balance, margin, and position information might not have changed yet. <br/>
+- Taker orders will be aggregated based on different fill prices. When aggregation occurs, the count field indicates the number of orders matched, and the tradeId represents the tradeId of the last trade in the aggregation. Maker orders will not be aggregated. <br/>
+- The channel returns clOrdId. The field will be returned upon trade execution. Note that the fills channel will only return this field if the user-provided clOrdId conforms to the signed int64 positive integer format (1-9223372036854775807, 2^63-1); if the user does not provide this field or if clOrdId does not meet the format requirements, the field will return "0". The order endpoints and channel will continue to return the user-provided clOrdId as usual. All request and response parameters are of string type.<br/>
+- In the future, connection limits will be imposed on this channel. The maximum number of connections subscribing to this channel per subaccount will be 20. We recommend users always use this channel within this limit to avoid any impact on their strategies when the limit is enforced. <br/>
+</aside>

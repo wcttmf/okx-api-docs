@@ -1,0 +1,188 @@
+<h3 id="funding-account-rest-api-get-deposit-payment-methods">Get deposit payment methods</h3>
+<p>To display all the available fiat deposit payment methods</p>
+<h4 id="funding-account-rest-api-get-deposit-payment-methods-rate-limit-3-requests-per-second">Rate Limit: 3 requests per second</h4><h4 id="funding-account-rest-api-get-deposit-payment-methods-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-deposit-payment-methods-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-deposit-payment-methods-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/fiat/deposit-payment-methods</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/fiat/deposit-payment-methods?ccy<span class="o">=</span>TRY
+body
+<span class="o">{</span>
+  <span class="s2">"ccy"</span> : <span class="s2">"TRY"</span>,
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code>
+</code></pre></div><h4 id="funding-account-rest-api-get-deposit-payment-methods-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameters</strong></th>
+<th style="text-align: left"><strong>Types</strong></th>
+<th style="text-align: left"><strong>Required</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Fiat currency, ISO-4217 3 digit currency code, e.g. <code>TRY</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRY"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paymentMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TR_BANKS"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"feeRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"minFee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"limits"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"dailyLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147483647"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"dailyLimitRemaining"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147483647"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"weeklyLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147483647"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"weeklyLimitRemaining"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147483647"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"monthlyLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"monthlyLimitRemaining"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"minAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lifetimeLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147483647"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"accounts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"paymentAcctId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"acctNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TR740001592093703829602611"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recipientName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bankName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VakıfBank"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bankCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TVBATR2AXXX"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"paymentAcctId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"acctNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TR740001592093703829602622"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"recipientName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bankName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FBHLTRISXXX"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"bankCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="funding-account-rest-api-get-deposit-payment-methods-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Fiat currency</td>
+</tr>
+<tr>
+<td>paymentMethod</td>
+<td>String</td>
+<td>The payment method associated with the currency<br/><code>TR_BANKS</code><br/><code>PIX</code><br/><code>SEPA</code></td>
+</tr>
+<tr>
+<td>feeRate</td>
+<td>String</td>
+<td>The fee rate for each deposit, expressed as a percentage<br/>e.g. <code>0.02</code> represents 2 percent fee for each transaction.</td>
+</tr>
+<tr>
+<td>minFee</td>
+<td>String</td>
+<td>The minimum fee for each deposit</td>
+</tr>
+<tr>
+<td>limits</td>
+<td>Object</td>
+<td>An object containing limits for various transaction intervals</td>
+</tr>
+<tr>
+<td>&gt; dailyLimit</td>
+<td>String</td>
+<td>The daily transaction limit</td>
+</tr>
+<tr>
+<td>&gt; dailyLimitRemaining</td>
+<td>String</td>
+<td>The remaining daily transaction limit</td>
+</tr>
+<tr>
+<td>&gt; weeklyLimit</td>
+<td>String</td>
+<td>The weekly transaction limit</td>
+</tr>
+<tr>
+<td>&gt; weeklyLimitRemaining</td>
+<td>String</td>
+<td>The remaining weekly transaction limit</td>
+</tr>
+<tr>
+<td>&gt; monthlyLimit</td>
+<td>String</td>
+<td>The monthly transaction limit</td>
+</tr>
+<tr>
+<td>&gt; monthlyLimitRemaining</td>
+<td>String</td>
+<td>The remaining monthly transaction limit</td>
+</tr>
+<tr>
+<td>&gt; maxAmt</td>
+<td>String</td>
+<td>The maximum amount allowed per transaction</td>
+</tr>
+<tr>
+<td>&gt; minAmt</td>
+<td>String</td>
+<td>The minimum amount allowed per transaction</td>
+</tr>
+<tr>
+<td>&gt; lifetimeLimit</td>
+<td>String</td>
+<td>The lifetime transaction limit. Return the configured value, "" if not configured</td>
+</tr>
+<tr>
+<td>accounts</td>
+<td>Array of Object</td>
+<td>An array containing information about payment accounts associated with the currency and method.</td>
+</tr>
+<tr>
+<td>&gt; paymentAcctId</td>
+<td>String</td>
+<td>The account ID for withdrawal</td>
+</tr>
+<tr>
+<td>&gt; acctNum</td>
+<td>String</td>
+<td>The account number, which can be an IBAN or other bank account number.</td>
+</tr>
+<tr>
+<td>&gt; recipientName</td>
+<td>String</td>
+<td>The name of the recipient</td>
+</tr>
+<tr>
+<td>&gt; bankName</td>
+<td>String</td>
+<td>The name of the bank associated with the account</td>
+</tr>
+<tr>
+<td>&gt; bankCode</td>
+<td>String</td>
+<td>The SWIFT code / BIC / bank code associated with the account</td>
+</tr>
+<tr>
+<td>&gt; state</td>
+<td>String</td>
+<td>The state of the account<br/><code>active</code></td>
+</tr>
+</tbody></table>

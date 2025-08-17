@@ -1,0 +1,362 @@
+<h3 id="order-book-trading-trade-ws-place-multiple-orders">WS / Place multiple orders</h3>
+<p>Place orders in a batch. Maximum 20 orders can be placed per request<br/><br/></p>
+<h4 id="order-book-trading-trade-ws-place-multiple-orders-url-path">URL Path</h4>
+<p>/ws/v5/private (required login)</p>
+<h4 id="order-book-trading-trade-ws-place-multiple-orders-rate-limit-300-orders-per-2-seconds">Rate Limit: 300 orders per 2 seconds</h4><h4 id="order-book-trading-trade-ws-place-multiple-orders-rate-limit-of-lead-trader-lead-instruments-for-copy-trading-4-orders-per-2-seconds">Rate Limit of lead trader lead instruments for Copy Trading: 4 orders per 2 seconds</h4><h4 id="order-book-trading-trade-ws-place-multiple-orders-rate-limit-rule-except-options-user-id-instrument-id">Rate limit rule (except Options): User ID + Instrument ID</h4><h4 id="order-book-trading-trade-ws-place-multiple-orders-rate-limit-rule-options-only-user-id-instrument-family">Rate limit rule (Options only): User ID + Instrument Family</h4>
+<p>Rate limit of this endpoint will also be affected by the rules <a href="/docs-v5/en/#overview-rate-limits-sub-account-rate-limit">Sub-account rate limit</a> and <a href="/docs-v5/en/#overview-rate-limits-fill-ratio-based-sub-account-rate-limit">Fill ratio based sub-account rate limit</a>.</p>
+<aside class="notice">
+Unlike other endpoints, the rate limit of this endpoint is determined by the number of orders. If there is only one order in the request, it will consume the rate limit of `Place order`.
+</aside>
+<aside class="notice">
+Rate limit is shared with the `Place multiple orders` REST API endpoints
+</aside>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1513"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"batch-orders"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+      <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT"</span>,
+      <span class="s2">"tdMode"</span>: <span class="s2">"cash"</span>,
+      <span class="s2">"ordType"</span>: <span class="s2">"market"</span>,
+      <span class="s2">"sz"</span>: <span class="s2">"100"</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"side"</span>: <span class="s2">"buy"</span>,
+      <span class="s2">"instId"</span>: <span class="s2">"LTC-USDT"</span>,
+      <span class="s2">"tdMode"</span>: <span class="s2">"cash"</span>,
+      <span class="s2">"ordType"</span>: <span class="s2">"market"</span>,
+      <span class="s2">"sz"</span>: <span class="s2">"1"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-trade-ws-place-multiple-orders-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Operation<br/><code>batch-orders</code></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Request Parameters</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trade mode <br/>Margin mode <code>isolated</code> <code>cross</code> <br/>Non-Margin mode <code>cash</code><br/><code>spot_isolated</code> (only applicable to SPOT lead trading, <code>tdMode</code> should be <code>spot_isolated</code> for <code>SPOT</code> lead trading.)<br/>Note: <code>isolated</code> is not available in multi-currency margin mode and portfolio margin mode.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Margin currency <br/>Applicable to all <code>isolated</code> <code>MARGIN</code> orders and <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client Order ID as assigned by the client  <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order side, <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Position side  <br/>The default <code>net</code> in the <code>net</code> mode <br/>It is required in the <code>long/short</code> mode, and only be <code>long</code> or <code>short</code>. <br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order type <br/><code>market</code>: Market order, only applicable to <code>SPOT/MARGIN/FUTURES/SWAP</code> <br/><code>limit</code>: limit order <br/><code>post_only</code>: Post-only order <br/><code>fok</code>: Fill-or-kill order <br/><code>ioc</code>: Immediate-or-cancel order  <br/><code>optimal_limit_ioc</code>: Market order with immediate-or-cancel order (applicable only to Expiry Futures and Perpetual Futures)<br/><code>mmp</code>: Market Maker Protection (only applicable to Option in Portfolio Margin mode)<br/><code>mmp_and_post_only</code>: Market Maker Protection and Post-only order(only applicable to Option in Portfolio Margin mode).</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Quantity to buy or sell.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Order price. Only applicable to <code>limit</code>,<code>post_only</code>,<code>fok</code>,<code>ioc</code>,<code>mmp</code>,<code>mmp_and_post_only</code> order.<br/>When placing an option order, one of px/pxUsd/pxVol must be filled in, and only one can be filled in</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pxUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Place options orders in <code>USD</code> <br/>Only applicable to options <br/>When placing an option order, one of px/pxUsd/pxVol must be filled in, and only one can be filled in</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pxVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Place options orders based on implied volatility, where 1 represents 100% <br/>Only applicable to options <br/>When placing an option order, one of px/pxUsd/pxVol must be filled in, and only one can be filled in</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; reduceOnly</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether the order can only reduce the position size.  <br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>.<br/>Only applicable to <code>MARGIN</code> orders, and <code>FUTURES</code>/<code>SWAP</code> orders in <code>net</code> mode <br/>Only applicable to <code>Futures mode</code> and <code>Multi-currency margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order quantity unit setting for <code>sz</code><br/><code>base_ccy</code>: Base currency ,<code>quote_ccy</code>: Quote currency  <br/>Only applicable to <code>SPOT</code> Market Orders<br/>Default is <code>quote_ccy</code> for buy, <code>base_ccy</code> for sell</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; banAmend</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether to disallow the system from amending the size of the SPOT Market Order.<br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>.<br/>If <code>true</code>, system will not amend and reject the market order if user does not have sufficient funds. <br/>Only applicable to SPOT Market Orders</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pxAmendType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The price amendment type for orders<br/><code>0</code>: Do not allow the system to amend to order price if <code>px</code> exceeds the price limit <br/><code>1</code>: Allow the system to amend the price to the best available value within the price limit if <code>px</code> exceeds the price limit<br/> The default value is <code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The quote currency used for trading. Only applicable to <code>SPOT</code>. <br/> The default value is the quote currency of the <code>instId</code>, for example: for <code>BTC-USD</code>, the default is <code>USD</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; stpMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Self trade prevention mode. <br/><code>cancel_maker</code>,<code>cancel_taker</code>, <code>cancel_both</code><br/>Cancel both does not support FOK. <br/><br/>The account-level acctStpMode will be used to place orders by default. The default value of this field is <code>cancel_maker</code>. Users can log in to the webpage through the master account to modify this configuration. Users can also utilize the stpMode request parameter of the placing order endpoint to determine the stpMode of a certain order.</td>
+</tr>
+<tr>
+<td style="text-align: left">expTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Request effective deadline. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example When All Succeed</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1513"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"batch-orders"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345689"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12344"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"inTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421339"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"outTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491423240"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response Example When Partially Successful</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1513"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"batch-orders"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345689"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5XXXX"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insufficient margin"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"inTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421339"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"outTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491423240"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response Example When All Failed</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1513"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"batch-orders"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oktswap6"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5XXXX"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insufficient margin"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oktswap7"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5XXXX"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insufficient margin"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"inTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421339"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"outTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491423240"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Response Example When Format Error</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1513"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"batch-orders"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60013"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid args"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"inTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491421339"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"outTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695190491423240"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-ws-place-multiple-orders-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Operation</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Error Code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Timestamp when the order request processing is finished by our system, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order status code, <code>0</code> means success</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sMsg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rejection or success message of event execution.</td>
+</tr>
+<tr>
+<td style="text-align: left">inTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Timestamp at Websocket gateway when the request is received, Unix timestamp format in microseconds, e.g. <code>1597026383085123</code></td>
+</tr>
+<tr>
+<td style="text-align: left">outTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Timestamp at Websocket gateway when the response is sent, Unix timestamp format in microseconds, e.g. <code>1597026383085123</code></td>
+</tr>
+</tbody></table>
+<aside class="notice">
+
+In the `Portfolio Margin` account mode, either all orders are accepted by the system successfully, or all orders are rejected by the system. 
+</aside>
+<aside class="notice">
+clOrdId<br/>
+clOrdId is a user-defined unique ID used to identify the order. It will be included in the response parameters if you have specified during order submission, and can be used as a request parameter to the endpoints to query, cancel and amend orders. <br/>
+clOrdId must be unique among all pending orders and the current request.
+</aside>

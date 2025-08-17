@@ -1,0 +1,195 @@
+<h3 id="trading-account-rest-api-get-account-configuration">Get account configuration</h3>
+<p>Retrieve current account configuration.</p>
+<h4 id="trading-account-rest-api-get-account-configuration-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-account-configuration-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-account-configuration-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-account-configuration-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/config</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/account/config
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Retrieve current account configuration
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_account_config</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-account-configuration-request-parameters">Request Parameters</h4>
+<p>none</p>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"acctLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"acctStpMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_maker"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"autoLoan"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ctIsoMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"enableSpotBorrow"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"greeksType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PA"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"kycLv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v5 test"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lv1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"levelTmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liquidationGear"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mainUid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44705892343619584"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnIsoMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"opAuth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"perm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read_only,withdraw,trade"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long_short_mode"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"roleType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"spotBorrowAutoRepay"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"spotOffsetType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"spotRoleType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"spotTraderInsts"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"traderInsts"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44705892343619584"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-account-configuration-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">uid</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Account ID of current request.</td>
+</tr>
+<tr>
+<td style="text-align: left">mainUid</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Main Account ID of current request. <br/>The current request account is main account if uid = mainUid.<br/>The current request account is sub-account if uid != mainUid.</td>
+</tr>
+<tr>
+<td style="text-align: left">acctLv</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Account mode <br/><code>1</code>: Spot mode<br/><code>2</code>: Futures mode<br/><code>3</code>: Multi-currency margin<br/><code>4</code>: Portfolio margin</td>
+</tr>
+<tr>
+<td style="text-align: left">acctStpMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Account self-trade prevention mode <br/><code>cancel_maker</code> <br/><code>cancel_taker</code> <br/><code>cancel_both</code> <br/>The default value is <code>cancel_maker</code>. Users can log in to the webpage through the master account to modify this configuration</td>
+</tr>
+<tr>
+<td style="text-align: left">posMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position mode<br/><code>long_short_mode</code>: long/short, only applicable to <code>FUTURES</code>/<code>SWAP</code><br/><code>net_mode</code>: net</td>
+</tr>
+<tr>
+<td style="text-align: left">autoLoan</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether to borrow coins automatically<br/><code>true</code>: borrow coins automatically<br/><code>false</code>: not borrow coins automatically</td>
+</tr>
+<tr>
+<td style="text-align: left">greeksType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current display type of Greeks<br/><code>PA</code>: Greeks in coins<br/><code>BS</code>: Black-Scholes Greeks in dollars</td>
+</tr>
+<tr>
+<td style="text-align: left">level</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The user level of the current real trading volume on the platform,  e.g <code>Lv1</code>, which means regular user level.</td>
+</tr>
+<tr>
+<td style="text-align: left">levelTmp</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Temporary experience user level of special users, e.g <code>Lv1</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ctIsoMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract isolated margin trading settings<br/><code>automatic</code>: Auto transfers<br/><code>autonomy</code>: Manual transfers</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnIsoMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin isolated margin trading settings<br/> <code>auto_transfers_ccy</code>: New auto transfers, enabling both base and quote currency as the margin for isolated margin trading<br/><code>automatic</code>: Auto transfers<br/><code>quick_margin</code>: Quick Margin Mode (For new accounts, including subaccounts, some defaults will be <code>automatic</code>, and others will be <code>quick_margin</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left">spotOffsetType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Risk offset type<br/><code>1</code>: Spot-Derivatives(USDT) to be offsetted<br/><code>2</code>: Spot-Derivatives(Coin) to be offsetted<br/><code>3</code>: Only derivatives to be offsetted<br/>Only applicable to <code>Portfolio margin</code></del><br/>(Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">roleType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Role type<br/><code>0</code>: General user<br/><code>1</code>: Leading trader<br/><code>2</code>: Copy trader</td>
+</tr>
+<tr>
+<td style="text-align: left">traderInsts</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Leading trade instruments, only applicable to Leading trader</td>
+</tr>
+<tr>
+<td style="text-align: left">spotRoleType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">SPOT copy trading role type.<br/><code>0</code>: General user；<code>1</code>: Leading trader；<code>2</code>: Copy trader</td>
+</tr>
+<tr>
+<td style="text-align: left">spotTraderInsts</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Spot lead trading instruments, only applicable to lead trader</td>
+</tr>
+<tr>
+<td style="text-align: left">opAuth</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether the optional trading was activated<br/><code>0</code>: not activate<br/><code>1</code>: activated</td>
+</tr>
+<tr>
+<td style="text-align: left">kycLv</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Main account KYC level<br/><code>0</code>: No verification<br/><code>1</code>: level 1 completed<br/><code>2</code>: level 2 completed<br/><code>3</code>: level 3 completed<br/>If the request originates from a subaccount, kycLv is the KYC level of the main account. <br/>If the request originates from the main account, kycLv is the KYC level of the current account.</td>
+</tr>
+<tr>
+<td style="text-align: left">label</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">API key note  of current request API key. No more than 50 letters (case sensitive) or numbers, which can be pure letters or pure numbers.</td>
+</tr>
+<tr>
+<td style="text-align: left">ip</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">IP addresses that linked with current API key, separate with commas if more than one, e.g. <code>117.37.203.58,117.37.203.57</code>. It is an empty string "" if there is no IP bonded.</td>
+</tr>
+<tr>
+<td style="text-align: left">perm</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The permission of the current requesting API key or Access token<br/><code>read_only</code>: Read<br/><code>trade</code>: Trade<br/><code>withdraw</code>: Withdraw</td>
+</tr>
+<tr>
+<td style="text-align: left">liquidationGear</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maintenance margin ratio level of liquidation alert<br/> <code>3</code> and <code>-1</code> means that you will get hourly liquidation alerts on app and channel "Position risk warning" when your margin level drops to or below 300%. <code>-1</code> is the initial value which has the same effect as <code>-3</code> <br/><code>0</code> means that there is not alert</td>
+</tr>
+<tr>
+<td style="text-align: left">enableSpotBorrow</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether borrow is allowed or not in <code>Spot mode</code><br/><code>true</code>: Enabled<br/><code>false</code>: Disabled</td>
+</tr>
+<tr>
+<td style="text-align: left">spotBorrowAutoRepay</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether auto-repay is allowed or not in <code>Spot mode</code><br/><code>true</code>: Enabled<br/><code>false</code>: Disabled</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Account type <br/><code>0</code>: Main account <br/><code>1</code>: Standard sub-account <br/><code>2</code>: Managed trading sub-account <br/><code>5</code>: Custody trading sub-account - Copper<br/><code>9</code>: Managed trading sub-account - Copper<br/> <code>12</code>: Custody trading sub-account - Komainu</td>
+</tr>
+</tbody></table>

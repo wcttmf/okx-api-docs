@@ -1,0 +1,75 @@
+<h3 id="trading-account-rest-api-set-position-mode">Set position mode</h3>
+<p>Futures mode and Multi-currency mode: <code>FUTURES</code> and <code>SWAP</code> support both <code>long/short</code> mode and <code>net</code> mode. In <code>net</code> mode, users can only have positions in one direction; In <code>long/short</code> mode, users can hold positions in long and short directions.<br/>
+Portfolio margin mode: <code>FUTURES</code> and <code>SWAP</code> only support <code>net</code> mode</p>
+<h4 id="trading-account-rest-api-set-position-mode-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-set-position-mode-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-set-position-mode-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-set-position-mode-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/set-position-mode</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/account/set-position-mode
+body 
+<span class="o">{</span>
+    <span class="s2">"posMode"</span>:<span class="s2">"long_short_mode"</span>
+<span class="o">}</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Set position mode
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">set_position_mode</span><span class="p">(</span>
+    <span class="n">posMode</span><span class="o">=</span><span class="s">"long_short_mode"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-set-position-mode-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">posMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Position mode<br/><code>long_short_mode</code>: long/short, only applicable to <code>FUTURES</code>/<code>SWAP</code><br/><code>net_mode</code>: net</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"posMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long_short_mode"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-set-position-mode-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">posMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position mode</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+<p>
+ Portfolio margin account only supports net mode
+</p>
+</aside>

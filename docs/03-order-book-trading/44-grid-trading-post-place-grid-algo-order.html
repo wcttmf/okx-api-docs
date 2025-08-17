@@ -1,0 +1,316 @@
+<h3 id="order-book-trading-grid-trading-post-place-grid-algo-order">POST / Place grid algo order</h3><h4 id="order-book-trading-grid-trading-post-place-grid-algo-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-post-place-grid-algo-order-rate-limit-rule-user-id-instrument-id">Rate limit rule: User ID + Instrument ID</h4><h4 id="order-book-trading-grid-trading-post-place-grid-algo-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-grid-trading-post-place-grid-algo-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/grid/order-algo</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Place spot grid algo order</span>
+POST /api/v5/tradingBot/grid/order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT"</span>,
+    <span class="s2">"algoOrdType"</span>: <span class="s2">"grid"</span>,
+    <span class="s2">"maxPx"</span>: <span class="s2">"5000"</span>,
+    <span class="s2">"minPx"</span>: <span class="s2">"400"</span>,
+    <span class="s2">"gridNum"</span>: <span class="s2">"10"</span>,
+    <span class="s2">"runType"</span>: <span class="s2">"1"</span>,
+    <span class="s2">"quoteSz"</span>: <span class="s2">"25"</span>,
+    <span class="s2">"triggerParams"</span>:[
+      <span class="o">{</span>
+         <span class="s2">"triggerAction"</span>:<span class="s2">"stop"</span>,
+         <span class="s2">"triggerStrategy"</span>:<span class="s2">"price"</span>,  
+         <span class="s2">"triggerPx"</span>:<span class="s2">"1000"</span>
+      <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+
+<span class="c"># Place contract grid algo order</span>
+POST /api/v5/tradingBot/grid/order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"algoOrdType"</span>: <span class="s2">"contract_grid"</span>,
+    <span class="s2">"maxPx"</span>: <span class="s2">"5000"</span>,
+    <span class="s2">"minPx"</span>: <span class="s2">"400"</span>,
+    <span class="s2">"gridNum"</span>: <span class="s2">"10"</span>,
+    <span class="s2">"runType"</span>: <span class="s2">"1"</span>,
+    <span class="s2">"sz"</span>: <span class="s2">"200"</span>, 
+    <span class="s2">"direction"</span>: <span class="s2">"long"</span>,
+    <span class="s2">"lever"</span>: <span class="s2">"2"</span>,
+    <span class="s2">"triggerParams"</span>:[
+      <span class="o">{</span>
+         <span class="s2">"triggerAction"</span>:<span class="s2">"start"</span>, 
+         <span class="s2">"triggerStrategy"</span>:<span class="s2">"rsi"</span>, 
+         <span class="s2">"timeframe"</span>:<span class="s2">"30m"</span>,
+         <span class="s2">"thold"</span>:<span class="s2">"10"</span>,
+         <span class="s2">"triggerCond"</span>:<span class="s2">"cross"</span>,
+         <span class="s2">"timePeriod"</span>:<span class="s2">"14"</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+         <span class="s2">"triggerAction"</span>:<span class="s2">"stop"</span>,
+         <span class="s2">"triggerStrategy"</span>:<span class="s2">"price"</span>,
+         <span class="s2">"triggerPx"</span>:<span class="s2">"1000"</span>,
+         <span class="s2">"stopType"</span>:<span class="s2">"2"</span>
+      <span class="o">}</span>
+   <span class="o">]</span>
+<span class="o">}</span>
+
+</code></pre></div><h4 id="order-book-trading-grid-trading-post-place-grid-algo-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">maxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Upper price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">minPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lower price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">gridNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Grid quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">runType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Grid type<br/><code>1</code>: Arithmetic, <code>2</code>: Geometric<br/>Default is Arithmetic</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">TP tigger price<br/>Applicable to <code>Spot grid</code>/<code>Contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">SL tigger price<br/>Applicable to <code>Spot grid</code>/<code>Contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Client-supplied Algo ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">profitSharingRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Profit sharing ratio, it only supports these values<br/><code>0</code>,<code>0.1</code>,<code>0.2</code>,<code>0.3</code><br/> 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerParams</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger Parameters<br/>Applicable to <code>Spot grid</code>/<code>Contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerAction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trigger action<br/><code>start</code><br/><code>stop</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerStrategy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trigger strategy<br/><code>instant</code><br/><code>price</code><br/><code>rsi</code><br/>Default is <code>instant</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; delaySeconds</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Delay seconds after action triggered</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; timeframe</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">K-line type<br/><code>3m</code>, <code>5m</code>, <code>15m</code>, <code>30m</code> (<code>m</code>: minute)<br/><code>1H</code>, <code>4H</code> (<code>H</code>: hour)<br/><code>1D</code> (<code>D</code>: day)<br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; thold</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Threshold<br/>The value should be an integer between 1 to 100<br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerCond</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger condition<br/><code>cross_up</code><br/><code>cross_down</code><br/><code>above</code><br/><code>below</code><br/><code>cross</code><br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; timePeriod</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Time Period<br/><code>14</code><br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger Price<br/>This field is only valid when <code>triggerStrategy</code> is <code>price</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; stopType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop type<br/>Spot grid <code>1</code>: Sell base currency <code>2</code>: Keep base currency<br/>Contract grid <code>1</code>: Market Close All positions <code>2</code>: Keep positions<br/>This field is only valid when <code>triggerAction</code> is <code>stop</code></td>
+</tr>
+</tbody></table>
+<p>Spot Grid Order</p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">quoteSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Invest amount for quote currency<br/>Either <code>quoteSz</code> or <code>baseSz</code> is required</td>
+</tr>
+<tr>
+<td style="text-align: left">baseSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Invest amount for base currency<br/>Either <code>quoteSz</code> or <code>baseSz</code> is required</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The quote currency for trading. Only applicable to SPOT.<br/>The default value is the quote currency of instId, e.g. USD for BTC-USD.</td>
+</tr>
+</tbody></table>
+<p>Contract Grid Order</p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Used margin based on <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">direction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Contract grid type<br/><code>long</code>,<code>short</code>,<code>neutral</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Leverage</td>
+</tr>
+<tr>
+<td style="text-align: left">basePos</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether or not open a position when the strategy activates <br/>Default is <code>false</code><br/>Neutral contract grid should omit the parameter</td>
+</tr>
+<tr>
+<td style="text-align: left">tpRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take profit ratio, 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">slRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop loss ratio, 0.1 represents 10%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"447053782921515008"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-post-place-grid-algo-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">sCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The code of the event execution result, <code>0</code> means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">sMsg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rejection message if the request is unsuccessful.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

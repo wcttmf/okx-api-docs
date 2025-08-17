@@ -1,0 +1,152 @@
+<h3 id="spread-trading-rest-api-place-order">Place order</h3>
+<p>Place a new order</p>
+<h4 id="spread-trading-rest-api-place-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="spread-trading-rest-api-place-order-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="spread-trading-rest-api-place-order-permission-trade">Permission: Trade</h4><h4 id="spread-trading-rest-api-place-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/sprd/order</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># place order for a spread</span>
+POST /api/v5/sprd/order
+body
+<span class="o">{</span>
+   <span class="s2">"sprdId"</span>:<span class="s2">"BTC-USDT_BTC-USDT-SWAP"</span>,
+   <span class="s2">"clOrdId"</span>:<span class="s2">"b15"</span>,
+   <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+   <span class="s2">"ordType"</span>:<span class="s2">"limit"</span>,
+   <span class="s2">"px"</span>:<span class="s2">"2.15"</span>,
+   <span class="s2">"sz"</span>:<span class="s2">"2"</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.SpreadTrading</span> <span class="k">as</span> <span class="n">SpreadTrading</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">spreadAPI</span> <span class="o">=</span> <span class="n">SpreadTrading</span><span class="p">.</span><span class="n">SpreadTradingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># place order
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">spreadAPI</span><span class="p">.</span><span class="n">place_order</span><span class="p">(</span><span class="n">sprdId</span><span class="o">=</span><span class="s">'BTC-USDT_BTC-USDT-SWAP'</span><span class="p">,</span>
+                               <span class="n">clOrdId</span><span class="o">=</span><span class="s">'b16'</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="s">'buy'</span><span class="p">,</span><span class="n">ordType</span><span class="o">=</span><span class="s">'limit'</span><span class="p">,</span>
+                               <span class="n">px</span><span class="o">=</span><span class="s">'2'</span><span class="p">,</span><span class="n">sz</span><span class="o">=</span><span class="s">'2'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="spread-trading-rest-api-place-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sprdId</td>
+<td>String</td>
+<td>Yes</td>
+<td>spread ID, e.g. BTC-USDT_BTC-USD-SWAP</td>
+</tr>
+<tr>
+<td>clOrdId</td>
+<td>String</td>
+<td>No</td>
+<td>Client Order ID as assigned by the client <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>String</td>
+<td>No</td>
+<td>Order tag <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+<tr>
+<td>side</td>
+<td>String</td>
+<td>Yes</td>
+<td>Order side, <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td>ordType</td>
+<td>String</td>
+<td>Yes</td>
+<td>Order type<br/><code>market</code>: Market order <br/><code>limit</code>: Limit order <br/><code>post_only</code>: Post-only order<br/><code>ioc</code>: Immediate-or-cancel order</td>
+</tr>
+<tr>
+<td>sz</td>
+<td>String</td>
+<td>Yes</td>
+<td>Quantity to buy or sell. The unit is USD for inverse spreads, and the corresponding baseCcy for linear and hybrid spreads.</td>
+</tr>
+<tr>
+<td>px</td>
+<td>String</td>
+<td>Yes</td>
+<td>Order price. Only applicable to <code>limit</code>, <code>post_only</code>, <code>ioc</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b15"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"312269865356374016"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="spread-trading-rest-api-place-order-response-example">Response Example</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ordId</td>
+<td>String</td>
+<td>Order ID</td>
+</tr>
+<tr>
+<td>clOrdId</td>
+<td>String</td>
+<td>Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>String</td>
+<td>Order tag</td>
+</tr>
+<tr>
+<td>sCode</td>
+<td>String</td>
+<td>The code of the event execution result, 0 means success.</td>
+</tr>
+<tr>
+<td>sMsg</td>
+<td>String</td>
+<td>Rejection or success message of event execution.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+clOrdId <br/>
+clOrdId is a user-defined unique ID used to identify the order. It will be included in the response parameters if you have specified during order submission, and can be used as a request parameter to the endpoints to query, cancel and amend orders.
+clOrdId must be unique among the clOrdIds of all pending orders.
+</aside>
+<aside class="notice">
+ordType <br/>
+Order type. When creating a new order, you must specify the order type. The order type you specify will affect: 1) what order parameters are required, and 2) how the matching system executes your order. The following are valid order types:<br/>
+limit: Limit order, which requires specified sz and px.<br/>
+post_only: Post-only order, which the order can only provide liquidity to the market and be a maker. If the order would have executed on placement, it will be canceled instead.
+ioc: Immediate-or-cancel order
+</aside>
+<aside class="notice">
+sz <br/>
+The sz unit for inverse spreads is USD in Nitro Spread, as opposed to contract in OKX orderbook.
+</aside>

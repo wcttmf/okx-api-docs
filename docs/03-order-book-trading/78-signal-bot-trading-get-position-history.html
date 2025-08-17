@@ -1,0 +1,134 @@
+<h3 id="order-book-trading-signal-bot-trading-get-position-history">GET / Position history</h3>
+<p>Retrieve the updated position data for the last 3 months. Return in reverse chronological order using utime.</p>
+<h4 id="order-book-trading-signal-bot-trading-get-position-history-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="order-book-trading-signal-bot-trading-get-position-history-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-signal-bot-trading-get-position-history-permission-read">Permission: Read</h4><h4 id="order-book-trading-signal-bot-trading-get-position-history-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/signal/positions-history</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/signal/positions-history?algoId<span class="o">=</span>1234
+</code></pre></div><h4 id="order-book-trading-signal-bot-trading-get-position-history-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g.：<code>BTC-USD-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested <code>uTime</code>, Unix timestamp format in milliseconds, e.g.<code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested <code>uTime</code>, Unix timestamp format in milliseconds, e.g <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is 100. The default is 100.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1704724451471"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"closeAvgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT-SWAP"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"openAvgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"220"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-2.021"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.4593181818181818"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1704724456322"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-signal-bot-trading-get-position-history-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin mode <code>cross</code> <code>isolated</code></td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Created time of position</td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Updated time of position</td>
+</tr>
+<tr>
+<td style="text-align: left">openAvgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average price of opening position</td>
+</tr>
+<tr>
+<td style="text-align: left">closeAvgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average price of closing position</td>
+</tr>
+<tr>
+<td style="text-align: left">pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">pnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">P&amp;L ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage</td>
+</tr>
+<tr>
+<td style="text-align: left">direction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Direction: <code>long</code> <code>short</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Underlying</td>
+</tr>
+</tbody></table>

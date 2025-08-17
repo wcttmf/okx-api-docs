@@ -1,0 +1,49 @@
+<h3 id="overview-transaction-timeouts-websocket">WebSocket</h3>
+<p>The following parameters are set in the request</p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">expTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Request effective deadline. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>
+<p>The following endpoints are supported:</p>
+<ul>
+<li><a href="/docs-v5/en/#order-book-trading-trade-ws-place-order">Place order</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-ws-place-multiple-orders">Place multiple orders</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-ws-amend-order">Amend order</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-ws-amend-multiple-orders">Amend multiple orders</a></li>
+</ul>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    "id": "1512",
+    "op": "order",
+    "expTime":"1597026383085",  // request effective deadline
+    "args": [{
+        "side": "buy",
+        "instId": "BTC-USDT",
+        "tdMode": "isolated",
+        "ordType": "market",
+        "sz": "100"
+    }]
+}
+</code></pre></div><h2 id="overview-rate-limits">Rate Limits</h2>
+<p>Our REST and WebSocket APIs use rate limits to protect our APIs against malicious usage so our trading platform can operate reliably and fairly.<br/>
+When a request is rejected by our system due to rate limits, the system returns error code 50011 (Rate limit reached. Please refer to API documentation and throttle requests accordingly).<br/>
+The rate limit is different for each endpoint. You can find the limit for each endpoint from the endpoint details. Rate limit definitions are detailed below:</p>
+<ul>
+<li><p>WebSocket login and subscription rate limits are based on connection.</p></li>
+<li><p>Public unauthenticated REST rate limits are based on IP address.</p></li>
+<li><p>Private REST rate limits are based on User ID (sub-accounts have individual User IDs).</p></li>
+<li><p>WebSocket order management rate limits are based on User ID (sub-accounts have individual User IDs).</p></li>
+</ul>

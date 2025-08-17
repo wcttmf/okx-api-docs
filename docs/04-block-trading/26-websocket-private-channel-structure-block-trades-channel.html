@@ -1,0 +1,336 @@
+<h3 id="block-trading-websocket-private-channel-structure-block-trades-channel">Structure block trades channel</h3>
+<p>Retrieve user's block trades data. All the legs in the same block trade are included in the same update. Data will be pushed whenever there is a block trade that the user is a counterparty for.</p>
+<h4 id="block-trading-websocket-private-channel-structure-block-trades-channel-url-path">URL Path</h4>
+<p>/ws/v5/business (required login)</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"struc-block-trades"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"struc-block-trades"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+
+</code></pre></div><h4 id="block-trading-websocket-private-channel-structure-block-trades-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>struc-block-trades</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"struc-block-trades"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">struc-block-trades</span><span class="se">\"</span><span class="s2">"</span><span class="p">}]}</span><span class="s2">",
+  "</span><span class="err">connId</span><span class="s2">": "</span><span class="err">a</span><span class="mi">4</span><span class="err">d</span><span class="mi">3</span><span class="err">ae</span><span class="mi">55</span><span class="s2">"
+}
+</span></code></pre></div><h4 id="block-trading-websocket-private-channel-structure-block-trades-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>struc-block-trades</code></td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="s2">"struc-block-trades"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77982378738415879"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="s2">"1608267227834"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rfqId"</span><span class="p">:</span><span class="s2">"18753"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clRfqId"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteId"</span><span class="p">:</span><span class="s2">"25092"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clQuoteId"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"blockTdId"</span><span class="p">:</span><span class="s2">"180184"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tTraderCode"</span><span class="p">:</span><span class="s2">"ANAND"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mTraderCode"</span><span class="p">:</span><span class="s2">"WAGMI"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isSuccessful"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"errorCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"legs"</span><span class="p">:[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"px"</span><span class="p">:</span><span class="s2">"0.0023"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="s2">"25.0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"BTC-USD-20220630-60000-C"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fee"</span><span class="p">:</span><span class="s2">"0.1001"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="s2">"10211"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tgtCcy"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"px"</span><span class="p">:</span><span class="s2">"0.0033"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"BTC-USD-20220630-50000-C"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fee"</span><span class="p">:</span><span class="s2">"0.1001"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="s2">"10212"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tgtCcy"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-websocket-private-channel-structure-block-trades-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameters</strong></th>
+<th><strong>Types</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; uid</td>
+<td>String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td>&gt; cTime</td>
+<td>String</td>
+<td>The time the trade was executed. Unix timestamp in milliseconds.</td>
+</tr>
+<tr>
+<td>&gt; rfqId</td>
+<td>String</td>
+<td>RFQ ID.</td>
+</tr>
+<tr>
+<td>&gt; clRfqId</td>
+<td>String</td>
+<td>Client-supplied RFQ ID. This attribute is treated as client sensitive information. It will not be exposed to the Maker, just return empty string "" for Maker.</td>
+</tr>
+<tr>
+<td>&gt; quoteId</td>
+<td>String</td>
+<td>Quote ID.</td>
+</tr>
+<tr>
+<td>&gt; clQuoteId</td>
+<td>String</td>
+<td>Client-supplied Quote ID. This attribute is treated as client sensitive information. It will not be exposed to the Taker, just return empty string "" for Taker.</td>
+</tr>
+<tr>
+<td>&gt; blockTdId</td>
+<td>String</td>
+<td>Block trade ID.</td>
+</tr>
+<tr>
+<td>&gt; tag</td>
+<td>String</td>
+<td>Trade tag. The block trade will have the tag of the RFQ or Quote it corresponds to.</td>
+</tr>
+<tr>
+<td>&gt; tTraderCode</td>
+<td>String</td>
+<td>A unique identifier of the Taker. Empty If anonymous mode of RFQ is <code>True</code>.</td>
+</tr>
+<tr>
+<td>&gt; mTraderCode</td>
+<td>String</td>
+<td>A unique identifier of the Maker. Empty If anonymous mode of Quote is <code>True</code>.</td>
+</tr>
+<tr>
+<td>&gt; isSuccessful</td>
+<td>Boolean</td>
+<td>Whether the trade is filled successfully</td>
+</tr>
+<tr>
+<td>&gt; errorCode</td>
+<td>String</td>
+<td>Error code for unsuccessful trades. <br/>It is "" for successful trade.</td>
+</tr>
+<tr>
+<td>&gt; legs</td>
+<td>Array of objects</td>
+<td>Legs of trade</td>
+</tr>
+<tr>
+<td>&gt;&gt; instId</td>
+<td>String</td>
+<td>Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td>&gt;&gt; px</td>
+<td>String</td>
+<td>The price the leg executed</td>
+</tr>
+<tr>
+<td>&gt;&gt; sz</td>
+<td>String</td>
+<td>Size of the leg.</td>
+</tr>
+<tr>
+<td>&gt;&gt; side</td>
+<td>String</td>
+<td>The direction of the leg. Valid value can be buy or sell.</td>
+</tr>
+<tr>
+<td>&gt;&gt; tgtCcy</td>
+<td>String</td>
+<td>Defines the unit of the “sz” attribute. <br/>Only applicable to instType = SPOT. <br/>The valid enumerations are <code>base_ccy</code> and <code>quote_ccy</code>. When not specified this is equal to <code>base_ccy</code> by default.</td>
+</tr>
+<tr>
+<td>&gt;&gt; fee</td>
+<td>String</td>
+<td>Fee. Negative number represents the user transaction fee charged by the platform. Positive fee represents rebate.</td>
+</tr>
+<tr>
+<td>&gt;&gt; feeCcy</td>
+<td>String</td>
+<td>Fee currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; tradeId</td>
+<td>String</td>
+<td>Last traded ID.</td>
+</tr>
+</tbody></table>
+<h2 id="block-trading-websocket-public-channel">WebSocket Public Channel</h2>

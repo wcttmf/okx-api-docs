@@ -1,0 +1,180 @@
+<h3 id="order-book-trading-signal-bot-trading-post-create-signal-bot">POST / Create signal bot</h3><h4 id="order-book-trading-signal-bot-trading-post-create-signal-bot-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-signal-bot-trading-post-create-signal-bot-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-signal-bot-trading-post-create-signal-bot-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-signal-bot-trading-post-create-signal-bot-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/signal/order-algo</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Create signal bot</span>
+POST /api/v5/tradingBot/signal/order-algo
+body
+<span class="o">{</span>
+  <span class="s2">"signalChanId"</span>: <span class="s2">"627921182788161536"</span>,
+  <span class="s2">"instIds"</span>: <span class="o">[</span>
+    <span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"ETH-USDT-SWAP"</span>,
+    <span class="s2">"LTC-USDT-SWAP"</span>
+  <span class="o">]</span>,
+  <span class="s2">"lever"</span>: <span class="s2">"10"</span>,
+  <span class="s2">"investAmt"</span>: <span class="s2">"100"</span>,
+  <span class="s2">"subOrdType"</span>: <span class="s2">"9"</span>,
+  <span class="s2">"entrySettingParam"</span>: <span class="o">{</span>
+    <span class="s2">"allowMultipleEntry"</span>: <span class="nb">true</span>,
+    <span class="s2">"entryType"</span>: <span class="s2">"1"</span>,
+    <span class="s2">"amt"</span>: <span class="s2">""</span>,
+    <span class="s2">"ratio"</span>: <span class="s2">""</span>
+  <span class="o">}</span>,
+  <span class="s2">"exitSettingParam"</span>: <span class="o">{</span>
+    <span class="s2">"tpSlType"</span>: <span class="s2">"2"</span>,
+    <span class="s2">"tpPct"</span>: <span class="s2">""</span>,
+    <span class="s2">"slPct"</span>: <span class="s2">""</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-signal-bot-trading-post-create-signal-bot-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">signalChanId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Signal channel Id</td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Leverage<br/>Only applicable to <code>contract signal</code></td>
+</tr>
+<tr>
+<td style="text-align: left">investAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Investment amount</td>
+</tr>
+<tr>
+<td style="text-align: left">subOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Sub order type <code>1</code>：limit order <code>2</code>：market order <code>9</code>：tradingView signal</td>
+</tr>
+<tr>
+<td style="text-align: left">includeAll</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether to include all USDT-margined contract.The default value is <code>false</code>. <code>true</code>: include <code>false</code> : exclude</td>
+</tr>
+<tr>
+<td style="text-align: left">instIds</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument IDs. Single currency or multiple currencies separated with comma. When <code>includeAll</code> is <code>true</code>, it is ignored</td>
+</tr>
+<tr>
+<td style="text-align: left">ratio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Price offset ratio, calculate the limit price as a percentage offset from the best bid/ask price.<br/>Only applicable to <code>subOrdType</code> is <code>limit</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">entrySettingParam</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Entry setting</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; allowMultipleEntry</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether or not allow multiple entries in the same direction for the same trading pairs.The default value is <code>true</code>。 <code>true</code>：Allow <code>false</code>：Prohibit</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; entryType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Entry type<br/><code>1</code>: TradingView signal<br/><code>2</code>: Fixed margin<br/><code>3</code>: Contracts<br/><code>4</code>: Percentage of free margin<br/><code>5</code>: Percentage of the initial invested margin</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Amount per order <br/>Only applicable to entryType in <code>2</code>/<code>3</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ratio</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Amount ratio per order<br/>Only applicable to entryType in <code>4</code>/<code>5</code></td>
+</tr>
+<tr>
+<td style="text-align: left">exitSettingParam</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Exit setting</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpSlType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">是</td>
+<td style="text-align: left">Type of set the take-profit and stop-loss trigger price <br/><code>pnl</code>: Based on the estimated profit and loss percentage from the entry point <br/><code>price</code>: Based on price increase or decrease from the crypto’s entry price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpPct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit percentage</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slPct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss percentage</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"447053782921515008"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-signal-bot-trading-post-create-signal-bot-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">sCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The code of the event execution result, 0 means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">sMsg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The code of the event execution result, 0 means success.</td>
+</tr>
+</tbody></table>

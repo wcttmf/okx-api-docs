@@ -1,0 +1,10 @@
+<h3 id="spread-trading-comprehensive-api-workflow-order-state">Order State</h3>
+<p>Track the state of an order by subscribing to the <code>sprd-orders</code> WebSocket channel.</p>
+<ol>
+<li>Upon submitting an order, whether as a Maker or Taker, an order update message is sent via the orders WebSocket channel. The message will indicate the order's <code>state</code> == <code>live</code>.</li>
+<li>Order matching and trade settlement are asynchronous processes. When the order is matched but not settled, system pushes <code>pendingSettleSz</code> &gt; 0 and <code>fillSz</code> == ""</li>
+<li>If the order is partially filled, an order update message is sent with <code>state</code> == <code>partially_filled</code>.</li>
+<li>In the event that the order is completely filled, an order update message is sent with the <code>state</code> == <code>filled</code>.</li>
+<li>If the order is not fully filled but has reached its final state, an order update message is sent with the <code>state</code> == <code>canceled</code>.</li>
+<li>If a certain part of an order is rejected, an order update message is sent with updated <code>canceledSz</code> and <code>pendingFillSz</code>, and <code>code</code> and <code>msg</code> corresponding to the error.</li>
+</ol>

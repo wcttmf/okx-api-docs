@@ -1,0 +1,220 @@
+<h3 id="funding-account-rest-api-get-withdrawal-history">Get withdrawal history</h3>
+<p>Retrieve the withdrawal records according to the currency, withdrawal status, and time range in reverse chronological order. The 100 most recent records are returned by default.<br/>
+Websocket API is also available, refer to <a href="/docs-v5/en/#funding-account-websocket-withdrawal-info-channel">Withdrawal info channel</a>.</p>
+<h4 id="funding-account-rest-api-get-withdrawal-history-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="funding-account-rest-api-get-withdrawal-history-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-withdrawal-history-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-withdrawal-history-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/asset/withdrawal-history</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>
+GET /api/v5/asset/withdrawal-history
+
+<span class="c"># Query withdrawal history from 2022-06-01 to 2022-07-01</span>
+GET /api/v5/asset/withdrawal-history?ccy<span class="o">=</span>BTC&amp;after<span class="o">=</span>1654041600000&amp;before<span class="o">=</span>1656633600000
+
+</code></pre></div><h4 id="funding-account-rest-api-get-withdrawal-history-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>No</td>
+<td>Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>wdId</td>
+<td>String</td>
+<td>No</td>
+<td>Withdrawal ID</td>
+</tr>
+<tr>
+<td>clientId</td>
+<td>String</td>
+<td>No</td>
+<td>Client-supplied ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td>txId</td>
+<td>String</td>
+<td>No</td>
+<td>Hash record of the deposit</td>
+</tr>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>No</td>
+<td>Withdrawal type<br/><code>3</code>: Internal transfer<br/><code>4</code>: On-chain withdrawal</td>
+</tr>
+<tr>
+<td>state</td>
+<td>String</td>
+<td>No</td>
+<td>Status of withdrawal<br/><br/><li>Stage 1 : Pending withdrawal</li><code>19</code>: insufficient balance in the hot wallet<br/><code>17</code>: Pending response from Travel Rule vendor<br/><code>10</code>: Waiting transfer<br/><code>0</code>: Waiting withdrawal<br/><code>4</code>/<code>5</code>/<code>6</code>/<code>8</code>/<code>9</code>/<code>12</code>: Waiting manual review<br/><code>7</code>: Approved<br/>&gt; <code>0</code>, <code>17</code>, <code>19</code> can be cancelled, other statuses cannot be cancelled<br/><br/><li>Stage 2 : Withdrawal in progress (Applicable to on-chain withdrawals, internal transfers do not have this stage)</li><code>1</code>: Broadcasting your transaction to chain<br/><code>15</code>: Pending transaction validation<br/><code>16</code>: Due to local laws and regulations, your withdrawal may take up to 24 hours to arrive<br/><code>-3</code>: Canceling <br/><br/><li>Final stage</li><code>-2</code>: Canceled <br/><code>-1</code>: Failed<br/><code>2</code>: Success</td>
+</tr>
+<tr>
+<td>after</td>
+<td>String</td>
+<td>No</td>
+<td>Pagination of data to return records earlier than the requested ts, Unix timestamp format in milliseconds, e.g. <code>1654041600000</code></td>
+</tr>
+<tr>
+<td>before</td>
+<td>String</td>
+<td>No</td>
+<td>Pagination of data to return records newer than the requested ts, Unix timestamp format in milliseconds, e.g. <code>1656633600000</code></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>String</td>
+<td>No</td>
+<td>Number of results per request. The maximum is <code>100</code>; The default is <code>100</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-Ethereum"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.007"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"clientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"toAddrType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.029809"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"txId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x35c******b360a174d"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"156****359"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"areaCodeFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">"86"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xa30d1fab********7CF18C7B6C579"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"areaCodeTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1655251200000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"nonTradableAsset"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"wdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15447421"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-withdrawal-history-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">chain</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Chain name, e.g. <code>USDT-ERC20</code>, <code>USDT-TRC20</code></td>
+</tr>
+<tr>
+<td style="text-align: left">nonTradableAsset</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether it is a non-tradable asset or not<br/><code>true</code>: non-tradable asset, <code>false</code>: tradable asset</td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal amount</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time the withdrawal request was submitted, Unix timestamp format in milliseconds, e.g. <code>1655251200000</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">from</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal account <br/>It can be <code>email</code>/<code>phone</code>/<code>sub-account name</code></td>
+</tr>
+<tr>
+<td style="text-align: left">areaCodeFrom</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Area code for the phone number<br/>If <code>from</code> is a phone number, this parameter returns the area code for the phone number</td>
+</tr>
+<tr>
+<td style="text-align: left">to</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Receiving address</td>
+</tr>
+<tr>
+<td style="text-align: left">areaCodeTo</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Area code for the phone number<br/>If <code>to</code> is a phone number, this parameter returns the area code for the phone number</td>
+</tr>
+<tr>
+<td style="text-align: left">toAddrType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Address type<br/><code>1</code>: wallet address, email, phone, or login account name<br/><code>2</code>: UID</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Some currencies require a tag for withdrawals. This is not returned if not required.</td>
+</tr>
+<tr>
+<td style="text-align: left">pmtId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Some currencies require a payment ID for withdrawals. This is not returned if not required.</td>
+</tr>
+<tr>
+<td style="text-align: left">memo</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Some currencies require this parameter for withdrawals. This is not returned if not required.</td>
+</tr>
+<tr>
+<td style="text-align: left">addrEx</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Withdrawal address attachment (This will not be returned if the currency does not require this) e.g. TONCOIN attached tag name is comment, the return will be {'comment':'123456'}</td>
+</tr>
+<tr>
+<td style="text-align: left">txId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Hash record of the withdrawal<br/>This parameter will return "" for internal transfers.</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal fee amount</td>
+</tr>
+<tr>
+<td style="text-align: left">feeCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal fee currency, e.g. <code>USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Status of withdrawal</td>
+</tr>
+<tr>
+<td style="text-align: left">wdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clientId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied ID</td>
+</tr>
+<tr>
+<td style="text-align: left">note</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Withdrawal note</td>
+</tr>
+</tbody></table>

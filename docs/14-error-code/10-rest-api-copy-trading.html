@@ -1,0 +1,205 @@
+<h3 id="error-code-rest-api-copy-trading">Copy trading</h3>
+<p>Error Code from 59200 to 59300</p>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>HTTP Status Code</th>
+<th>Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>59128</td>
+<td>200</td>
+<td>As a lead trader, you can't lead trades in {instrument} with leverage higher than {num}×</td>
+</tr>
+<tr>
+<td>59129</td>
+<td>200</td>
+<td>The first crypto you use to repay must be {param0}.</td>
+</tr>
+<tr>
+<td>59130</td>
+<td>200</td>
+<td>If an asset’s balance is &lt; 1 USD, it can only repay borrowings of the same crypto.</td>
+</tr>
+<tr>
+<td>59206</td>
+<td>200</td>
+<td>The lead trader doesn't have any more vacancies for copy traders</td>
+</tr>
+<tr>
+<td>59216</td>
+<td>200</td>
+<td>The position doesn't exist. Please try again</td>
+</tr>
+<tr>
+<td>59218</td>
+<td>200</td>
+<td>Closing all positions at market price...</td>
+</tr>
+<tr>
+<td>59256</td>
+<td>200</td>
+<td>To switch to One-way mode, lower the number of traders you copy to 1</td>
+</tr>
+<tr>
+<td>59247</td>
+<td>200</td>
+<td>High leverage causes current position to exceed the maximum position size limit under this leverage. Adjust the leverage.</td>
+</tr>
+<tr>
+<td>59260</td>
+<td>200</td>
+<td>You are not a spot lead trader yet. Complete the application on our website or app first.</td>
+</tr>
+<tr>
+<td>59262</td>
+<td>200</td>
+<td>You aren't a contract lead trader yet. Complete the application first.</td>
+</tr>
+<tr>
+<td>59641</td>
+<td>200</td>
+<td>Can't switch account mode as you have fixed loan borrowings.</td>
+</tr>
+<tr>
+<td>59642</td>
+<td>200</td>
+<td>Lead and copy traders can only use spot or futures modes</td>
+</tr>
+<tr>
+<td>59643</td>
+<td>200</td>
+<td>Couldn’t switch account modes as you’re currently copying spot trades</td>
+</tr>
+<tr>
+<td>59245</td>
+<td>200</td>
+<td>As a lead trader, number of {param0} contract per order must be no greater than {param1}</td>
+</tr>
+<tr>
+<td>59263</td>
+<td>200</td>
+<td>Only traders on the allowlist can use copy trading. ND brokers can reach out to BD for help.</td>
+</tr>
+<tr>
+<td>59264</td>
+<td>200</td>
+<td>Spot copy trading isn't supported</td>
+</tr>
+<tr>
+<td>59267</td>
+<td>200</td>
+<td>Cancellation failed as you aren't copying this trader</td>
+</tr>
+<tr>
+<td>59268</td>
+<td>200</td>
+<td>You can't copy trades with instId that hasn't been selected by the lead trader</td>
+</tr>
+<tr>
+<td>59269</td>
+<td>200</td>
+<td>This contract lead trader doesn't exist</td>
+</tr>
+<tr>
+<td>59270</td>
+<td>200</td>
+<td>Maximum total amount (copyTotalAmt) can't be lower than amount per order (copyAmt) when using fixed amount</td>
+</tr>
+<tr>
+<td>59273</td>
+<td>200</td>
+<td>You aren't a contract copy trader yet. Start by coping a contract trader.</td>
+</tr>
+<tr>
+<td>59274</td>
+<td>200</td>
+<td>Copying your own trade isn't allowed</td>
+</tr>
+<tr>
+<td>59275</td>
+<td>200</td>
+<td>You can't copy trade as you're applying to become a lead trader</td>
+</tr>
+<tr>
+<td>59276</td>
+<td>200</td>
+<td>You can't copy this lead trader as they've applied to stop leading trades</td>
+</tr>
+<tr>
+<td>59277</td>
+<td>200</td>
+<td>You can't copy this lead trader as they don't have any copy trader vacancies</td>
+</tr>
+<tr>
+<td>59278</td>
+<td>200</td>
+<td>Your request to stop copy trading is being processed. Try again later.</td>
+</tr>
+<tr>
+<td>59279</td>
+<td>200</td>
+<td>You've already copied this trader</td>
+</tr>
+<tr>
+<td>59280</td>
+<td>200</td>
+<td>You can't modify copy trade settings as you aren't copying this trader</td>
+</tr>
+<tr>
+<td>59282</td>
+<td>200</td>
+<td>Only ND sub-accounts under ND brokers whose main accounts are on the allowlist support this endpoint. Reach out to BD for help.</td>
+</tr>
+<tr>
+<td>59283</td>
+<td>200</td>
+<td>Your account isn't currently using futures mode</td>
+</tr>
+<tr>
+<td>59284</td>
+<td>200</td>
+<td>You've reached the monthly limit of {param0} ratio edits</td>
+</tr>
+<tr>
+<td>59286</td>
+<td>200</td>
+<td>You can't become a futures lead trader when using spot mode</td>
+</tr>
+<tr>
+<td>59287</td>
+<td>200</td>
+<td>Profit sharing ratio should be between {param0} and {param1}</td>
+</tr>
+<tr>
+<td>59288</td>
+<td>200</td>
+<td>You're leading trades but your account is in portfolio margin mode. Switch to futures mode or multiple-currency margin mode and try again.</td>
+</tr>
+<tr>
+<td>59130</td>
+<td>200</td>
+<td>The highest take profit level is {num}%. Enter a smaller number and try again.</td>
+</tr>
+<tr>
+<td>59258</td>
+<td>200</td>
+<td>Action not supported for lead traders</td>
+</tr>
+<tr>
+<td>59259</td>
+<td>200</td>
+<td>Enter a multiplier value that's within the valid range</td>
+</tr>
+<tr>
+<td>59285</td>
+<td>200</td>
+<td>You haven't led or copied any trades yet</td>
+</tr>
+<tr>
+<td>59292</td>
+<td>200</td>
+<td>This lead trader only supports smart sync mode.</td>
+</tr>
+</tbody></table>

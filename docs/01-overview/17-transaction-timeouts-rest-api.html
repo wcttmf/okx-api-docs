@@ -1,0 +1,46 @@
+<h3 id="overview-transaction-timeouts-rest-api">REST API</h3>
+<p>Set the following parameters in the request header</p>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">expTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Request effective deadline. Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>
+<p>The following endpoints are supported:</p>
+<ul>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-place-order">Place order</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-place-multiple-orders">Place multiple orders</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-amend-order">Amend order</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-trade-post-amend-multiple-orders">Amend multiple orders</a></li>
+<li><a href="/docs-v5/en/#order-book-trading-signal-bot-trading-post-place-sub-order">POST / Place sub order</a> under signal bot trading</li>
+</ul>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>curl -X 'POST' \
+  'https://www.okx.com/api/v5/trade/order' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'OK-ACCESS-KEY: *****' \
+  -H 'OK-ACCESS-SIGN: *****'' \
+  -H 'OK-ACCESS-TIMESTAMP: *****'' \
+  -H 'OK-ACCESS-PASSPHRASE: *****'' \
+  -H 'expTime: 1597026383085' \   // request effective deadline
+  -d '{
+  "instId": "BTC-USDT",
+  "tdMode": "cash",
+  "side": "buy",
+  "ordType": "limit",
+  "px": "1000",
+  "sz": "0.01"
+}'
+</code></pre></div>

@@ -1,0 +1,117 @@
+<h3 id="order-book-trading-copy-trading-get-my-lead-traders">GET / My lead traders</h3>
+<p>Retrieve my lead traders.</p>
+<h4 id="order-book-trading-copy-trading-get-my-lead-traders-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-my-lead-traders-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-get-my-lead-traders-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-my-lead-traders-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/current-lead-traders</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/current-lead-traders?instType<span class="o">=</span>SWAP
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-my-lead-traders-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"beginCopyTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1701224821936"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTotalAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"500"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTotalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"leadMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"public"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.89395"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"nickName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Trader9527"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"portLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"profitSharingRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.08"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"todayPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uniqueCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25CD5A80241D6FE6"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-my-lead-traders-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">portLink</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Portrait link</td>
+</tr>
+<tr>
+<td style="text-align: left">nickName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Nick name</td>
+</tr>
+<tr>
+<td style="text-align: left">margin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin for copy trading</td>
+</tr>
+<tr>
+<td style="text-align: left">copyTotalAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy total amount</td>
+</tr>
+<tr>
+<td style="text-align: left">copyTotalPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy total pnl</td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead trader unique code</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">margin currency</td>
+</tr>
+<tr>
+<td style="text-align: left">profitSharingRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit sharing ratio. 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">beginCopyTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Begin copying time. Unix timestamp format in milliseconds, e.g.1597026383085</td>
+</tr>
+<tr>
+<td style="text-align: left">upl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit &amp; loss</td>
+</tr>
+<tr>
+<td style="text-align: left">todayPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Today pnl</td>
+</tr>
+<tr>
+<td style="text-align: left">leadMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead mode <code>public</code> <code>private</code></td>
+</tr>
+</tbody></table>

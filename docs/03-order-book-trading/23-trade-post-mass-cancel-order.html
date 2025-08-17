@@ -1,0 +1,68 @@
+<h3 id="order-book-trading-trade-post-mass-cancel-order">POST / Mass cancel order</h3>
+<p>Cancel all the MMP pending orders of an instrument family.<br/></p>
+<p>Only applicable to Option in Portfolio Margin mode, and MMP privilege is required.</p>
+<h4 id="order-book-trading-trade-post-mass-cancel-order-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-trade-post-mass-cancel-order-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-trade-post-mass-cancel-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-trade-post-mass-cancel-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/trade/mass-cancel</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/trade/mass-cancel
+body
+<span class="o">{</span>
+    <span class="s2">"instType"</span>:<span class="s2">"OPTION"</span>,
+    <span class="s2">"instFamily"</span>:<span class="s2">"BTC-USD"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-trade-post-mass-cancel-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument type<br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument family</td>
+</tr>
+<tr>
+<td style="text-align: left">lockInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Lock interval(ms)<br/> The range should be [0, 10 000]<br/> The default is 0. You can set it as "0" if you want to unlock it immediately.<br/> Error 54008 will be returned when placing order during lock interval, it is different from 51034 which is thrown when MMP is triggered</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"result"</span><span class="p">:</span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-post-mass-cancel-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">result</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Result of the request <code>true</code>, <code>false</code></td>
+</tr>
+</tbody></table>

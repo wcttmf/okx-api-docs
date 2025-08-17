@@ -1,0 +1,77 @@
+<h3 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid">POST / Cancel close position order for contract grid</h3><h4 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/grid/cancel-close-order</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/tradingBot/grid/cancel-close-order
+body
+<span class="o">{</span>
+    <span class="s2">"algoId"</span>:<span class="s2">"448965992920907776"</span>,
+    <span class="s2">"ordId"</span>:<span class="s2">"570627699870375936"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Close position order ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"448965992920907776"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"570627699870375936"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-post-cancel-close-position-order-for-contract-grid-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Close position order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

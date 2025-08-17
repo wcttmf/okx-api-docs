@@ -1,0 +1,427 @@
+<h3 id="order-book-trading-grid-trading-get-grid-algo-order-history">GET / Grid algo order history</h3><h4 id="order-book-trading-grid-trading-get-grid-algo-order-history-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-get-grid-algo-order-history-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-grid-trading-get-grid-algo-order-history-permission-read">Permission: Read</h4><h4 id="order-book-trading-grid-trading-get-grid-algo-order-history-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/grid/orders-algo-history</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/grid/orders-algo-history?algoOrdType<span class="o">=</span>grid
+</code></pre></div><h4 id="order-book-trading-grid-trading-get-grid-algo-order-history-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>FUTURES</code><br/><code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested <code>algoId</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested <code>algoId</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is 100. The default is 100.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"actualLever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"565849588675117056"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grid"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"arbitrageNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"basePos"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"baseSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1681181054927"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cancelType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"floatProfit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gridNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gridProfit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"investment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"minPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"400"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordFrozen"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quoteSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rebateTrans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"rebate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"rebateCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"rebate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"rebateCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"runType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stopped"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stopResult"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stopType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerParams"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"triggerAction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"start"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"delaySeconds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerStrategy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"instant"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"triggerAction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"delaySeconds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerStrategy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"instant"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"stopType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"manual"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1681181186484"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1681181186496"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w"> 
+            </span><span class="nl">"profitSharingRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fundingFee"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-get-grid-algo-order-history-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order created time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order updated time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order state<br/><code>stopped</code></td>
+</tr>
+<tr>
+<td style="text-align: left">rebateTrans</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Rebate transfer info</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rebate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rebate amount</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; rebateCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rebate currency</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerParams</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Trigger Parameters</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerAction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger action<br/><code>start</code><br/><code>stop</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerStrategy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger strategy<br/><code>instant</code><br/><code>price</code><br/><code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; delaySeconds</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Delay seconds after action triggered</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual action triggered time, unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual action triggered type<br/><code>manual</code><br/><code>auto</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; timeframe</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">K-line type<br/><code>3m</code>, <code>5m</code>, <code>15m</code>, <code>30m</code> (<code>m</code>: minute)<br/><code>1H</code>, <code>4H</code> (<code>H</code>: hour)<br/><code>1D</code> (<code>D</code>: day)<br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; thold</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Threshold<br/>The value should be an integer between 1 to 100<br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerCond</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger condition<br/><code>cross_up</code><br/><code>cross_down</code><br/><code>above</code><br/><code>below</code><br/><code>cross</code><br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; timePeriod</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time Period<br/><code>14</code><br/>This field is only valid when <code>triggerStrategy</code> is <code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger Price<br/>This field is only valid when <code>triggerStrategy</code> is <code>price</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; stopType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop type<br/>Spot grid <code>1</code>: Sell base currency <code>2</code>: Keep base currency<br/>Contract grid <code>1</code>: Market Close All positions <code>2</code>: Keep positions<br/>This field is only valid when <code>triggerAction</code> is <code>stop</code></td>
+</tr>
+<tr>
+<td style="text-align: left">maxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Upper price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">minPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lower price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">gridNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Grid quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">runType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Grid type<br/><code>1</code>: Arithmetic, <code>2</code>: Geometric</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price</td>
+</tr>
+<tr>
+<td style="text-align: left">arbitrageNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The number of arbitrages executed</td>
+</tr>
+<tr>
+<td style="text-align: left">totalPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">pnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">P&amp;L ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">investment</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated investment amount<br/>Spot grid investment amount calculated on quote currency</td>
+</tr>
+<tr>
+<td style="text-align: left">gridProfit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Grid profit</td>
+</tr>
+<tr>
+<td style="text-align: left">floatProfit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Variable P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">cancelType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order stop reason<br/><code>0</code>: None<br/><code>1</code>: Manual stop<br/><code>2</code>: Take profit<br/><code>3</code>: Stop loss<br/><code>4</code>: Risk control<br/><code>5</code>: Delivery<br/><code>6</code>: Signal</td>
+</tr>
+<tr>
+<td style="text-align: left">stopType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual Stop type<br/>Spot grid <code>1</code>: Sell base currency <code>2</code>: Keep base currency<br/>Contract grid <code>1</code>: Market Close All positions <code>2</code>: Keep positions</td>
+</tr>
+<tr>
+<td style="text-align: left">quoteSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quote currency investment amount<br/>Only applicable to <code>Spot grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">baseSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Base currency investment amount<br/>Only applicable to <code>Spot grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">direction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract grid type<br/><code>long</code>,<code>short</code>,<code>neutral</code><br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">basePos</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether or not to open a position when the strategy is activated<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Used margin based on <code>USDT</code><br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">actualLever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual Leverage<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">liqPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated liquidation price<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Underlying<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument family<br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code><br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ordFrozen</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin used by pending orders<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">availEq</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Available margin<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">profitSharingRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit sharing ratio<br/>Value range [0, 0.3]<br/>If it is a normal order (neither copy order nor lead order), this field returns ""</td>
+</tr>
+<tr>
+<td style="text-align: left">copyType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit sharing order type<br/><code>0</code>: Normal order<br/><code>1</code>: Copy order without profit sharing<br/><code>2</code>: Copy order with profit sharing<br/><code>3</code>: Lead order</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated fee. Only applicable to contract grid, or it will be ""</td>
+</tr>
+<tr>
+<td style="text-align: left">fundingFee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated funding fee. Only applicable to contract grid, or it will be ""</td>
+</tr>
+<tr>
+<td style="text-align: left">stopResult</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop result<br/><code>0</code>: default, <code>1</code>: Successful selling of currency at market price, <code>-1</code>: Failed to sell currency at market price<br/>Only applicable to <code>Spot grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The quote currency for trading.</td>
+</tr>
+</tbody></table>

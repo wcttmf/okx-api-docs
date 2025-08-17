@@ -1,0 +1,131 @@
+<h3 id="order-book-trading-market-data-get-option-trades-by-instrument-family">GET / Option trades by instrument family</h3>
+<p>Retrieve the recent transactions of an instrument under same instFamily. The maximum is 100.</p>
+<h4 id="order-book-trading-market-data-get-option-trades-by-instrument-family-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-market-data-get-option-trades-by-instrument-family-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-market-data-get-option-trades-by-instrument-family-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/market/option/instrument-family-trades</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/market/option/instrument-family-trades?instFamily<span class="o">=</span>BTC-USD
+</code></pre></div><h4 id="order-book-trading-market-data-get-option-trades-by-instrument-family-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument family, e.g. BTC-USD<br/>Applicable to <code>OPTION</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"vol24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"103381"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-221111-17750-C"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0075"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1668090715058"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-221111-17750-C"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1668090421062"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"optType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"vol24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"144499"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-230127-10000-P"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"82"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.019"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1668090967057"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-221111-16250-P"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"102"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0045"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"24"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1668090885050"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"optType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"P"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-get-option-trades-by-instrument-family-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">vol24h</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">24h trading volume, with a unit of contract.</td>
+</tr>
+<tr>
+<td style="text-align: left">optType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Option type, C: Call P: Put</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeInfo</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">The list trade data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade quantity. The unit is contract.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade side<br/><code>buy</code><br/><code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade time, Unix timestamp format in milliseconds, e.g. 1597026383085.</td>
+</tr>
+</tbody></table>

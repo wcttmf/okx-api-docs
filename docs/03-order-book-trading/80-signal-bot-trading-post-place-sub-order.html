@@ -1,0 +1,117 @@
+<h3 id="order-book-trading-signal-bot-trading-post-place-sub-order">POST / Place sub order</h3>
+<p>You can place an order only if you have sufficient funds.<br/><br/></p>
+<h4 id="order-book-trading-signal-bot-trading-post-place-sub-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-signal-bot-trading-post-place-sub-order-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-signal-bot-trading-post-place-sub-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-signal-bot-trading-post-place-sub-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/signal/sub-order</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/tradingBot/signal/sub-order
+body
+<span class="o">{</span>
+    <span class="s2">"algoId"</span>:<span class="s2">"1222"</span>,
+    <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"side"</span>:<span class="s2">"buy"</span>,
+    <span class="s2">"ordType"</span>:<span class="s2">"limit"</span>,
+    <span class="s2">"px"</span>:<span class="s2">"2.15"</span>,
+    <span class="s2">"sz"</span>:<span class="s2">"2"</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-signal-bot-trading-post-place-sub-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order side, <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Order type <br/><code>market</code>: Market order <br/><code>limit</code>: Limit order</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Quantity to buy or sell</td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Order price. Only applicable to <code>limit</code> order.</td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether orders can only reduce in position size. <br/>Valid options: <code>true</code> or <code>false</code>. The default value is <code>false</code>. <br/>Only applicable to <code>Futures mode</code>/<code>Multi-currency margin</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-signal-bot-trading-post-place-sub-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The result code, <code>0</code> means success</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The error message, empty if the code is 0</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Array of objects contains the response results</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+ordType<br/>
+Order type. When creating a new order, you must specify the order type. The order type you specify will affect: 1) what order parameters are required, and 2) how the matching system executes your order. The following are valid order types:<br/>
+`limit`: Limit order, which requires specified sz and px.<br/>
+`market`: Market order. It will be filled with market price (by swiping opposite order book). Market order will be placed to order book with most aggressive price allowed by Price Limit Mechanism.
+</aside>
+<aside class="notice">
+sz refers to the number of contracts。
+</aside>
+<aside class="notice">
+reduceOnly<br/>
+When placing an order with this parameter set to true, it means that the order will reduce the size of the position only
+The sum of the current order size and all reverse direction reduce-only pending orders which's price-time priority is higher than the current order, cannot exceed the contract quantity of position.
+Only applicable to `Futures mode` and `Multi-currency margin`
+</aside>

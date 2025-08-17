@@ -1,0 +1,126 @@
+<h3 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account">Reset the API Key of a sub-account</h3>
+<p>Applies to master accounts only and master accounts API Key must be linked to IP addresses.</p>
+<h4 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account-rate-limit-1-request-per-second">Rate limit：1 request per second</h4><h4 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account-permission-trade">Permission: Trade</h4><h4 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account-http-request">HTTP request</h4>
+<p><code>POST /api/v5/users/subaccount/modify-apikey</code></p>
+<blockquote>
+<p>Request sample</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/users/subaccount/modify-apikey
+body
+<span class="o">{</span>
+    <span class="s2">"subAcct"</span>:<span class="s2">"yongxu"</span>,
+    <span class="s2">"apiKey"</span>:<span class="s2">"******"</span>
+    <span class="s2">"ip"</span>:<span class="s2">"1.1.1.1"</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.SubAccount</span> <span class="k">as</span> <span class="n">SubAccount</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">subAccountAPI</span> <span class="o">=</span> <span class="n">SubAccount</span><span class="p">.</span><span class="n">SubAccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Reset the API Key of a sub-account
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">subAccountAPI</span><span class="p">.</span><span class="n">reset_subaccount_apikey</span><span class="p">(</span>
+    <span class="n">subAcct</span><span class="o">=</span><span class="s">"hahawang1"</span><span class="p">,</span>
+    <span class="n">apiKey</span><span class="o">=</span><span class="s">""</span><span class="p">,</span>
+    <span class="n">ip</span><span class="o">=</span><span class="s">""</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter name</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Sub-account name</td>
+</tr>
+<tr>
+<td style="text-align: left">apiKey</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Sub-account APIKey</td>
+</tr>
+<tr>
+<td style="text-align: left">label</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Sub-account API Key label. The label will be reset if this is passed through.</td>
+</tr>
+<tr>
+<td style="text-align: left">perm</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Sub-account API Key permissions<br/><code>read_only</code>: Read<br/><code>trade</code>: Trade<br/>Separate with commas if more than one. <br/>The permission will be reset if this is passed through.</td>
+</tr>
+<tr>
+<td style="text-align: left">ip</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Sub-account API Key linked IP addresses, separate with commas if more than one. Support up to 20 IP addresses.<br/>The IP will be reset if this is passed through.<br/>If <code>ip</code> is set to "", then no IP addresses is linked to the APIKey.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Returned results</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"subAcct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yongxu"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"******"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"perm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read,trade"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1597026383085"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="sub-account-rest-api-reset-the-api-key-of-a-sub-account-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter name</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subAcct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account name</td>
+</tr>
+<tr>
+<td style="text-align: left">apiKey</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-accountAPI public key</td>
+</tr>
+<tr>
+<td style="text-align: left">label</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account API Key label</td>
+</tr>
+<tr>
+<td style="text-align: left">perm</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account API Key permissions<br/><code>read_only</code>: Read<br/><code>trade</code>: Trade</td>
+</tr>
+<tr>
+<td style="text-align: left">ip</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub-account API Key IP addresses that linked with API Key</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Creation time</td>
+</tr>
+</tbody></table>

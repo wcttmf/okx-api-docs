@@ -1,0 +1,62 @@
+<h3 id="overview-websocket-notification">Notification</h3>
+<p>WebSocket has introduced a new message type (event = <code>notice</code>). <br/><br/></p>
+<p>Client will receive the information in the following scenarios:</p>
+<ul>
+<li>Websocket disconnect for service upgrade<br/></li>
+</ul>
+<p>60 seconds prior to the upgrade of the WebSocket service, the notification message will be sent to users indicating that the connection will soon be disconnected.
+Users are encouraged to establish a new connection to prevent any disruptions caused by disconnection.</p>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notice"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64008"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The connection will soon be closed for a service upgrade. Please reconnect."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><br/><br/>
+The feature is supported by WebSocket Public (/ws/v5/public) and Private (/ws/v5/private) for now.</p>
+<h2 id="overview-account-mode">Account mode</h2>
+<p>To facilitate your trading experience, please set the appropriate account mode before starting trading.</p>
+<p>In the trading account trading system, 4 account modes are supported: <code>Spot mode</code>, <code>Futures mode</code>, <code>Multi-currency margin mode</code>, and <code>Portfolio margin mode</code>.</p>
+<p>You need to set on the Web/App for the first set of every account mode.</p>
+<h2 id="overview-production-trading-services">Production Trading Services</h2>
+<p>The Production Trading URL:  </p>
+<ul>
+<li>REST: <code>https://www.okx.com</code><br/></li>
+<li>Public WebSocket: <code>wss://ws.okx.com:8443/ws/v5/public</code><br/></li>
+<li>Private WebSocket: <code>wss://ws.okx.com:8443/ws/v5/private</code></li>
+<li>Business WebSocket: <code>wss://ws.okx.com:8443/ws/v5/business</code></li>
+</ul>
+<h2 id="overview-demo-trading-services">Demo Trading Services</h2>
+<p>Currently, the API works for Demo Trading, but some functions are not supported, such as <code>withdraw</code>,<code>deposit</code>,<code>purchase/redemption</code>, etc.</p>
+<p>The Demo Trading URL:  </p>
+<ul>
+<li>REST: <code>https://www.okx.com</code><br/></li>
+<li>Public WebSocket: <code>wss://wspap.okx.com:8443/ws/v5/public</code><br/></li>
+<li>Private WebSocket: <code>wss://wspap.okx.com:8443/ws/v5/private</code><br/></li>
+<li>Business WebSocket: <code>wss://wspap.okx.com:8443/ws/v5/business</code></li>
+</ul>
+<p>OKX account can be used for login on Demo Trading. If you already have an OKX account, you can log in directly.</p>
+<p>Start API Demo Trading by the following steps:<br/>
+Login OKX —&gt; Trade —&gt; Demo Trading —&gt; Personal Center —&gt; Demo Trading API -&gt; Create Demo Trading API Key —&gt; Start your Demo Trading</p>
+<aside class="notice">
+Note: `x-simulated-trading: 1` needs to be added to the header of the Demo Trading request.
+</aside>
+<blockquote>
+<p>Http Header Example  </p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>Content-Type: application/json
+
+OK-ACCESS-KEY: 37c541a1-****-****-****-10fe7a038418
+
+OK-ACCESS-SIGN: leaVRETrtaoEQ3yI9qEtI1CZ82ikZ4xSG5Kj8gnl3uw=
+
+OK-ACCESS-PASSPHRASE: 1****6
+
+OK-ACCESS-TIMESTAMP: 2020-03-28T12:21:41.274Z
+
+x-simulated-trading: 1
+</code></pre></div>

@@ -1,0 +1,261 @@
+<h3 id="order-book-trading-market-data-ws-candlesticks-channel">WS / Candlesticks channel</h3>
+<p>Retrieve the candlesticks data of an instrument. the push frequency is the fastest interval 1 second push the data.</p>
+<h4 id="order-book-trading-market-data-ws-candlesticks-channel-url-path">URL Path</h4>
+<p>/ws/v5/business</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"candle1D"</span>,
+      <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPublicAsync</span> <span class="kn">import</span> <span class="n">WsPublicAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPublicAsync</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"wss://wspap.okx.com:8443/ws/v5/business"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"candle1D"</span><span class="p">,</span>
+          <span class="s">"instId"</span><span class="p">:</span> <span class="s">"BTC-USDT"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="order-book-trading-market-data-ws-candlesticks-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name <br/><code>candle3M</code><br/><code>candle1M</code><br/><code>candle1W</code> <br/><code>candle1D</code><br/><code>candle2D</code><br/><code>candle3D</code><br/><code>candle5D</code><br/><code>candle12H</code><br/><code>candle6H</code><br/><code>candle4H</code><br/><code>candle2H</code><br/><code>candle1H</code><br/><code>candle30m</code><br/><code>candle15m</code><br/><code>candle5m</code><br/><code>candle3m</code><br/><code>candle1m</code><br/><code>candle1s</code><br/><code>candle3Mutc</code><br/><code>candle1Mutc</code><br/><code>candle1Wutc</code><br/><code>candle1Dutc</code><br/><code>candle2Dutc</code><br/><code>candle3Dutc</code><br/><code>candle5Dutc</code><br/><code>candle12Hutc</code><br/><code>candle6Hutc</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Instrument ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"candle1D"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">candle1D</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instId</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">BTC-USD-191227</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-ws-candlesticks-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">yes</td>
+<td>channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"candle1D"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"1597026383085"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"8533.02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"8553.74"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"8527.17"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"8548.26"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"45247"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"529.5858061"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"5529.5858061"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"0"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-ws-candlesticks-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of Arrays</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ts</td>
+<td style="text-align: left">String</td>
+<td>Opening time of the candlestick, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; o</td>
+<td style="text-align: left">String</td>
+<td>Open price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; h</td>
+<td style="text-align: left">String</td>
+<td>highest price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; l</td>
+<td style="text-align: left">String</td>
+<td>Lowest price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; c</td>
+<td style="text-align: left">String</td>
+<td>Close price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; vol</td>
+<td style="text-align: left">String</td>
+<td>Trading volume, with a unit of <code>contract</code>. <br/>If it is a <code>derivatives</code> contract, the value is the number of contracts. <br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in base currency.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; volCcy</td>
+<td style="text-align: left">String</td>
+<td>Trading volume, with a unit of <code>currency</code>. <br/>If it is a <code>derivatives</code> contract, the value is the number of base currency. <br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in quote currency.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; volCcyQuote</td>
+<td style="text-align: left">String</td>
+<td>Trading volume, the value is the quantity in quote currency <br/>e.g. The unit is <code>USDT</code> for <code>BTC-USDT</code> and <code>BTC-USDT-SWAP</code><br/>The unit is <code>USD</code> for <code>BTC-USD-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; confirm</td>
+<td style="text-align: left">String</td>
+<td>The state of candlesticks<br/><code>0</code>: K line is uncompleted<br/><code>1</code>: K line is completed</td>
+</tr>
+</tbody></table>

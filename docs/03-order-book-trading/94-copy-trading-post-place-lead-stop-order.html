@@ -1,0 +1,109 @@
+<h3 id="order-book-trading-copy-trading-post-place-lead-stop-order">POST / Place lead stop order</h3>
+<p>Set TP/SL for the current lead position that are not closed.</p>
+<h4 id="order-book-trading-copy-trading-post-place-lead-stop-order-rate-limit-20-requests-per-2-seconds">Rate limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-post-place-lead-stop-order-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-post-place-lead-stop-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-copy-trading-post-place-lead-stop-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/copytrading/algo-order</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST /api/v5/copytrading/algo-order
+body
+{
+    "subPosId": "518541406042591232",
+    "tpTriggerPx": "10000"
+}
+</code></pre></div><h4 id="order-book-trading-copy-trading-post-place-lead-stop-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">subPosId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Take-profit trigger price. Take-profit order price will be the market price after triggering. At least one of tpTriggerPx and slTriggerPx must be filled<br/>The take profit order will be deleted if it is 0</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Stop-loss trigger price. Stop-loss order price will be the market price after triggering. The stop loss order will be deleted if it is 0</td>
+</tr>
+<tr>
+<td style="text-align: left">tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit order price<br/>If the price is -1, take-profit will be executed at the market price, the default is <code>-1</code><br/>Only applicable to <code>SPOT</code> lead trader</td>
+</tr>
+<tr>
+<td style="text-align: left">slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss order price<br/>If the price is -1, stop-loss will be executed at the market price, the default is <code>-1</code><br/>Only applicable to <code>SPOT</code> lead trader</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit trigger price type <br/><br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price <br/>Default is <code>last</code></td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price <br/><code>index</code>: index price <br/><code>mark</code>: mark price <br/>Default is last</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order tag<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 16 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"subPosId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"518560559046594560"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-post-place-lead-stop-order-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">subPosId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lead position ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,74 @@
+<h3 id="order-book-trading-copy-trading-post-amend-leading-instruments">POST / Amend leading instruments</h3>
+<p>The leading trader can amend current leading instruments, need to set initial leading instruments while applying to become a leading trader.<br/>
+All non-leading instruments can't have position or pending orders for the current request when setting non-leading instruments as leading instruments.</p>
+<h4 id="order-book-trading-copy-trading-post-amend-leading-instruments-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-post-amend-leading-instruments-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-post-amend-leading-instruments-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-copy-trading-post-amend-leading-instruments-http-request">HTTP request</h4>
+<p><code>POST /api/v5/copytrading/set-instruments</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight plaintext"><code>POST /api/v5/copytrading/set-instruments
+body
+{
+    "instId": "BTC-USDT-SWAP,ETH-USDT-SWAP"
+}
+</code></pre></div><h4 id="order-book-trading-copy-trading-post-amend-leading-instruments-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. BTC-USDT-SWAP. If there are multiple instruments, separate them with commas.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+The value of `instId` must include all instruments that you are going to have the lead trading with because the previous settings will be overwritten after the current request is set successfully<br/>
+</aside>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USDT-SWAP"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-post-amend-leading-instruments-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. BTC-USDT-SWAP</td>
+</tr>
+<tr>
+<td style="text-align: left">enabled</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether you set it successfully<br/> <code>true</code> or <code>false</code></td>
+</tr>
+</tbody></table>

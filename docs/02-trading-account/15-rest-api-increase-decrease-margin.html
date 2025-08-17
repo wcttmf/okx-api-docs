@@ -1,0 +1,133 @@
+<h3 id="trading-account-rest-api-increase-decrease-margin">Increase/decrease margin</h3>
+<p>Increase or decrease the margin of the isolated position. Margin reduction may result in the change of the actual leverage.</p>
+<h4 id="trading-account-rest-api-increase-decrease-margin-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="trading-account-rest-api-increase-decrease-margin-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-increase-decrease-margin-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-increase-decrease-margin-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/position/margin-balance</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/account/position/margin-balance 
+body
+<span class="o">{</span>
+    <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-200626"</span>,
+    <span class="s2">"posSide"</span>:<span class="s2">"short"</span>,
+    <span class="s2">"type"</span>:<span class="s2">"add"</span>,
+    <span class="s2">"amt"</span>:<span class="s2">"1"</span>
+<span class="o">}</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Increase margin
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">adjustment_margin</span><span class="p">(</span>
+    <span class="n">instId</span><span class="o">=</span><span class="s">"BTC-USDT-SWAP"</span><span class="p">,</span>
+    <span class="n">posSide</span><span class="o">=</span><span class="s">"short"</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span> <span class="s">"add"</span><span class="p">,</span>
+    <span class="n">amt</span><span class="o">=</span><span class="s">"1"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-increase-decrease-margin-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Position side, the default is <code>net</code><br/><code>long</code> <br/><code>short</code> <br/><code>net</code></td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left"><code>add</code>: add margin <br/><code>reduce</code>: reduce margin</td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Amount to be increased or decreased.</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Currency <br/>Applicable to <code>isolated</code> <code>MARGIN</code> orders</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"add"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-increase-decrease-margin-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side, <code>long</code> <code>short</code></td>
+</tr>
+<tr>
+<td style="text-align: left">amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Amount to be increase or decrease</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><code>add</code>: add margin<br/><code>reduce</code>: reduce margin</td>
+</tr>
+<tr>
+<td style="text-align: left">leverage</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Real leverage after the margin adjustment</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Manual transfer mode<br/>
+The value of the margin initially assigned to the isolated position must be greater than or equal to 10,000 USDT, and a position will be created on the account.
+</aside>

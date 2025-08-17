@@ -1,0 +1,365 @@
+<h3 id="error-code-rest-api-block-trading-and-spread-orderbook">Block Trading and Spread Orderbook</h3>
+<p>Error Code from 70000</p>
+<table><thead>
+<tr>
+<th style="text-align: left">Error Code</th>
+<th style="text-align: left">HTTP Status Code</th>
+<th style="text-align: left">Error Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">70000</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">RFQ does not exist.</td>
+</tr>
+<tr>
+<td style="text-align: left">70001</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Quote does not exist.</td>
+</tr>
+<tr>
+<td style="text-align: left">70002</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Block trade does not exist.</td>
+</tr>
+<tr>
+<td style="text-align: left">70003</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Public block trade does not exist.</td>
+</tr>
+<tr>
+<td style="text-align: left">70004</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Invalid instrument {instId}</td>
+</tr>
+<tr>
+<td style="text-align: left">70005</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The number of legs in RFQ cannot exceed maximum value.</td>
+</tr>
+<tr>
+<td style="text-align: left">70006</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Does not meet the minimum asset requirement.</td>
+</tr>
+<tr>
+<td style="text-align: left">70007</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Underlying index {instFamily} does not exist under instType {instType}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70008</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Operation failed under MMP status.</td>
+</tr>
+<tr>
+<td style="text-align: left">70009</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Data must have at least 1 valid element.</td>
+</tr>
+<tr>
+<td style="text-align: left">70010</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Timestamp parameters need to be in Unix timestamp format in milliseconds.</td>
+</tr>
+<tr>
+<td style="text-align: left">70011</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate setting for instType {instType}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70012</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate setting for underlying/instId {instId} under the same instType {instType}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70013</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">endTs needs to be bigger than or equal to beginTs.</td>
+</tr>
+<tr>
+<td style="text-align: left">70014</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">It's not allowed to have includeAll=True for all the instType.</td>
+</tr>
+<tr>
+<td style="text-align: left">70015</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">In order to trade this product, you need to complete advanced verification</td>
+</tr>
+<tr>
+<td style="text-align: left">70016</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Please specify your instrument settings for at least one instType.</td>
+</tr>
+<tr>
+<td style="text-align: left">70060</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The {account} doesn’t exist or the position side is incorrect. “To” and “from” accounts must be under the same main account.</td>
+</tr>
+<tr>
+<td style="text-align: left">70061</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">To move position, please enter a position that’s opposite to your current side and is smaller than or equal to your current size.</td>
+</tr>
+<tr>
+<td style="text-align: left">70062</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">{account} has reached the maximum number of position transfers allowed per day.</td>
+</tr>
+<tr>
+<td style="text-align: left">70064</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Position does not exist.</td>
+</tr>
+<tr>
+<td style="text-align: left">70065</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Couldn’t move position. Execution price cannot be determined.</td>
+</tr>
+<tr>
+<td style="text-align: left">70066</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Moving positions isn't supported in spot mode. Switch to any other account mode and try again.</td>
+</tr>
+<tr>
+<td style="text-align: left">70067</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Moving positions isn't supported in margin trading.</td>
+</tr>
+<tr>
+<td style="text-align: left">70100</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate instruments in legs array.</td>
+</tr>
+<tr>
+<td style="text-align: left">70101</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate clRfqId</td>
+</tr>
+<tr>
+<td style="text-align: left">70102</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">No counterparties specified</td>
+</tr>
+<tr>
+<td style="text-align: left">70103</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Invalid counterparty</td>
+</tr>
+<tr>
+<td style="text-align: left">70105</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The total value of non all-SPOT RFQs should be greater than the min notional value {nonSpotMinNotional}</td>
+</tr>
+<tr>
+<td style="text-align: left">70106</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The trading amount does not meet the min tradable amount requirement</td>
+</tr>
+<tr>
+<td style="text-align: left">70107</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The number of counterparties cannot exceed maximum value.</td>
+</tr>
+<tr>
+<td style="text-align: left">70108</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The total value of all-spot RFQs should be greater than the min notional value {spotMinNotional}</td>
+</tr>
+<tr>
+<td style="text-align: left">70109</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Counterparties for selected instruments are currently unavailable.</td>
+</tr>
+<tr>
+<td style="text-align: left">70200</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The RFQ with {rfqState} status cannot be canceled</td>
+</tr>
+<tr>
+<td style="text-align: left">70203</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Cancellation failed as rfq count exceeds the limit {rfqLimit}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70207</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Cancellation failed as you do not have any active RFQs.</td>
+</tr>
+<tr>
+<td style="text-align: left">70208</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Cancellation failed as service is unavailable now, please try again later.</td>
+</tr>
+<tr>
+<td style="text-align: left">70301</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate clQuoteId.</td>
+</tr>
+<tr>
+<td style="text-align: left">70303</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The RFQ with {rfqState} status cannot be quoted.</td>
+</tr>
+<tr>
+<td style="text-align: left">70304</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Price should be an integer multiple of the tick size.</td>
+</tr>
+<tr>
+<td style="text-align: left">70305</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Bid price cannot be higher than offer price</td>
+</tr>
+<tr>
+<td style="text-align: left">70306</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The legs of quote do not match the legs of {rfqId}</td>
+</tr>
+<tr>
+<td style="text-align: left">70307</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Size should be in integral multiples of the lot size.</td>
+</tr>
+<tr>
+<td style="text-align: left">70308</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Quote to your own RFQ is not allowed.</td>
+</tr>
+<tr>
+<td style="text-align: left">70309</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Quote to the same RFQ with the same side is not allowed.</td>
+</tr>
+<tr>
+<td style="text-align: left">70310</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Quoted price of instId {instId} cannot exceed your preset price limit.</td>
+</tr>
+<tr>
+<td style="text-align: left">70400</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The Quote with {quoteState} status cannot be canceled</td>
+</tr>
+<tr>
+<td style="text-align: left">70408</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Cancellation failed as quote count exceeds the limit {quoteLimit}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70409</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Cancellation failed as you do not have any active Quotes.</td>
+</tr>
+<tr>
+<td style="text-align: left">70501</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">RFQ {rfqId} is not quoted by {quoteId}</td>
+</tr>
+<tr>
+<td style="text-align: left">70502</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The legs do not match the legs of {rfqId}</td>
+</tr>
+<tr>
+<td style="text-align: left">70503</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Leg sizes specified are under the minimum block size required by Jupiter.</td>
+</tr>
+<tr>
+<td style="text-align: left">70504</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Execution failed as the RFQ status is {rfqState}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70505</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Execution failed as the Quote status is {quoteState}.</td>
+</tr>
+<tr>
+<td style="text-align: left">70506</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Leg sizes specified do not have the same ratios as the whole RFQ.</td>
+</tr>
+<tr>
+<td style="text-align: left">70507</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Partial execution was attempted but allowPartialExecution of the RFQ is not enabled.</td>
+</tr>
+<tr>
+<td style="text-align: left">70508</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">No instrument settings available.</td>
+</tr>
+<tr>
+<td style="text-align: left">70509</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Execution failed: counterparty error</td>
+</tr>
+<tr>
+<td style="text-align: left">70511</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Execution is being processed</td>
+</tr>
+<tr>
+<td style="text-align: left">75001</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Trade ID does not exist</td>
+</tr>
+<tr>
+<td style="text-align: left">75002</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">{sprdId} : unable to place new orders or modify existing orders at the moment</td>
+</tr>
+<tr>
+<td style="text-align: left">75003</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Invalid price</td>
+</tr>
+<tr>
+<td style="text-align: left">56000</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Block trade does not exist.</td>
+</tr>
+<tr>
+<td style="text-align: left">56001</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The number of multi-legs cannot exceed {legLimit}.</td>
+</tr>
+<tr>
+<td style="text-align: left">56002</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The number of multi-legs does not match with the verified one.</td>
+</tr>
+<tr>
+<td style="text-align: left">56003</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate clBlockTdId.</td>
+</tr>
+<tr>
+<td style="text-align: left">56004</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Trade with yourself is not allowed.</td>
+</tr>
+<tr>
+<td style="text-align: left">56005</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">clBlockTdId should be the same as the verified one.</td>
+</tr>
+<tr>
+<td style="text-align: left">56006</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">The role should be different from the verified one.</td>
+</tr>
+<tr>
+<td style="text-align: left">56007</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Leg no.{legNo} does not match with the verified one.</td>
+</tr>
+<tr>
+<td style="text-align: left">56008</td>
+<td style="text-align: left">200</td>
+<td style="text-align: left">Duplicate instruments in legs array.</td>
+</tr>
+</tbody></table>

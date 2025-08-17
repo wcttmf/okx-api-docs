@@ -1,0 +1,52 @@
+<h3 id="funding-account-rest-api-get-convert-currencies">Get convert currencies</h3><h4 id="funding-account-rest-api-get-convert-currencies-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="funding-account-rest-api-get-convert-currencies-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-convert-currencies-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-convert-currencies-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/asset/convert/currencies</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/asset/convert/currencies
+
+</code></pre></div><h4 id="funding-account-rest-api-get-convert-currencies-response-parameters">Response parameters</h4>
+<p>none</p>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"min"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Deprecated</span><span class="w">
+            </span><span class="nl">"max"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Deprecated</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"min"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"max"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-convert-currencies-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Currency, e.g. BTC</td>
+</tr>
+<tr>
+<td>min</td>
+<td>String</td>
+<td>Minimum amount to convert ( Deprecated )</td>
+</tr>
+<tr>
+<td>max</td>
+<td>String</td>
+<td>Maximum amount to convert ( Deprecated )</td>
+</tr>
+</tbody></table>

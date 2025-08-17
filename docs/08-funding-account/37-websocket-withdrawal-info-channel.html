@@ -1,0 +1,363 @@
+<h3 id="funding-account-websocket-withdrawal-info-channel">Withdrawal info channel</h3>
+<p>A push notification is triggered when a withdrawal is initiated or the withdrawal status changes.<br/>
+Supports subscriptions for accounts<br/></p>
+<ul>
+<li>If it is a master account subscription, you can receive the push of the withdrawal info of both the master account and the sub-account.</li>
+<li>If it is a sub-account subscription, only the push of sub-account withdrawal info you can receive.</li>
+</ul>
+<h4 id="funding-account-websocket-withdrawal-info-channel-url-path">URL Path</h4>
+<p>/ws/v5/business (required login)</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+    <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+    <span class="s2">"args"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"channel"</span>: <span class="s2">"withdrawal-info"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"channel"</span><span class="p">:</span> <span class="s">"withdrawal-info"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div><h4 id="funding-account-websocket-withdrawal-info-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>withdrawal-info</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Currency, e.g. <code>BTC</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"withdrawal-info"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">withdrawal-info</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-websocket-withdrawal-info-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>withdrawal-info</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"withdrawal-info"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"289320*****0975104"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"addrEx"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"areaCodeFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"areaCodeTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT-TRC20"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.8"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"nonTradableAsset"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1674103268578"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"pmtId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"subAcct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TN8CKTQMnpWfT******8KipbJ24ErguhF"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"toAddrType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1674103268472"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"txId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"289333*****1101696"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"wdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"63754560"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-websocket-withdrawal-info-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameters</strong></th>
+<th><strong>Types</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; uid</td>
+<td>String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>data</td>
+<td>Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td>&gt; uid</td>
+<td>String</td>
+<td>User Identifier of the message producer</td>
+</tr>
+<tr>
+<td>&gt; subAcct</td>
+<td>String</td>
+<td>Sub-account name<br/>If the message producer is master account, the parameter will return ""</td>
+</tr>
+<tr>
+<td>&gt; pTime</td>
+<td>String</td>
+<td>Push time, the millisecond format of the Unix timestamp, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>&gt; chain</td>
+<td>String</td>
+<td>Chain name, e.g. <code>USDT-ERC20</code>, <code>USDT-TRC20</code></td>
+</tr>
+<tr>
+<td>&gt; nonTradableAsset</td>
+<td>String</td>
+<td>Whether it is a non-tradable asset or not<br/><code>true</code>: non-tradable asset, <code>false</code>: tradable asset</td>
+</tr>
+<tr>
+<td>&gt; amt</td>
+<td>String</td>
+<td>Withdrawal amount</td>
+</tr>
+<tr>
+<td>&gt; ts</td>
+<td>String</td>
+<td>Time the withdrawal request was submitted, Unix timestamp format in milliseconds, e.g. <code>1655251200000</code>.</td>
+</tr>
+<tr>
+<td>&gt; from</td>
+<td>String</td>
+<td>Withdrawal account<br/>It can be <code>email</code>/<code>phone</code>/<code>sub-account name</code></td>
+</tr>
+<tr>
+<td>&gt; areaCodeFrom</td>
+<td>String</td>
+<td>Area code for the phone number<br/>If <code>from</code> is a phone number, this parameter returns the area code for the phone number</td>
+</tr>
+<tr>
+<td>&gt; to</td>
+<td>String</td>
+<td>Receiving address</td>
+</tr>
+<tr>
+<td>&gt; areaCodeTo</td>
+<td>String</td>
+<td>Area code for the phone number<br/>If <code>to</code> is a phone number, this parameter returns the area code for the phone number</td>
+</tr>
+<tr>
+<td>&gt; toAddrType</td>
+<td>String</td>
+<td>Address type<br/><code>1</code>: wallet address, email, phone, or login account name<br/><code>2</code>: UID</td>
+</tr>
+<tr>
+<td>&gt; tag</td>
+<td>String</td>
+<td>Some currencies require a tag for withdrawals</td>
+</tr>
+<tr>
+<td>&gt; pmtId</td>
+<td>String</td>
+<td>Some currencies require a payment ID for withdrawals</td>
+</tr>
+<tr>
+<td>&gt; memo</td>
+<td>String</td>
+<td>Some currencies require this parameter for withdrawals</td>
+</tr>
+<tr>
+<td>&gt; addrEx</td>
+<td>Object</td>
+<td>Withdrawal address attachment, e.g. <code>TONCOIN</code> attached tag name is comment, the return will be {'comment':'123456'}</td>
+</tr>
+<tr>
+<td>&gt; txId</td>
+<td>String</td>
+<td>Hash record of the withdrawal <br/>This parameter will return "" for internal transfers.</td>
+</tr>
+<tr>
+<td>&gt; fee</td>
+<td>String</td>
+<td>Withdrawal fee amount</td>
+</tr>
+<tr>
+<td>&gt; feeCcy</td>
+<td>String</td>
+<td>Withdrawal fee currency, e.g. <code>USDT</code></td>
+</tr>
+<tr>
+<td>&gt; state</td>
+<td>String</td>
+<td>Status of withdrawal<br/><br/><li>Stage 1 : Pending withdrawal</li><code>17</code>: Pending response from Travel Rule vendor<br/><code>10</code>: Waiting transfer<br/><code>0</code>: Waiting withdrawal<br/><code>4</code>/<code>5</code>/<code>6</code>/<code>8</code>/<code>9</code>/<code>12</code>: Waiting manual review<br/><code>7</code>: Approved<br/><br/><li>Stage 2 : Withdrawal in progress (Applicable to on-chain withdrawals, internal transfers do not have this stage)</li><code>1</code>: Broadcasting your transaction to chain<br/><code>15</code>: Pending transaction validation<br/><code>16</code>: Due to local laws and regulations, your withdrawal may take up to 24 hours to arrive<br/><code>-3</code>: Canceling <br/><br/><li>Final stage</li><code>-2</code>: Canceled <br/><code>-1</code>: Failed<br/><code>2</code>: Success</td>
+</tr>
+<tr>
+<td>&gt; wdId</td>
+<td>String</td>
+<td>Withdrawal ID</td>
+</tr>
+<tr>
+<td>&gt; clientId</td>
+<td>String</td>
+<td>Client-supplied ID</td>
+</tr>
+<tr>
+<td>&gt; note</td>
+<td>String</td>
+<td>Withdrawal note</td>
+</tr>
+</tbody></table>
+<h1 id="sub-account">Sub-account</h1>
+<p>The API endpoints of <code>sub-account</code> require authentication.</p>
+<h2 id="sub-account-rest-api">REST API</h2>

@@ -1,0 +1,190 @@
+<h3 id="funding-account-rest-api-get-deposit-history">Get deposit history</h3>
+<p>Retrieve the deposit records according to the currency, deposit status, and time range in reverse chronological order. The 100 most recent records are returned by default.<br/>
+Websocket API is also available, refer to <a href="/docs-v5/en/#funding-account-websocket-deposit-info-channel">Deposit info channel</a>.</p>
+<h4 id="funding-account-rest-api-get-deposit-history-rate-limit-6-requests-per-second">Rate Limit: 6 requests per second</h4><h4 id="funding-account-rest-api-get-deposit-history-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="funding-account-rest-api-get-deposit-history-permission-read">Permission: Read</h4><h4 id="funding-account-rest-api-get-deposit-history-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/asset/deposit-history</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>
+GET /api/v5/asset/deposit-history
+
+<span class="c"># Query deposit history from 2022-06-01 to 2022-07-01</span>
+GET /api/v5/asset/deposit-history?ccy<span class="o">=</span>BTC&amp;after<span class="o">=</span>1654041600000&amp;before<span class="o">=</span>1656633600000
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Funding</span> <span class="k">as</span> <span class="n">Funding</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">fundingAPI</span> <span class="o">=</span> <span class="n">Funding</span><span class="p">.</span><span class="n">FundingAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get deposit history
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">fundingAPI</span><span class="p">.</span><span class="n">get_deposit_history</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="funding-account-rest-api-get-deposit-history-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td style="text-align: left">depId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Deposit ID</td>
+</tr>
+<tr>
+<td style="text-align: left">fromWdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Internal transfer initiator's withdrawal ID<br/>If the deposit comes from internal transfer, this field displays the withdrawal ID of the internal transfer initiator</td>
+</tr>
+<tr>
+<td style="text-align: left">txId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Hash record of the deposit</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Deposit Type<br/><code>3</code>: internal transfer<br/><code>4</code>: deposit from chain</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Status of deposit  <br/><code>0</code>: waiting for confirmation<br/><code>1</code>: deposit credited  <br/><code>2</code>: deposit successful <br/><code>8</code>: pending due to temporary deposit suspension on this crypto currency<br/><code>11</code>: match the address blacklist<br/><code>12</code>: account or deposit is frozen<br/><code>13</code>: sub-account deposit interception<br/><code>14</code>: KYC limit<br/> <code>17</code>: Pending response from Travel Rule vendor</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested ts, Unix timestamp format in milliseconds, e.g. <code>1654041600000</code></td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested ts, Unix timestamp format in milliseconds, e.g. <code>1656633600000</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">string</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is <code>100</code>; The default is <code>100</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"actualDepBlkConfirm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"areaCodeFrom"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT-TRC20"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"depId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88****33"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fromWdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TN4hGjVXMzy*********9b4N1aGizqs"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1674038705000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"txId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fee235b3e812********857d36bb0426917f0df1802"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="funding-account-rest-api-get-deposit-history-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>chain</td>
+<td>String</td>
+<td>Chain name</td>
+</tr>
+<tr>
+<td>amt</td>
+<td>String</td>
+<td>Deposit amount</td>
+</tr>
+<tr>
+<td>from</td>
+<td>String</td>
+<td>Deposit account<br/>If the deposit comes from an internal transfer, this field displays the account information of the internal transfer initiator, which can be a mobile phone number, email address, account name, and will return "" in other cases</td>
+</tr>
+<tr>
+<td>areaCodeFrom</td>
+<td>String</td>
+<td>If <code>from</code> is a phone number, this parameter return area code of the phone number</td>
+</tr>
+<tr>
+<td>to</td>
+<td>String</td>
+<td>Deposit address<br/>If the deposit comes from the on-chain, this field displays the on-chain address, and will return "" in other cases</td>
+</tr>
+<tr>
+<td>txId</td>
+<td>String</td>
+<td>Hash record of the deposit</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>String</td>
+<td>The timestamp that the deposit record is created, Unix timestamp format in milliseconds, e.g. <code>1655251200000</code></td>
+</tr>
+<tr>
+<td>state</td>
+<td>String</td>
+<td>Status of deposit<br/><code>0</code>: Waiting for confirmation<br/><code>1</code>: Deposit credited  <br/><code>2</code>: Deposit successful <br/><code>8</code>: Pending due to temporary deposit suspension on this crypto currency<br/><code>11</code>: Match the address blacklist<br/><code>12</code>: Account or deposit is frozen<br/><code>13</code>: Sub-account deposit interception<br/><code>14</code>: KYC limit</td>
+</tr>
+<tr>
+<td>depId</td>
+<td>String</td>
+<td>Deposit ID</td>
+</tr>
+<tr>
+<td>fromWdId</td>
+<td>String</td>
+<td>Internal transfer initiator's withdrawal ID<br/>If the deposit comes from internal transfer, this field displays the withdrawal ID of the internal transfer initiator, and will return "" in other cases</td>
+</tr>
+<tr>
+<td>actualDepBlkConfirm</td>
+<td>String</td>
+<td>The actual amount of blockchain confirmed in a single deposit</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+About deposit state<br/>
+<b>Waiting for confirmation</b> is that the required number of blockchain confirmations has not been reached. <br/>
+<b>Deposit credited</b> is that there is sufficient number of blockchain confirmations for the currency to be credited to the account, but it cannot be withdrawn yet. <br/>
+<b>Deposit successful</b> means the crypto has been credited to the account and it can be withdrawn.
+</aside>

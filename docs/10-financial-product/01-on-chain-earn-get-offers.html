@@ -1,0 +1,186 @@
+<h3 id="financial-product-on-chain-earn-get-offers">GET / Offers</h3><h4 id="financial-product-on-chain-earn-get-offers-rate-limit-3-requests-per-second">Rate Limit: 3 requests per second</h4><h4 id="financial-product-on-chain-earn-get-offers-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="financial-product-on-chain-earn-get-offers-permission-read">Permission: Read</h4><h4 id="financial-product-on-chain-earn-get-offers-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/finance/staking-defi/offers</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/finance/staking-defi/offers
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Finance.StakingDefi</span> <span class="k">as</span> <span class="n">StakingDefi</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">StakingAPI</span> <span class="o">=</span> <span class="n">StakingDefi</span><span class="p">.</span><span class="n">StakingDefiAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">StakingAPI</span><span class="p">.</span><span class="n">get_offers</span><span class="p">(</span><span class="n">ccy</span><span class="o">=</span><span class="s">"USDT"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre></div><h4 id="financial-product-on-chain-earn-get-offers-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">productId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Product ID</td>
+</tr>
+<tr>
+<td style="text-align: left">protocolType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Protocol type<br/><code>defi</code>: on-chain earn</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Investment currency, e.g. <code>BTC</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"productId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"101"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Polkadot"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"protocolType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"defi"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"term"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"apy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1767"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"earlyRedeem"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"purchasable"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"investData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"bal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"maxAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"minAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"earningData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOT"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"earningType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"fastRedemptionDailyLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"redeemPeriod"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"28D"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"28D"</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="financial-product-on-chain-earn-get-offers-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ccy</td>
+<td>String</td>
+<td>Currency type, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>productId</td>
+<td>String</td>
+<td>Product ID</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>String</td>
+<td>Protocol</td>
+</tr>
+<tr>
+<td>protocolType</td>
+<td>String</td>
+<td>Protocol type<br/><code>defi</code>: on-chain earn</td>
+</tr>
+<tr>
+<td>term</td>
+<td>String</td>
+<td>Protocol term<br/>It will return the days of fixed term and will return <code>0</code> for flexible product</td>
+</tr>
+<tr>
+<td>apy</td>
+<td>String</td>
+<td>Estimated annualization<br/>If the annualization is 7% , this field is 0.07</td>
+</tr>
+<tr>
+<td>earlyRedeem</td>
+<td>Boolean</td>
+<td>Whether the protocol supports early redemption</td>
+</tr>
+<tr>
+<td>investData</td>
+<td>Array of objects</td>
+<td>Current target currency information available for investment</td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Investment currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>&gt; bal</td>
+<td>String</td>
+<td>Available balance to invest</td>
+</tr>
+<tr>
+<td>&gt; minAmt</td>
+<td>String</td>
+<td>Minimum subscription amount</td>
+</tr>
+<tr>
+<td>&gt; maxAmt</td>
+<td>String</td>
+<td>Maximum available subscription amount</td>
+</tr>
+<tr>
+<td>earningData</td>
+<td>Array of objects</td>
+<td>Earning data</td>
+</tr>
+<tr>
+<td>&gt; ccy</td>
+<td>String</td>
+<td>Earning currency, e.g. <code>BTC</code></td>
+</tr>
+<tr>
+<td>&gt; earningType</td>
+<td>String</td>
+<td>Earning type<br/><code>0</code>: Estimated earning<br/><code>1</code>: Cumulative earning</td>
+</tr>
+<tr>
+<td>state</td>
+<td>String</td>
+<td>Product state<br/><code>purchasable</code>: Purchasable<br/><code>sold_out</code>: Sold out<br/><code>Stop</code>: Suspension of subscription</td>
+</tr>
+<tr>
+<td>redeemPeriod</td>
+<td>Array of strings</td>
+<td>Redemption Period, format in [min time,max time]<br/><code>H</code>: Hour, <code>D</code>: Day<br/>e.g. ["1H","24H"] represents redemption period is between 1 Hour and 24 Hours.<br/>["14D","14D"] represents redemption period is 14 days.</td>
+</tr>
+<tr>
+<td>fastRedemptionDailyLimit</td>
+<td>String</td>
+<td>Fast redemption daily limit<br/>If fast redemption is not supported, it will return ''.</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,114 @@
+<h3 id="spread-trading-rest-api-amend-order">Amend order</h3>
+<p>Amend an incomplete order.</p>
+<h4 id="spread-trading-rest-api-amend-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="spread-trading-rest-api-amend-order-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="spread-trading-rest-api-amend-order-permission-trade">Permission: Trade</h4><h4 id="spread-trading-rest-api-amend-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/sprd/amend-order</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/sprd/amend-order
+body
+<span class="o">{</span>
+    <span class="s2">"ordId"</span>:<span class="s2">"2510789768709120"</span>,
+    <span class="s2">"newSz"</span>:<span class="s2">"2"</span>
+<span class="o">}</span>
+
+</code></pre></div><h4 id="spread-trading-rest-api-amend-order-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ordId</td>
+<td>String</td>
+<td>Conditional</td>
+<td>Order ID <br/>Either <code>ordId</code> or <code>clOrdId</code> is required. If both are passed, ordId will be used.</td>
+</tr>
+<tr>
+<td>clOrdId</td>
+<td>String</td>
+<td>Conditional</td>
+<td>Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td>reqId</td>
+<td>String</td>
+<td>No</td>
+<td>Client Request ID as assigned by the client for order amendment <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters. <br/>The response will include the corresponding reqId to help you identify the request if you provide it in the request.</td>
+</tr>
+<tr>
+<td>newSz</td>
+<td>String</td>
+<td>Conditional</td>
+<td>New quantity after amendment <br/>Either <code>newSz</code> or <code>newPx</code> is required. <br/>When amending a partially-filled order, the newSz should include the amount that has been filled.</td>
+</tr>
+<tr>
+<td>newPx</td>
+<td>String</td>
+<td>Conditional</td>
+<td>New price after amendment <br/>Either <code>newSz</code> or <code>newPx</code> is required.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"ordId"</span><span class="p">:</span><span class="s2">"12344"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"reqId"</span><span class="p">:</span><span class="s2">"b12344"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"sCode"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="spread-trading-rest-api-amend-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ordId</td>
+<td>String</td>
+<td>Order ID</td>
+</tr>
+<tr>
+<td>clOrdId</td>
+<td>String</td>
+<td>Client Order ID as assigned by the client.</td>
+</tr>
+<tr>
+<td>reqId</td>
+<td>String</td>
+<td>Client Request ID as assigned by the client for order amendment.</td>
+</tr>
+<tr>
+<td>sCode</td>
+<td>String</td>
+<td>The code of the event execution result, 0 means success.</td>
+</tr>
+<tr>
+<td>sMsg</td>
+<td>String</td>
+<td>Rejection message if the request is unsuccessful.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+newSz<br/>
+If the new quantity of the order is less than or equal to the (accFillSz + canceledSz + pendingSettleSz), after pendingSettleSz is settled, the order status will be transitioned into filled (if canceledSz = 0), or canceled (if canceledSz &gt; 0).
+</aside>
+<aside class="notice">
+The amend order returns sCode equal to 0<br/>
+
+It is not strictly considered that the order has been amended. It only means that your amend order request has been accepted by the system server. The result of the amend is subject to the status pushed by the order channel or the order status query.
+</aside>

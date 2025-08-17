@@ -1,0 +1,167 @@
+<h3 id="order-book-trading-grid-trading-post-amend-grid-algo-order">POST / Amend grid algo order</h3><h4 id="order-book-trading-grid-trading-post-amend-grid-algo-order-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-post-amend-grid-algo-order-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-grid-trading-post-amend-grid-algo-order-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-grid-trading-post-amend-grid-algo-order-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/grid/amend-order-algo</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/tradingBot/grid/amend-order-algo
+body
+<span class="o">{</span>
+    <span class="s2">"algoId"</span>:<span class="s2">"448965992920907776"</span>,
+    <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+    <span class="s2">"slTriggerPx"</span>:<span class="s2">"1200"</span>,
+    <span class="s2">"tpTriggerPx"</span>:<span class="s2">""</span>
+<span class="o">}</span>
+
+POST /api/v5/tradingBot/grid/amend-order-algo
+body 
+<span class="o">{</span>
+   <span class="s2">"algoId"</span>:<span class="s2">"578963447615062016"</span>,
+   <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT"</span>,
+   <span class="s2">"triggerParams"</span>:[
+       <span class="o">{</span>
+           <span class="s2">"triggerAction"</span>:<span class="s2">"stop"</span>,  
+           <span class="s2">"triggerStrategy"</span>:<span class="s2">"price"</span>,   
+           <span class="s2">"triggerPx"</span>:<span class="s2">"1000"</span>
+       <span class="o">}</span>
+   <span class="o">]</span>
+<span class="o">}</span>
+
+POST /api/v5/tradingBot/grid/amend-order-algo
+body 
+<span class="o">{</span>
+   <span class="s2">"algoId"</span>:<span class="s2">"578963447615062016"</span>,
+   <span class="s2">"instId"</span>:<span class="s2">"BTC-USDT-SWAP"</span>,
+   <span class="s2">"triggerParams"</span>:[
+       <span class="o">{</span>
+           <span class="s2">"triggerAction"</span>:<span class="s2">"stop"</span>,  
+           <span class="s2">"triggerStrategy"</span>:<span class="s2">"instant"</span>,   
+           <span class="s2">"stopType"</span>:<span class="s2">"1"</span>
+       <span class="o">}</span>
+   <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-grid-trading-post-amend-grid-algo-order-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">New stop-loss trigger price<br/>if slTriggerPx is set "" means stop-loss trigger price is canceled.<br/>Either <code>slTriggerPx</code> or <code>tpTriggerPx</code> is required.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">New take-profit trigger price<br/>if tpTriggerPx is set "" means take-profit trigger price is canceled.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take profit ratio, 0.1 represents 10%, only applicable to contract grid<br/>if it is set "" means take-profit ratio is canceled.</td>
+</tr>
+<tr>
+<td style="text-align: left">slRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop loss ratio, 0.1 represents 10%, only applicable to contract grid`<br/>if it is set "" means stop-loss ratio is canceled.</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerParams</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger Parameters</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerAction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trigger action<br/><code>start</code><br/><code>stop</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerStrategy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Trigger strategy<br/><code>instant</code><br/><code>price</code><br/><code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger Price<br/>This field is only valid when <code>triggerStrategy</code> is <code>price</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; stopType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop type<br/>Spot grid <code>1</code>: Sell base currency <code>2</code>: Keep base currency<br/>Contract grid <code>1</code>: Market Close All positions <code>2</code>: Keep positions<br/>This field is only valid when <code>triggerAction</code> is <code>stop</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"448965992920907776"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sCode"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sMsg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-post-amend-grid-algo-order-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">sCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The code of the event execution result, <code>0</code> means success.</td>
+</tr>
+<tr>
+<td style="text-align: left">sMsg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rejection message if the request is unsuccessful.</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

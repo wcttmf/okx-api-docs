@@ -1,0 +1,80 @@
+<h3 id="order-book-trading-grid-trading-get-rsi-back-testing-public">GET / RSI back testing (public)</h3>
+<p>Authentication is not required for this public endpoint.</p>
+<h4 id="order-book-trading-grid-trading-get-rsi-back-testing-public-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-get-rsi-back-testing-public-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-grid-trading-get-rsi-back-testing-public-permission-read">Permission: Read</h4><h4 id="order-book-trading-grid-trading-get-rsi-back-testing-public-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/public/rsi-back-testing</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/public/rsi-back-testing?instId<span class="o">=</span>BTC-USDT&amp;thold<span class="o">=</span>30&amp;timeframe<span class="o">=</span>3m&amp;timePeriod<span class="o">=</span>14
+</code></pre></div><h4 id="order-book-trading-grid-trading-get-rsi-back-testing-public-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code><br/>Only applicable to <code>SPOT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">timeframe</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">K-line type<br/><code>3m</code>, <code>5m</code>, <code>15m</code>, <code>30m</code> (<code>m</code>: minute)<br/><code>1H</code>, <code>4H</code> (<code>H</code>: hour)<br/><code>1D</code> (<code>D</code>: day)</td>
+</tr>
+<tr>
+<td style="text-align: left">thold</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Threshold<br/>The value should be an integer between 1 to 100</td>
+</tr>
+<tr>
+<td style="text-align: left">timePeriod</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Time Period<br/><code>14</code></td>
+</tr>
+<tr>
+<td style="text-align: left">triggerCond</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger condition<br/><code>cross_up</code><br/><code>cross_down</code><br/><code>above</code><br/><code>below</code><br/><code>cross</code><br/>Default is <code>cross_down</code></td>
+</tr>
+<tr>
+<td style="text-align: left">duration</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Back testing duration<br/><code>1M</code> (<code>M</code>: month)<br/>Default is <code>1M</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"triggerNum"</span><span class="p">:</span><span class="w"> </span><span class="s2">"164"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-get-rsi-back-testing-public-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">triggerNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger number</td>
+</tr>
+</tbody></table>

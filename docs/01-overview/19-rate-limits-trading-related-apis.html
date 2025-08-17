@@ -1,0 +1,9 @@
+<h3 id="overview-rate-limits-trading-related-apis">Trading-related APIs</h3>
+<p>For Trading-related APIs (place order, cancel order, and amend order) the following conditions apply:</p>
+<ul>
+<li><p>Rate limits are shared across the REST and WebSocket channels. </p></li>
+<li><p>Rate limits for placing orders, amending orders, and cancelling orders are independent from each other. </p></li>
+<li><p>Rate limits are defined on the Instrument ID level (except Options)</p></li>
+<li><p>Rate limits for Options are defined based on the Instrument Family level. Refer to the <a href="/docs-v5/en/#public-data-rest-api-get-instruments">Get instruments</a> endpoint to view Instrument Family information.</p></li>
+<li><p>Rate limits for a multiple order endpoint and a single order endpoint are also independent, with the exception being when there is only one order sent to a multiple order endpoint, the order will be counted as a single order and adopt the single order rate limit. </p></li>
+</ul>

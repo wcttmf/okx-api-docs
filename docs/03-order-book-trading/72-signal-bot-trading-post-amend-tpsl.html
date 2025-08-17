@@ -1,0 +1,81 @@
+<h3 id="order-book-trading-signal-bot-trading-post-amend-tpsl">POST / Amend TPSL</h3><h4 id="order-book-trading-signal-bot-trading-post-amend-tpsl-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-signal-bot-trading-post-amend-tpsl-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-signal-bot-trading-post-amend-tpsl-permission-trade">Permission: Trade</h4><h4 id="order-book-trading-signal-bot-trading-post-amend-tpsl-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/signal/amendTPSL</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/tradingBot/signal/amendTPSL
+body
+<span class="o">{</span>
+    <span class="s2">"algoId"</span>: <span class="s2">"637039348240277504"</span>,
+    <span class="s2">"exitSettingParam"</span>: <span class="o">{</span>
+        <span class="s2">"tpSlType"</span>: <span class="s2">"pnl"</span>,
+        <span class="s2">"tpPct"</span>: <span class="s2">"0.01"</span>,
+        <span class="s2">"slPct"</span>: <span class="s2">"0.01"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-signal-bot-trading-post-amend-tpsl-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">exitSettingParam</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Exit setting</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpSlType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Type of set the take-profit and stop-loss trigger price<br/><code>pnl</code>: Based on the estimated profit and loss percentage from the entry point<br/><code>price</code>: Based on price increase or decrease from the crypto’s entry price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpPct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Take-profit percentage</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slPct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Stop-loss percentage</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"637039348240277504"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-signal-bot-trading-post-amend-tpsl-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+</tbody></table>

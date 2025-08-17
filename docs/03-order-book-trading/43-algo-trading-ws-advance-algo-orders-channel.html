@@ -1,0 +1,579 @@
+<h3 id="order-book-trading-algo-trading-ws-advance-algo-orders-channel">WS / Advance algo orders channel</h3>
+<p>Retrieve advance algo orders (including Iceberg order, TWAP order, Trailing order). Data will be pushed when first subscribed. Data will be pushed when triggered by events such as placing/canceling order.</p>
+<h4 id="order-book-trading-algo-trading-ws-advance-algo-orders-channel-url-path">URL Path</h4>
+<p>/ws/v5/business (required login)</p>
+<blockquote>
+<p>Request Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"algo-advance"</span>,
+      <span class="s2">"instType"</span>: <span class="s2">"SPOT"</span>,
+      <span class="s2">"instId"</span>: <span class="s2">"BTC-USDT"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"algo-advance"</span><span class="p">,</span>
+          <span class="s">"instType"</span><span class="p">:</span> <span class="s">"SPOT"</span><span class="p">,</span>
+          <span class="s">"instId"</span><span class="p">:</span> <span class="s">"BTC-USDT"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"algo-advance"</span>,
+      <span class="s2">"instType"</span>: <span class="s2">"SPOT"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/business"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"algo-advance"</span><span class="p">,</span>
+          <span class="s">"instType"</span><span class="p">:</span> <span class="s">"SPOT"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div><h4 id="order-book-trading-algo-trading-ws-advance-algo-orders-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td>Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name<br/><code>algo-advance</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Instrument type <br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code> <br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Algo Order ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"algo-advance"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"algo-advance"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">algo-advance</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instType</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">FUTURES</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-algo-trading-ws-advance-algo-orders-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>Instrument type <br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code> <br/><code>ANY</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Algo Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td>No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td>Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example: single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="s2">"algo-advance"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77982378738415879"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"BTC-USDT"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"actualPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"actualSide"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"actualSz"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="s2">"355056228680335360"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="s2">"1630924001545"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"count"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordType"</span><span class="p">:</span><span class="s2">"iceberg"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pTime"</span><span class="p">:</span><span class="s2">"1630924295204"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxLimit"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxSpread"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxVar"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slOrdPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="s2">"pause"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"szLimit"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="s2">"cash"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"timeInterval"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpOrdPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adadadadad"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"callbackRatio"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"callbackSpread"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"activePx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"moveTriggerPx"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"failCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"reduceOnly"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isTradeBorrowMode"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-algo-trading-ws-advance-algo-orders-channel-response-parameters-when-data-is-pushed">Response parameters when data is pushed.</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uid</td>
+<td style="text-align: left">String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Algo Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td>Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td>Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td>Margin currency <br/>Applicable to all <code>isolated</code> <code>MARGIN</code> orders and <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordId</td>
+<td style="text-align: left">String</td>
+<td>Order ID, the order ID associated with the algo order.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td>Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; clOrdId</td>
+<td style="text-align: left">String</td>
+<td>Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td>Quantity to buy or sell. <code>SPOT</code>/<code>MARGIN</code>: in the unit of currency. <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>: in the unit of contract.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordType</td>
+<td style="text-align: left">String</td>
+<td>Order type <br/><code>iceberg</code>: Iceberg order <br/><code>twap</code>: TWAP order <br/><code>move_order_stop</code>: Trailing order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; side</td>
+<td style="text-align: left">String</td>
+<td>Order side, <code>buy</code> <code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td>Position side <br/><code>net</code> <br/><code>long</code> or <code>short</code> Only applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tdMode</td>
+<td style="text-align: left">String</td>
+<td>Trade mode, <code>cross</code>: cross <code>isolated</code>: isolated <code>cash</code>: cash</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tgtCcy</td>
+<td style="text-align: left">String</td>
+<td>Order quantity unit setting for <code>sz</code><br/><code>base_ccy</code>: Base currency ,<code>quote_ccy</code>: Quote currency  <br/>Only applicable to <code>SPOT</code> Market Orders<br/>Default is <code>quote_ccy</code> for buy, <code>base_ccy</code> for sell</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lever</td>
+<td style="text-align: left">String</td>
+<td>Leverage, from <code>0.01</code> to <code>125</code>. <br/>Only applicable to <code>MARGIN/FUTURES/SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td>Order status  <br/><code>live</code>: to be effective <br/><code>effective</code>: effective<br/><code>partially_effective</code>: partially effective<br/><code>canceled</code>: canceled <br/><code>order_failed</code>: order failed <br/><code>pause</code>: pause</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td>Take-profit order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slOrdPx</td>
+<td style="text-align: left">String</td>
+<td>Stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerPx</td>
+<td style="text-align: left">String</td>
+<td>Trigger price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordPx</td>
+<td style="text-align: left">String</td>
+<td>Order price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; actualSz</td>
+<td style="text-align: left">String</td>
+<td>Actual order quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; actualPx</td>
+<td style="text-align: left">String</td>
+<td>Actual order price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; notionalUsd</td>
+<td style="text-align: left">String</td>
+<td>Estimated national value in <code>USD</code> of order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tag</td>
+<td style="text-align: left">String</td>
+<td>Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; actualSide</td>
+<td style="text-align: left">String</td>
+<td>Actual trigger side</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; triggerTime</td>
+<td style="text-align: left">String</td>
+<td>Trigger time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; cTime</td>
+<td style="text-align: left">String</td>
+<td>Creation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pxVar</td>
+<td style="text-align: left">String</td>
+<td>Price ratio  <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pxSpread</td>
+<td style="text-align: left">String</td>
+<td>Price variance  <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; szLimit</td>
+<td style="text-align: left">String</td>
+<td>Average amount <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pxLimit</td>
+<td style="text-align: left">String</td>
+<td>Price limit <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; timeInterval</td>
+<td style="text-align: left">String</td>
+<td>Time interval <br/>Only applicable to <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; count</td>
+<td style="text-align: left">String</td>
+<td>Algo Order count <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; callbackRatio</td>
+<td style="text-align: left">String</td>
+<td>Callback price ratio<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; callbackSpread</td>
+<td style="text-align: left">String</td>
+<td>Callback price variance<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; activePx</td>
+<td style="text-align: left">String</td>
+<td>Active price<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; moveTriggerPx</td>
+<td style="text-align: left">String</td>
+<td>Trigger price<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; failCode</td>
+<td style="text-align: left">String</td>
+<td>It represents that the reason that algo order fails to trigger. It is "" when the state is <code>effective</code>/<code>canceled</code>. There will be value when the state is <code>order_failed</code>, e.g. 51008;<br/>Only applicable to Stop Order, Trailing Stop Order, Trigger order.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td>Client Algo Order ID as assigned by the client.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; reduceOnly</td>
+<td style="text-align: left">String</td>
+<td>Whether the order can only reduce the position size. Valid options: <code>true</code> or <code>false</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; pTime</td>
+<td style="text-align: left">String</td>
+<td>Push time of algo order information, millisecond format of Unix timestamp, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; isTradeBorrowMode</td>
+<td style="text-align: left">Boolean</td>
+<td>Whether borrowing currency automatically<br/> true<br/> false<br/>Only applicable to <code>trigger order</code>, <code>trailing order</code> and <code>twap order</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td>The quote currency used for trading.</td>
+</tr>
+</tbody></table>
+<h2 id="order-book-trading-grid-trading">Grid Trading</h2>
+<p>Grid trading works by the simple strategy of buy low and sell high. 
+After you set the parameters, the system automatically places orders at incrementally increasing or decreasing prices. Overall, the grid bot seeks to capitalize on normal price volatility by placing buy and sell orders at certain regular intervals above and below a predefined base price.<br/>
+The API endpoints of <code>Grid Trading</code> require authentication.</p>

@@ -1,0 +1,172 @@
+<h3 id="order-book-trading-grid-trading-post-compute-min-investment-public">POST / Compute min investment (public)</h3>
+<p>Authentication is not required for this public endpoint.</p>
+<h4 id="order-book-trading-grid-trading-post-compute-min-investment-public-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-post-compute-min-investment-public-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-grid-trading-post-compute-min-investment-public-permission-read">Permission: Read</h4><h4 id="order-book-trading-grid-trading-post-compute-min-investment-public-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/tradingBot/grid/min-investment</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/tradingBot/grid/min-investment
+body 
+<span class="o">{</span>
+    <span class="s2">"instId"</span>: <span class="s2">"ETH-USDT"</span>,
+    <span class="s2">"algoOrdType"</span>:<span class="s2">"grid"</span>,
+    <span class="s2">"gridNum"</span>: <span class="s2">"50"</span>,
+    <span class="s2">"maxPx"</span>:<span class="s2">"5000"</span>,
+    <span class="s2">"minPx"</span>:<span class="s2">"3000"</span>,
+    <span class="s2">"runType"</span>:<span class="s2">"1"</span>,
+    <span class="s2">"investmentData"</span>:[
+        <span class="o">{</span>
+            <span class="s2">"amt"</span>:<span class="s2">"0.01"</span>,
+            <span class="s2">"ccy"</span>:<span class="s2">"ETH"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+            <span class="s2">"amt"</span>:<span class="s2">"100"</span>,
+            <span class="s2">"ccy"</span>:<span class="s2">"USDT"</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><h4 id="order-book-trading-grid-trading-post-compute-min-investment-public-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo order type<br/><code>grid</code>: Spot grid<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">maxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Upper price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">minPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lower price of price range</td>
+</tr>
+<tr>
+<td style="text-align: left">gridNum</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Grid quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">runType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Grid type<br/><code>1</code>: Arithmetic, <code>2</code>: Geometric</td>
+</tr>
+<tr>
+<td style="text-align: left">direction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Contract grid type<br/><code>long</code>,<code>short</code>,<code>neutral</code><br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Leverage<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">basePos</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Whether or not open a position when the strategy activates<br/>Default is <code>false</code><br/>Neutral contract grid should omit the parameter<br/>Only applicable to <code>contract grid</code></td>
+</tr>
+<tr>
+<td style="text-align: left">investmentType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Investment type, only applicable to <code>grid</code><br/> <code>quote</code><br/><code>base</code><br/><code>dual</code></td>
+</tr>
+<tr>
+<td style="text-align: left">triggerStrategy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Trigger stragety, <br/> <code>instant</code><br/><code>price</code><br/><code>rsi</code></td>
+</tr>
+<tr>
+<td style="text-align: left">investmentData</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Invest Data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Invest amount</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Invest currency</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+           </span><span class="nl">"minInvestmentData"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+               </span><span class="p">{</span><span class="w">
+                   </span><span class="nl">"amt"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+                   </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"ETH"</span><span class="w">
+               </span><span class="p">},</span><span class="w">
+               </span><span class="p">{</span><span class="w">
+                   </span><span class="nl">"amt"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+                   </span><span class="nl">"ccy"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="w">
+               </span><span class="p">}</span><span class="w">
+           </span><span class="p">],</span><span class="w">
+           </span><span class="nl">"singleAmt"</span><span class="p">:</span><span class="s2">"10"</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-post-compute-min-investment-public-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">minInvestmentData</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Minimum invest Data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Minimum invest amount</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Minimum Invest currency</td>
+</tr>
+<tr>
+<td style="text-align: left">singleAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Single grid trading amount<br/>In terms of <code>spot grid</code>, the unit is <code>quote currency</code><br/>In terms of <code>contract grid</code>, the unit is <code>contract</code></td>
+</tr>
+</tbody></table>

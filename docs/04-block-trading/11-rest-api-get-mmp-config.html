@@ -1,0 +1,61 @@
+<h3 id="block-trading-rest-api-get-mmp-config">Get MMP Config</h3>
+<p>This endpoint is used to get MMP configure information and only applicable to block trading market makers<br/></p>
+<h4 id="block-trading-rest-api-get-mmp-config-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="block-trading-rest-api-get-mmp-config-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="block-trading-rest-api-get-mmp-config-permission-read">Permission: Read</h4><h4 id="block-trading-rest-api-get-mmp-config-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/rfq/mmp-config</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/rfq/mmp-config
+
+</code></pre></div><h4 id="block-trading-rest-api-get-mmp-config-request-parameters">Request Parameters</h4>
+<p>none</p>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"frozenInterval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmpFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmpFrozenUntil"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"countLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeInterval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-rest-api-get-mmp-config-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">timeInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time window (ms). MMP interval where monitoring is done<br/>"0" means MMP is diabled</td>
+</tr>
+<tr>
+<td style="text-align: left">frozenInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Frozen period (ms). If it is "0", the trade will remain frozen until manually reset and <code>mmpFrozenUntil</code> will be "".</td>
+</tr>
+<tr>
+<td style="text-align: left">countLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Limit in number of execution attempts</td>
+</tr>
+<tr>
+<td style="text-align: left">mmpFrozen</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether MMP is currently triggered. <code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mmpFrozenUntil</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">If frozenInterval is not "0" and mmpFrozen = True, it is the time interval (in ms) when MMP is no longer triggered, otherwise ""</td>
+</tr>
+</tbody></table>

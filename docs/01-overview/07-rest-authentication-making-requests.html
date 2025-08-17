@@ -1,0 +1,9 @@
+<h3 id="overview-rest-authentication-making-requests">Making Requests</h3>
+<p>All private REST requests must contain the following headers:</p>
+<ul>
+<li><p><code>OK-ACCESS-KEY</code> The API key as a String.</p></li>
+<li><p><code>OK-ACCESS-SIGN</code> The Base64-encoded signature (see Signing Messages subsection for details).</p></li>
+<li><p><code>OK-ACCESS-TIMESTAMP</code> The UTC timestamp of your request .e.g : 2020-12-08T09:08:57.715Z</p></li>
+<li><p><code>OK-ACCESS-PASSPHRASE</code> The passphrase you specified when creating the API key.</p></li>
+</ul>
+<p>Request bodies should have content type <code>application/json</code> and be in valid JSON format.</p>

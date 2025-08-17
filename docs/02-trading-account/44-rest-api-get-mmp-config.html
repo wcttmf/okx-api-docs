@@ -1,0 +1,82 @@
+<h3 id="trading-account-rest-api-get-mmp-config">GET MMP Config</h3>
+<p>This endpoint is used to get MMP configure information<br/></p>
+<p>Only applicable to Option in Portfolio Margin mode, and MMP privilege is required.</p>
+<h4 id="trading-account-rest-api-get-mmp-config-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-mmp-config-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-mmp-config-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-mmp-config-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/mmp-config</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/account/mmp-config?instFamily<span class="o">=</span>BTC-USD
+
+</code></pre></div><h4 id="trading-account-rest-api-get-mmp-config-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument Family</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"frozenInterval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH-USD"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmpFrozen"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mmpFrozenUntil"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"qtyLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeInterval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-mmp-config-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument Family</td>
+</tr>
+<tr>
+<td style="text-align: left">mmpFrozen</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether MMP is currently triggered. <code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mmpFrozenUntil</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">If frozenInterval is configured and mmpFrozen = True, it is the time interval (in ms) when MMP is no longer triggered, otherwise "".</td>
+</tr>
+<tr>
+<td style="text-align: left">timeInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time window (ms). MMP interval where monitoring is done</td>
+</tr>
+<tr>
+<td style="text-align: left">frozenInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Frozen period (ms). If it is "0", the trade will remain frozen until manually reset and <code>mmpFrozenUntil</code> will be "".</td>
+</tr>
+<tr>
+<td style="text-align: left">qtyLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade qty limit in number of contracts</td>
+</tr>
+</tbody></table>

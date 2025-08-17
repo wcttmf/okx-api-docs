@@ -1,0 +1,420 @@
+<h3 id="order-book-trading-algo-trading-get-algo-order-details">GET / Algo order details</h3><h4 id="order-book-trading-algo-trading-get-algo-order-details-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-algo-trading-get-algo-order-details-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-algo-trading-get-algo-order-details-permission-read">Permission: Read</h4><h4 id="order-book-trading-algo-trading-get-algo-order-details-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/trade/order-algo</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/trade/order-algo?algoId<span class="o">=</span>1753184812254216192
+</code></pre></div><h4 id="order-book-trading-algo-trading-get-algo-order-details-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Algo ID<br/>Either <code>algoId</code> or <code>algoClOrdId</code> is required.If both are passed, <code>algoId</code> will be used.</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Client-supplied Algo ID<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"activePx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"actualPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"actualSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"actualSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1753184812254216192"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"amendPxOnTriggerType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"attachAlgoOrds"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1724751378980"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"callbackRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"callbackSpread"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"chaseType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"chaseVal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"closeFraction"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"failCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isTradeBorrowMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62916.5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"linkedOrd"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"maxChaseType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"maxChaseVal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"moveTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordIdList"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"ordPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"conditional"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxSpread"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxVar"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quickMgnType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"reduceOnly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"szLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cash"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tgtCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quote_ccy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"timeInterval"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerPxType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"triggerTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1724751378980"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-algo-trading-get-algo-order-details-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency <br/>Applicable to all <code>isolated</code> <code>MARGIN</code> orders and <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest order ID. It will be deprecated soon</td>
+</tr>
+<tr>
+<td style="text-align: left">ordIdList</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Order ID list. There will be multiple order IDs when there is TP/SL splitting order.</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity to buy or sell</td>
+</tr>
+<tr>
+<td style="text-align: left">closeFraction</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fraction of position to be closed when the algo order is triggered</td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order type</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order side</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side</td>
+</tr>
+<tr>
+<td style="text-align: left">tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade mode</td>
+</tr>
+<tr>
+<td style="text-align: left">tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order quantity unit setting for <code>sz</code><br/><code>base_ccy</code>: Base currency ,<code>quote_ccy</code>: Quote currency  <br/>Only applicable to <code>SPOT</code> Market Orders<br/>Default is <code>quote_ccy</code> for buy, <code>base_ccy</code> for sell</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">State <br/><code>live</code> <br/><code>pause</code> <br/><code>partially_effective</code><br/><code>effective</code> <br/><code>canceled</code> <br/><code>order_failed</code><br/><code>partially_failed</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage, from <code>0.01</code> to <code>125</code>. <br/>Only applicable to <code>MARGIN/FUTURES/SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">ordPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order price for the trigger order</td>
+</tr>
+<tr>
+<td style="text-align: left">actualSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual order quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">actualPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual order price</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">actualSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Actual trigger side, <code>tp</code>: take profit <code>sl</code>: stop loss<br/>Only applicable to oco order and conditional order</td>
+</tr>
+<tr>
+<td style="text-align: left">triggerTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">pxVar</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price ratio <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">pxSpread</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price variance <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">szLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average amount <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">pxLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price Limit <br/>Only applicable to <code>iceberg</code> order or <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">timeInterval</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Time interval <br/>Only applicable to <code>twap</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">callbackRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Callback price ratio<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">callbackSpread</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Callback price variance<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">activePx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Active price<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">moveTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trigger price<br/>Only applicable to <code>move_order_stop</code> order</td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether the order can only reduce the position size. Valid options: true or false.</td>
+</tr>
+<tr>
+<td style="text-align: left">quickMgnType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quick Margin type, Only applicable to Quick Margin Mode of isolated margin<br/><code>manual</code>, <code>auto_borrow</code>, <code>auto_repay</code></td>
+</tr>
+<tr>
+<td style="text-align: left">last</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled price while placing</td>
+</tr>
+<tr>
+<td style="text-align: left">failCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">It represents that the reason that algo order fails to trigger. It is "" when the state is <code>effective</code>/<code>canceled</code>. There will be value when the state is <code>order_failed</code>, e.g. 51008;<br/>Only applicable to Stop Order, Trailing Stop Order, Trigger order.</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">amendPxOnTriggerType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether to enable Cost-price SL. Only applicable to SL order of split TPs. <br/><code>0</code>: disable, the default value <br/><code>1</code>: Enable</td>
+</tr>
+<tr>
+<td style="text-align: left">attachAlgoOrds</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Attached SL/TP orders info<br/>Applicable to <code>Futures mode/Multi-currency margin/Portfolio margin</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; attachAlgoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID when placing order attaching TP/SL.<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.<br/>It will be posted to algoClOrdId when placing TP/SL order once the general order is filled completely.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price<br/>If you fill in this parameter, you should fill in the take-profit order price as well.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit order price<br/>If you fill in this parameter, you should fill in the take-profit trigger price as well. <br/>If the price is <code>-1</code>, take-profit will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price<br/>If you fill in this parameter, you should fill in the stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price type<br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss order price <br/>If you fill in this parameter, you should fill in the stop-loss trigger price. <br/>If the price is <code>-1</code>, stop-loss will be executed at the market price.</td>
+</tr>
+<tr>
+<td style="text-align: left">linkedOrd</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Linked TP order detail, only applicable to SL order that comes from the one-cancels-the-other (OCO) order that contains the TP limit order.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Creation time Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order updated time, Unix timestamp format in milliseconds, e.g. 1597026383085</td>
+</tr>
+<tr>
+<td style="text-align: left">isTradeBorrowMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether borrowing currency automatically<br/> true<br/> false<br/>Only applicable to <code>trigger order</code>, <code>trailing order</code> and <code>twap order</code></td>
+</tr>
+<tr>
+<td style="text-align: left">chaseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Chase type. Only applicable to <code>chase</code> order.</td>
+</tr>
+<tr>
+<td style="text-align: left">chaseVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Chase value. Only applicable to <code>chase</code> order.</td>
+</tr>
+<tr>
+<td style="text-align: left">maxChaseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum chase type. Only applicable to <code>chase</code> order.</td>
+</tr>
+<tr>
+<td style="text-align: left">maxChaseVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum chase value. Only applicable to <code>chase</code> order.</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The quote currency used for trading.</td>
+</tr>
+</tbody></table>

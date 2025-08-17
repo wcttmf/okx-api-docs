@@ -1,0 +1,154 @@
+<h3 id="order-book-trading-copy-trading-get-copy-settings">GET / Copy settings</h3>
+<p>Retrieve the copy settings about certain lead trader.</p>
+<h4 id="order-book-trading-copy-trading-get-copy-settings-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-copy-settings-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-copy-trading-get-copy-settings-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-copy-settings-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/copy-settings</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/copy-settings?instType<span class="o">=</span>SWAP&amp;uniqueCode<span class="o">=</span>25CD5A80241D6FE6
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-copy-settings-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead trader unique code<br/>A combination of case-sensitive alphanumerics, all numbers and the length is 16 characters, e.g. 213E8C92DC61EFAC</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyInstIdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"copy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyMgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ratio_copy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"copyTotalAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"500"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ADA-USDT-SWAP"</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"YFII-USDT-SWAP"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"slRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTotalAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subPosCloseType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"copy_close"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-copy-settings-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">copyMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy mode<br/><code>fixed_amount</code> <code>ratio_copy</code></td>
+</tr>
+<tr>
+<td style="text-align: left">copyAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy amount in USDT per order.</td>
+</tr>
+<tr>
+<td style="text-align: left">copyRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy ratio per order.</td>
+</tr>
+<tr>
+<td style="text-align: left">copyTotalAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maximum total amount in USDT. <br/>The maximum total amount you'll invest at any given time across all orders in this copy trade</td>
+</tr>
+<tr>
+<td style="text-align: left">tpRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take profit per order. 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">slRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop loss per order. 0.1 represents 10%</td>
+</tr>
+<tr>
+<td style="text-align: left">copyInstIdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy contract type setted<br/><code>custom</code>: custom by <code>instId</code> which is required；<br/><code>copy</code>: Keep your contracts consistent with this trader by automatically adding or removing contracts when they do</td>
+</tr>
+<tr>
+<td style="text-align: left">instIds</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Instrument list. It will return all lead contracts of the lead trader</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; enabled</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether copying this <code>instId</code><br/><code>0</code> <code>1</code></td>
+</tr>
+<tr>
+<td style="text-align: left">slTotalAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total stop loss in USDT for trader.</td>
+</tr>
+<tr>
+<td style="text-align: left">subPosCloseType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Action type for open positions<br/><code>market_close</code>: immediately close at market price<br/><code>copy_close</code>：close when trader closes<br/><code>manual_close</code>: close manually</td>
+</tr>
+<tr>
+<td style="text-align: left">copyMgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Copy margin mode<br/><code>cross</code>: cross<br/><code>isolated</code>: isolated<br/><code>copy</code>: Use the same margin mode as lead trader when opening positions</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency</td>
+</tr>
+<tr>
+<td style="text-align: left">copyState</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Current copy state <br/><code>0</code>: non-copy, <code>1</code>: copy</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,180 @@
+<h3 id="order-book-trading-grid-trading-get-grid-algo-order-positions">GET / Grid algo order positions</h3><h4 id="order-book-trading-grid-trading-get-grid-algo-order-positions-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-grid-trading-get-grid-algo-order-positions-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-grid-trading-get-grid-algo-order-positions-permission-read">Permission: Read</h4><h4 id="order-book-trading-grid-trading-get-grid-algo-order-positions-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/grid/positions</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/grid/positions?algoId<span class="o">=</span>448965992920907776&amp;algoOrdType<span class="o">=</span>contract_grid
+</code></pre></div><h4 id="order-book-trading-grid-trading-get-grid-algo-order-positions-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo order type<br/><code>contract_grid</code>: Contract grid</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"adl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"449327675342323712"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29215.0142857142857149"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1653400065917"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2045.386"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29206.7"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"liqPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"661.1684795867162"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29213.9"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"217.19370606167573"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40.907720000000005"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10216.70307"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"35"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"net"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1653400066938"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.674999999999818"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uplRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0008190504784478"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-grid-trading-get-grid-algo-order-positions-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order created time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order updated time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">avgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average open price</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency</td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage</td>
+</tr>
+<tr>
+<td style="text-align: left">liqPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated liquidation price</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side<br/><code>net</code></td>
+</tr>
+<tr>
+<td style="text-align: left">pos</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity of positions</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin mode<br/><code>cross</code><br/><code>isolated</code></td>
+</tr>
+<tr>
+<td style="text-align: left">mgnRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maintenance margin ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">imr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Initial margin requirement</td>
+</tr>
+<tr>
+<td style="text-align: left">mmr</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Maintenance margin requirement</td>
+</tr>
+<tr>
+<td style="text-align: left">upl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss</td>
+</tr>
+<tr>
+<td style="text-align: left">uplRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unrealized profit and loss ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">last</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Latest traded price</td>
+</tr>
+<tr>
+<td style="text-align: left">notionalUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Notional value of positions in <code>USD</code></td>
+</tr>
+<tr>
+<td style="text-align: left">adl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Auto decrease line, signal area<br/>Divided into 5 levels, from 1 to 5, the smaller the number, the weaker the adl intensity.</td>
+</tr>
+<tr>
+<td style="text-align: left">markPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark price</td>
+</tr>
+</tbody></table>

@@ -1,0 +1,61 @@
+<h3 id="spread-trading-comprehensive-api-workflow-spread-states">Spread States</h3>
+<p>There are three different states during a Spread's life cycle: <code>live</code>, <code>suspend</code>, and <code>expired</code> as detailed below:</p>
+<ol>
+<li><code>live</code>: Spreads that are actively traded on Nitro Spreads</li>
+<li><code>suspend</code>: Spreads in which at least one of the legs is suspended and the other one is active or suspended on the OKX orderbook exchange; or spreads in which the underlying instruments are still live on the OKX orderbook exchange, but removed from Nitro Spreads</li>
+<li><code>expired</code>: Spreads in which at least one of the underlying instruments is expired on the OKX orderbook exchange</li>
+</ol>
+<p>Please refer to the following table for all possible scenarios given the state of the underlying instruments and the resulting state of the spread on Nitro Spreads (except for the case that the spread is delisted on Nitro Spreads):</p>
+<table><thead>
+<tr>
+<th>Instrument A</th>
+<th>Instrument B</th>
+<th>Spread State</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Live</td>
+<td>Live</td>
+<td>Live</td>
+</tr>
+<tr>
+<td>Suspend</td>
+<td>Live</td>
+<td>Suspend</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Suspend</td>
+<td>Suspend</td>
+</tr>
+<tr>
+<td>Suspend</td>
+<td>Suspend</td>
+<td>Suspend</td>
+</tr>
+<tr>
+<td>Expired</td>
+<td>Live</td>
+<td>Expired</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Expired</td>
+<td>Expired</td>
+</tr>
+<tr>
+<td>Suspend</td>
+<td>Expired</td>
+<td>Expired</td>
+</tr>
+<tr>
+<td>Expired</td>
+<td>Suspend</td>
+<td>Expired</td>
+</tr>
+<tr>
+<td>Expired</td>
+<td>Expired</td>
+<td>Expired</td>
+</tr>
+</tbody></table>

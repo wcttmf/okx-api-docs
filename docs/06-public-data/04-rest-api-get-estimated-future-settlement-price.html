@@ -1,0 +1,68 @@
+<h3 id="public-data-rest-api-get-estimated-future-settlement-price">Get estimated future settlement price</h3>
+<p>Retrieve the estimated settlement price which will only have a return value one hour before the settlement.</p>
+<h4 id="public-data-rest-api-get-estimated-future-settlement-price-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="public-data-rest-api-get-estimated-future-settlement-price-rate-limit-rule-ip-instrument-id">Rate limit rule: IP + Instrument ID</h4><h4 id="public-data-rest-api-get-estimated-future-settlement-price-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/public/estimated-settlement-info</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/public/estimated-settlement-info?instId<span class="o">=</span>XRP-USDT-250307
+</code></pre></div><h4 id="public-data-rest-api-get-estimated-future-settlement-price-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>XRP-USDT-250307</code> <br/>only applicable to <code>FUTURES</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"estSettlePx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.5666068562369959"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"XRP-USDT-250307"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"nextSettleTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1741248000000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1741246429748"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="public-data-rest-api-get-estimated-future-settlement-price-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>XRP-USDT-250307</code></td>
+</tr>
+<tr>
+<td style="text-align: left">nextSettleTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Next settlement time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">estSettlePx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Estimated settlement price</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Data return time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>

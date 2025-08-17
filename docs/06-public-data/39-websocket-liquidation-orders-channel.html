@@ -1,0 +1,198 @@
+<h3 id="public-data-websocket-liquidation-orders-channel">Liquidation orders channel</h3>
+<p>Retrieve the recent liquidation orders. For futures and swaps, each contract will only show a maximum of one order per one-second period. This data doesn’t represent the total number of liquidations on OKX.</p>
+<h4 id="public-data-websocket-liquidation-orders-channel-url-path">URL Path</h4>
+<p>/ws/v5/public</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"liquidation-orders"</span>,
+      <span class="s2">"instType"</span>: <span class="s2">"SWAP"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPublicAsync</span> <span class="kn">import</span> <span class="n">WsPublicAsync</span>
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPublicAsync</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"wss://wspap.okx.com:8443/ws/v5/public"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"liquidation-orders"</span><span class="p">,</span>
+          <span class="s">"instType"</span><span class="p">:</span> <span class="s">"SWAP"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="public-data-websocket-liquidation-orders-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Operation<br/><code>subscribe</code><br/><code>unsubscribe</code></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Channel name<br/><code>liquidation-orders</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>MARGIN</code><br/><code>OPTION</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"liquidation-orders"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"bkLoss"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"bkPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.007831"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">"short"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1692266434010"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IOST-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IOST-USDT-SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IOST-USDT"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="public-data-websocket-liquidation-orders-channel-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Successfully subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USD-SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Underlying<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; details</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Liquidation details</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order side<br/><code>buy</code><br/><code>sell</code><br/>Applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position mode side<br/><code>long</code>: Hedge mode long<br/><code>short</code>: Hedge mode short<br/><code>net</code>: Net mode</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; bkPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bankruptcy price. The price of the transaction with the system's liquidation account, only applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity of liquidation, only applicable to <code>MARGIN</code>/<code>FUTURES</code>/<code>SWAP</code>.<br/> For <code>MARGIN</code>, the unit is base currency. <br/> For <code>FUTURES/SWAP</code>, the unit is contract.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; bkLoss</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Bankruptcy loss</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidation currency, only applicable to  <code>MARGIN</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Liquidation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+</tbody></table>

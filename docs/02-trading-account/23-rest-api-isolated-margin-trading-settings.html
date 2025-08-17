@@ -1,0 +1,90 @@
+<h3 id="trading-account-rest-api-isolated-margin-trading-settings">Isolated margin trading settings</h3>
+<p>You can set the currency margin and futures/perpetual Isolated margin trading mode</p>
+<h4 id="trading-account-rest-api-isolated-margin-trading-settings-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-account-rest-api-isolated-margin-trading-settings-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-isolated-margin-trading-settings-permission-trade">Permission: Trade</h4><h4 id="trading-account-rest-api-isolated-margin-trading-settings-http-request">HTTP Request</h4>
+<p><code>POST /api/v5/account/set-isolated-mode</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>POST /api/v5/account/set-isolated-mode
+body
+<span class="o">{</span>
+    <span class="s2">"isoMode"</span>:<span class="s2">"automatic"</span>,
+    <span class="s2">"type"</span>:<span class="s2">"MARGIN"</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Isolated margin trading settings
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">set_isolated_mode</span><span class="p">(</span>
+    <span class="n">isoMode</span><span class="o">=</span><span class="s">"automatic"</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s">"MARGIN"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-isolated-margin-trading-settings-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">isoMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Isolated margin trading settings<br/> <code>auto_transfers_ccy</code>: New auto transfers, enabling both base and quote currency as the margin for isolated margin trading. Only applicable to <code>MARGIN</code>.<br/><code>automatic</code>: Auto transfers</td>
+</tr>
+<tr>
+<td style="text-align: left">type</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument type<br/><code>MARGIN</code><br/><code>CONTRACTS</code></td>
+</tr>
+</tbody></table>
+<aside class="notice">
+
+When there are positions and pending orders in the current account, the margin transfer mode from position to position cannot be adjusted.
+</aside>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"isoMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-isolated-margin-trading-settings-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">isoMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Isolated margin trading settings<br/><code>automatic</code>: Auto transfers</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+CONTRACTS<br/>
+Auto transfers: Automatically occupy and release the margin when opening and closing positions
+</aside>
+<aside class="notice">
+MARGIN<br/>
+Auto transfers: Automatically borrow and return coins when opening and closing positions
+</aside>

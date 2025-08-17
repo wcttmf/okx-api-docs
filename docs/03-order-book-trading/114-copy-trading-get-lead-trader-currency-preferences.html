@@ -1,0 +1,71 @@
+<h3 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences">GET / Lead trader currency preferences</h3>
+<p>Public endpoint. The most frequently traded crypto of this lead trader. Results are sorted by ratio from large to small.</p>
+<h4 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences-rate-limit-5-requests-per-2-seconds">Rate limit: 5 requests per 2 seconds</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences-permission-read">Permission: Read</h4><h4 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences-http-request">HTTP request</h4>
+<p><code>GET /api/v5/copytrading/public-preference-currency</code></p>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/copytrading/public-preference-currency?instType<span class="o">=</span>SWAP&amp;uniqueCode<span class="o">=</span>CB4594A3BB5D3538
+
+</code></pre></div><h4 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument type<br/><code>SWAP</code>, the default value</td>
+</tr>
+<tr>
+<td style="text-align: left">uniqueCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Lead trader unique code<br/>A combination of case-sensitive alphanumerics, all numbers and the length is 16 characters, e.g. 213E8C92DC61EFAC</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.8881"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0666"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"YFII"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0453"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-copy-trading-get-lead-trader-currency-preferences-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">ratio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Ratio. 0.1 represents 10%</td>
+</tr>
+</tbody></table>

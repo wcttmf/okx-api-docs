@@ -1,0 +1,508 @@
+<h3 id="order-book-trading-trade-get-order-history-last-7-days">GET / Order history (last 7 days)</h3>
+<p>Get completed orders which are placed in the last 7 days, including those placed 7 days ago but completed in the last 7 days.  <br/></p>
+<p>The incomplete orders that have been canceled are only reserved for 2 hours.</p>
+<h4 id="order-book-trading-trade-get-order-history-last-7-days-rate-limit-40-requests-per-2-seconds">Rate Limit: 40 requests per 2 seconds</h4><h4 id="order-book-trading-trade-get-order-history-last-7-days-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-trade-get-order-history-last-7-days-permission-read">Permission: Read</h4><h4 id="order-book-trading-trade-get-order-history-last-7-days-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/trade/orders-history</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/trade/orders-history?ordType<span class="o">=</span>post_only,fok,ioc&amp;instType<span class="o">=</span>SPOT
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Trade</span> <span class="k">as</span> <span class="n">Trade</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading: 0, Demo trading: 1
+</span>
+<span class="n">tradeAPI</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">.</span><span class="n">TradeAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Get completed SPOT orders which are placed in the last 7 days
+# The incomplete orders that have been canceled are only reserved for 2 hours
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">tradeAPI</span><span class="p">.</span><span class="n">get_orders_history</span><span class="p">(</span>
+    <span class="n">instType</span><span class="o">=</span><span class="s">"SPOT"</span><span class="p">,</span>
+    <span class="n">ordType</span><span class="o">=</span><span class="s">"post_only,fok,ioc"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="order-book-trading-trade-get-order-history-last-7-days-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">yes</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument family<br/>Applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order type<br/><code>market</code>: market order <br/><code>limit</code>: limit order <br/><code>post_only</code>: Post-only order <br/><code>fok</code>: Fill-or-kill order <br/><code>ioc</code>: Immediate-or-cancel order  <br/><code>optimal_limit_ioc</code>: Market order with immediate-or-cancel order<br/><code>mmp</code>: Market Maker Protection (only applicable to Option in Portfolio Margin mode)<br/><code>mmp_and_post_only</code>: Market Maker Protection and Post-only order(only applicable to Option in Portfolio Margin mode) <br/><code>op_fok</code>: Simple options (fok)</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">State<br/><code>canceled</code><br/><code>filled</code><br/><code>mmp_canceled</code>: Order canceled automatically due to Market Maker Protection</td>
+</tr>
+<tr>
+<td style="text-align: left">category</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Category <br/><code>twap</code> <br/><code>adl</code><br/><code>full_liquidation</code><br/><code>partial_liquidation</code> <br/><code>delivery</code> <br/><code>ddh</code>: Delta dynamic hedge</td>
+</tr>
+<tr>
+<td style="text-align: left">after</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records earlier than the requested <code>ordId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">before</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Pagination of data to return records newer than the requested <code>ordId</code></td>
+</tr>
+<tr>
+<td style="text-align: left">begin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Filter with a begin timestamp <code>cTime</code>. Unix timestamp format in milliseconds, e.g. 1597026383085</td>
+</tr>
+<tr>
+<td style="text-align: left">end</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Filter with an end timestamp <code>cTime</code>. Unix timestamp format in milliseconds, e.g. 1597026383085</td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is <code>100</code>; The default is <code>100</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"accFillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00192834"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"attachAlgoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"attachAlgoOrds"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="nl">"avgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51858"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708587373361"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cancelSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cancelSourceReason"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.00000192834"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"feeCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51858"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00192834"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fillTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708587373361"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"linkedAlgoOrd"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"ordId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"680800019749904384"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ordType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"posSide"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"pxVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"quickMgnType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rebate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"rebateCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"reduceOnly"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"slTriggerPxType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stpId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"stpMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tdMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cash"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tgtCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quote_ccy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpOrdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tpTriggerPxType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"744876980"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeQuoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1708587373362"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"isTpLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-trade-get-order-history-last-7-days-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tgtCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order quantity unit setting for <code>sz</code><br/><code>base_ccy</code>: Base currency ,<code>quote_ccy</code>: Quote currency  <br/>Only applicable to <code>SPOT</code> Market Orders<br/>Default is <code>quote_ccy</code> for buy, <code>base_ccy</code> for sell</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency <br/>Applicable to all <code>isolated</code> <code>MARGIN</code> orders and <code>cross</code> <code>MARGIN</code> orders in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">ordId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order ID</td>
+</tr>
+<tr>
+<td style="text-align: left">clOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client Order ID as assigned by the client</td>
+</tr>
+<tr>
+<td style="text-align: left">tag</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order tag</td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price <br/>For options, use coin as unit (e.g. BTC, ETH)</td>
+</tr>
+<tr>
+<td style="text-align: left">pxUsd</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Options price in USDOnly applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">pxVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Implied volatility of the options orderOnly applicable to options; return "" for other instrument types</td>
+</tr>
+<tr>
+<td style="text-align: left">pxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price type of options <br/><code>px</code>: Place an order based on price, in the unit of coin (the unit for the request parameter px is BTC or ETH) <br/><code>pxVol</code>: Place an order based on pxVol <br/><code>pxUsd</code>: Place an order based on pxUsd, in the unit of USD (the unit for the request parameter px is USD)</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quantity to buy or sell</td>
+</tr>
+<tr>
+<td style="text-align: left">ordType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order type <br/><code>market</code>: market order <br/><code>limit</code>: limit order <br/><code>post_only</code>: Post-only order <br/><code>fok</code>: Fill-or-kill order <br/><code>ioc</code>: Immediate-or-cancel order  <br/><code>optimal_limit_ioc</code>: Market order with immediate-or-cancel order<br/><code>mmp</code>: Market Maker Protection (only applicable to Option in Portfolio Margin mode)<br/><code>mmp_and_post_only</code>: Market Maker Protection and Post-only order(only applicable to Option in Portfolio Margin mode)  <br/><code>op_fok</code>: Simple options (fok)</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order side</td>
+</tr>
+<tr>
+<td style="text-align: left">posSide</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Position side</td>
+</tr>
+<tr>
+<td style="text-align: left">tdMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade mode</td>
+</tr>
+<tr>
+<td style="text-align: left">accFillSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Accumulated fill quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">fillPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled price. If none is filled, it will return "".</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">fillSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled quantity</td>
+</tr>
+<tr>
+<td style="text-align: left">fillTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Last filled time</td>
+</tr>
+<tr>
+<td style="text-align: left">avgPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Average filled price. If none is filled, it will return "".</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">State <br/><code>canceled</code> <br/><code>filled</code> <br/><code>mmp_canceled</code></td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage, from <code>0.01</code> to <code>125</code>. <br/>Only applicable to <code>MARGIN/FUTURES/SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">attachAlgoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID when placing order attaching TP/SL.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">attachAlgoOrds</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">TP/SL information attached when placing order</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; attachAlgoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The order ID of attached TP/SL order. It can be used to identity the TP/SL order when amending. It will not be posted to algoId when placing TP/SL order after the general order is filled completely.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; attachAlgoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID when placing order attaching TP/SL<br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.<br/>It will be posted to <code>algoClOrdId</code> when placing TP/SL order once the general order is filled completely.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdKind</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">TP order kind<br/><code>condition</code><br/><code>limit</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slTriggerPxType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss trigger price type. <br/><code>last</code>: last price<br/><code>index</code>: index price<br/><code>mark</code>: mark price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slOrdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss order price.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Size. Only applicable to TP order of split TPs</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amendPxOnTriggerType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether to enable Cost-price SL. Only applicable to SL order of split TPs. <br/><code>0</code>: disable, the default value <br/><code>1</code>: Enable</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; failCode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The error code when failing to place TP/SL order, e.g. 51020 <br/>The default is ""</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; failReason</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The error reason when failing to place TP/SL order. <br/>The default is ""</td>
+</tr>
+<tr>
+<td style="text-align: left">linkedAlgoOrd</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Linked SL order detail, only applicable to the order that is placed by one-cancels-the-other (OCO) order that contains the TP limit order.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">stpId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Self trade prevention ID<br/>Return "" if self trade prevention is not applicable</del> (deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">stpMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Self trade prevention mode</td>
+</tr>
+<tr>
+<td style="text-align: left">feeCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fee currency</td>
+</tr>
+<tr>
+<td style="text-align: left">fee</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Fee and rebate<br/>For spot and margin, it is accumulated fee charged by the platform. It is always negative, e.g. -0.01. <br/>For Expiry Futures, Perpetual Futures and Options, it is accumulated fee and rebate</td>
+</tr>
+<tr>
+<td style="text-align: left">rebateCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rebate currency</td>
+</tr>
+<tr>
+<td style="text-align: left">source</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order source<br/><code>6</code>: The normal order triggered by the <code>trigger order</code><br/><code>7</code>:The normal order triggered by the <code>TP/SL order</code> <br/><code>13</code>: The normal order triggered by the algo order<br/><code>25</code>:The normal order triggered by the <code>trailing stop order</code><br/><code>34</code>: The normal order triggered by the chase order</td>
+</tr>
+<tr>
+<td style="text-align: left">rebate</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Rebate amount, only applicable to spot and margin, the reward of placing orders from the platform (rebate) given to user who has reached the specified trading level. If there is no rebate, this field is "".</td>
+</tr>
+<tr>
+<td style="text-align: left">pnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Profit and loss (excluding the fee).<br/> Applicable to orders which have a trade and aim to close position. It always is 0 in other conditions</td>
+</tr>
+<tr>
+<td style="text-align: left">category</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Category <br/><code>normal</code><br/><code>twap</code> <br/><code>adl</code><br/><code>full_liquidation</code><br/><code>partial_liquidation</code> <br/><code>delivery</code> <br/><code>ddh</code>: Delta dynamic hedge<br/><code>auto_conversion</code></td>
+</tr>
+<tr>
+<td style="text-align: left">reduceOnly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether the order can only reduce the position size. Valid options: true or false.</td>
+</tr>
+<tr>
+<td style="text-align: left">cancelSource</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Code of the cancellation source.</td>
+</tr>
+<tr>
+<td style="text-align: left">cancelSourceReason</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Reason for the cancellation.</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID. There will be a value when algo order attaching <code>algoClOrdId</code> is triggered, or it will be "".</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID. There will be a value when algo order is triggered, or it will be "".</td>
+</tr>
+<tr>
+<td style="text-align: left">isTpLimit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Whether it is TP limit order. true or false</td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Update time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Creation time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">quickMgnType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>Quick Margin type, Only applicable to Quick Margin Mode of isolated margin<br/><code>manual</code>, <code>auto_borrow</code>, <code>auto_repay</code></del>  (Deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The quote currency used for trading.</td>
+</tr>
+</tbody></table>

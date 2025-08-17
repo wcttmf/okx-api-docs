@@ -1,0 +1,108 @@
+<h3 id="block-trading-rest-api-get-public-single-leg-transactions-of-block-trades">Get public single-leg transactions of block trades</h3>
+<p>Retrieve the recent block trading transactions of an instrument. Descending order by tradeId. The data will be updated 15 minutes after the block trade execution.</p>
+<h4 id="block-trading-rest-api-get-public-single-leg-transactions-of-block-trades-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="block-trading-rest-api-get-public-single-leg-transactions-of-block-trades-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="block-trading-rest-api-get-public-single-leg-transactions-of-block-trades-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/public/block-trades</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/public/block-trades?instId<span class="o">=</span>BTC-USDT
+</code></pre></div><h4 id="block-trading-rest-api-get-public-single-leg-transactions-of-block-trades-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"fillVol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"fwdPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26857.86591585"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"idxPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26889.7"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USD-231013-22000-P"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"markPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0000000000000001"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0026"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"632960608383700997"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1697181568974"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="block-trading-rest-api-get-public-single-leg-transactions-of-block-trades-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade price</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade quantity <br/>For spot trading, the unit is base currency<br/>For <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>, the unit is contract.</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade side <br/><code>buy</code> <br/><code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">fillVol</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Implied volatility <br/>Only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">fwdPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Forward price <br/>Only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">idxPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Index price  <br/>Applicable to <code>FUTURES</code>, <code>SWAP</code>, <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">markPx</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Mark price  <br/>Applicable to <code>FUTURES</code>, <code>SWAP</code>, <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code>.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Up to 500 most recent historical public transaction data can be retrieved.
+</aside>
+<h2 id="block-trading-websocket-private-channel">WebSocket Private Channel</h2>

@@ -1,0 +1,245 @@
+<h3 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details">GET / Signal bot order details</h3><h4 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details-permission-read">Permission: Read</h4><h4 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/tradingBot/signal/orders-algo-details</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/tradingBot/signal/orders-algo-details?algoId<span class="o">=</span>623833708424069120&amp;algoOrdType<span class="o">=</span>contract
+</code></pre></div><h4 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo order type<br/><code>contract</code>: Contract signal</td>
+</tr>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"algoId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"623833708424069120"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoClOrdId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"algoOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contract"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"availBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.6561369013122267"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1695005546360"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"cancelType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"entrySettingParam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"allowMultipleEntry"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"amt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"entryType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"exitSettingParam"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"slPct"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"tpPct"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"tpSlType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"price"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"floatPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1279999999999927"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"frozenBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25.16816"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"instIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"BTC-USDT-SWAP"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"ETH-USDT-SWAP"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWAP"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"investAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"realizedPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-73.303703098687766"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"signalChanId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"623827579484770304"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"signalChanName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testing"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"signalSourceType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"running"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"subOrdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26.824296901312227"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-73.1757030986877733"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"totalPnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.7317570309868777"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1697029422313"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-signal-bot-trading-get-signal-bot-order-details-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">algoId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">algoClOrdId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Client-supplied Algo ID</td>
+</tr>
+<tr>
+<td style="text-align: left">instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">instIds</td>
+<td style="text-align: left">Array of strings</td>
+<td style="text-align: left">Instrument IDs</td>
+</tr>
+<tr>
+<td style="text-align: left">cTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order created time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">uTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order updated time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">algoOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order type<br/><code>contract</code>: Contract signal</td>
+</tr>
+<tr>
+<td style="text-align: left">state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order state<br/><code>starting</code><br/><code>running</code><br/><code>stopping</code><br/><code>stopped</code></td>
+</tr>
+<tr>
+<td style="text-align: left">cancelType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Algo order stop reason<br/><code>0</code>: None<br/><code>1</code>: Manual stop</td>
+</tr>
+<tr>
+<td style="text-align: left">totalPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">totalPnlRatio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total P&amp;L ratio</td>
+</tr>
+<tr>
+<td style="text-align: left">totalEq</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Total equity of strategy account</td>
+</tr>
+<tr>
+<td style="text-align: left">floatPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Float P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">realizedPnl</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Realized P&amp;L</td>
+</tr>
+<tr>
+<td style="text-align: left">frozenBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Frozen balance</td>
+</tr>
+<tr>
+<td style="text-align: left">availBal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Avail balance</td>
+</tr>
+<tr>
+<td style="text-align: left">lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Leverage<br/>Only applicable to <code>contract signal</code></td>
+</tr>
+<tr>
+<td style="text-align: left">investAmt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Investment amount</td>
+</tr>
+<tr>
+<td style="text-align: left">subOrdType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Sub order type<br/><code>1</code>：limit order<br/><code>2</code>：market order<br/><code>9</code>：tradingView signal</td>
+</tr>
+<tr>
+<td style="text-align: left">ratio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Price offset ratio, calculate the limit price as a percentage offset from the best bid/ask price<br/>Only applicable to <code>subOrdType</code> is <code>limit order</code></td>
+</tr>
+<tr>
+<td style="text-align: left">entrySettingParam</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Entry setting</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; allowMultipleEntry</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether or not allow multiple entries in the same direction for the same trading pairs</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; entryType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Entry type<br/><code>1</code>: TradingView signal<br/><code>2</code>: Fixed margin<br/><code>3</code>: Contracts<br/><code>4</code>: Percentage of free margin<br/><code>5</code>: Percentage of the initial invested margin</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; amt</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Amount per order<br/>Only applicable to <code>entryType</code> in <code>2</code>/<code>3</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ratio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Amount ratio per order<br/>Only applicable to <code>entryType</code> in <code>4</code>/<code>5</code></td>
+</tr>
+<tr>
+<td style="text-align: left">exitSettingParam</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Exit setting</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpSlType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Type of set the take-profit and stop-loss trigger price<br/><code>pnl</code>: Based on the estimated profit and loss percentage from the entry point<br/><code>price</code>: Based on price increase or decrease from the crypto’s entry price</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tpPct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Take-profit percentage</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; slPct</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Stop-loss percentage</td>
+</tr>
+<tr>
+<td style="text-align: left">signalChanId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Signal channel Id</td>
+</tr>
+<tr>
+<td style="text-align: left">signalChanName</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Signal channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">signalSourceType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Signal source type<br/><code>1</code>: Created by yourself<br/><code>2</code>: Subscribe<br/><code>3</code>: Free signal</td>
+</tr>
+</tbody></table>

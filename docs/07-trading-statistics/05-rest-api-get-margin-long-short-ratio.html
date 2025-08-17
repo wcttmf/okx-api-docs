@@ -1,0 +1,92 @@
+<h3 id="trading-statistics-rest-api-get-margin-long-short-ratio">Get margin long/short ratio</h3>
+<p>Retrieve the ratio of cumulative amount of quote currency to base currency.</p>
+<h4 id="trading-statistics-rest-api-get-margin-long-short-ratio-rate-limit-5-requests-per-2-seconds">Rate Limit: 5 requests per 2 seconds</h4><h4 id="trading-statistics-rest-api-get-margin-long-short-ratio-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="trading-statistics-rest-api-get-margin-long-short-ratio-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/rubik/stat/margin/loan-ratio</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/rubik/stat/margin/loan-ratio?ccy<span class="o">=</span>BTC
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.TradingData</span> <span class="k">as</span> <span class="n">TradingData_api</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">tradingDataAPI</span> <span class="o">=</span> <span class="n">TradingData_api</span><span class="p">.</span><span class="n">TradingDataAPI</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Retrieve the ratio of cumulative amount between currency margin quote currency and base currency
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">tradingDataAPI</span><span class="p">.</span><span class="n">get_margin_lending_ratio</span><span class="p">(</span>
+    <span class="n">ccy</span><span class="o">=</span><span class="s">"BTC"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-statistics-rest-api-get-margin-long-short-ratio-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">begin</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Begin time, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">end</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">End time, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td style="text-align: left">period</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Period<br/><code>m</code>: Minute, <code>H</code>: Hour, <code>D</code>: Day<br/>the default is <code>5m</code>, e.g. [<code>5m</code>/<code>1H</code>/<code>1D</code>]  <br/><code>5m</code> granularity can only query data within two days at most<br/><code>1H</code> granularity can only query data within 30 days at most<br/><code>1D</code> granularity can only query data within 180 days at most</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"1630492800000"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"0.4614"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"1630492500000"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"0.5767"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-statistics-rest-api-get-margin-long-short-ratio-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Timestamp</td>
+</tr>
+<tr>
+<td style="text-align: left">ratio</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin lending ratio</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+The return value array order is: [ts,ratio]
+</aside>

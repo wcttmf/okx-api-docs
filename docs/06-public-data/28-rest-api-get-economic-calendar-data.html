@@ -1,0 +1,163 @@
+<h3 id="public-data-rest-api-get-economic-calendar-data">Get economic calendar data</h3>
+<aside class="notice">
+Authentication is required for this endpoint. This endpoint is only supported in production environment.
+</aside>
+<p>Get the macro-economic calendar data within 3 months. Historical data from 3 months ago is only available to users with trading fee tier VIP1 and above.</p>
+<h4 id="public-data-rest-api-get-economic-calendar-data-rate-limit-1-request-per-5-seconds">Rate Limit: 1 request per 5 seconds</h4><h4 id="public-data-rest-api-get-economic-calendar-data-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="public-data-rest-api-get-economic-calendar-data-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/public/economic-calendar</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/public/economic-calendar
+</code></pre></div><h4 id="public-data-rest-api-get-economic-calendar-data-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>region</td>
+<td>string</td>
+<td>No</td>
+<td>Country, region or entity <br/><code>afghanistan</code>, <code>albania</code>, <code>algeria</code>, <code>andorra</code>, <code>angola</code>, <code>antigua_and_barbuda</code>, <code>argentina</code>, <code>armenia</code>, <code>aruba</code>, <code>australia</code>, <code>austria</code>, <code>azerbaijan</code>, <code>bahamas</code>, <code>bahrain</code>, <code>bangladesh</code>, <code>barbados</code>, <code>belarus</code>, <code>belgium</code>, <code>belize</code>, <code>benin</code>, <code>bermuda</code>, <code>bhutan</code>, <code>bolivia</code>, <code>bosnia_and_herzegovina</code>, <code>botswana</code>, <code>brazil</code>, <code>brunei</code>, <code>bulgaria</code>, <code>burkina_faso</code>, <code>burundi</code>, <code>cambodia</code>, <code>cameroon</code>, <code>canada</code>, <code>cape_verde</code>, <code>cayman_islands</code>, <code>central_african_republic</code>, <code>chad</code>, <code>chile</code>, <code>china</code>, <code>colombia</code>, <code>comoros</code>, <code>congo</code>, <code>costa_rica</code>, <code>croatia</code>, <code>cuba</code>, <code>cyprus</code>, <code>czech_republic</code>, <code>denmark</code>, <code>djibouti</code>, <code>dominica</code>, <code>dominican_republic</code>, <code>east_timor</code>, <code>ecuador</code>, <code>egypt</code>, <code>el_salvador</code>, <code>equatorial_guinea</code>, <code>eritrea</code>, <code>estonia</code>, <code>ethiopia</code>, <code>euro_area</code>, <code>european_union</code>, <code>faroe_islands</code>, <code>fiji</code>, <code>finland</code>, <code>france</code>, <code>g20</code>, <code>g7</code>, <code>gabon</code>, <code>gambia</code>, <code>georgia</code>, <code>germany</code>, <code>ghana</code>, <code>greece</code>, <code>greenland</code>, <code>grenada</code>, <code>guatemala</code>, <code>guinea</code>, <code>guinea_bissau</code>, <code>guyana</code>, <code>hungary</code>, <code>haiti</code>, <code>honduras</code>, <code>hong_kong</code>, <code>hungary</code>, <code>imf</code>, <code>indonesia</code>, <code>iceland</code>, <code>india</code>, <code>indonesia</code>, <code>iran</code>, <code>iraq</code>, <code>ireland</code>, <code>isle_of_man</code>, <code>israel</code>, <code>italy</code>, <code>ivory_coast</code>, <code>jamaica</code>, <code>japan</code>, <code>jordan</code>, <code>kazakhstan</code>, <code>kenya</code>, <code>kiribati</code>, <code>kosovo</code>, <code>kuwait</code>, <code>kyrgyzstan</code>, <code>laos</code>, <code>latvia</code>, <code>lebanon</code>, <code>lesotho</code>, <code>liberia</code>, <code>libya</code>, <code>liechtenstein</code>, <code>lithuania</code>, <code>luxembourg</code>, <code>macau</code>, <code>macedonia</code>, <code>madagascar</code>, <code>malawi</code>, <code>malaysia</code>, <code>maldives</code>, <code>mali</code>, <code>malta</code>, <code>mauritania</code>, <code>mauritius</code>, <code>mexico</code>, <code>micronesia</code>, <code>moldova</code>, <code>monaco</code>, <code>mongolia</code>, <code>montenegro</code>, <code>morocco</code>, <code>mozambique</code>, <code>myanmar</code>, <code>namibia</code>, <code>nepal</code>, <code>netherlands</code>, <code>new_caledonia</code>, <code>new_zealand</code>, <code>nicaragua</code>, <code>niger</code>, <code>nigeria</code>, <code>north_korea</code>, <code>northern_mariana_islands</code>, <code>norway</code>, <code>opec</code>, <code>oman</code>, <code>pakistan</code>, <code>palau</code>, <code>palestine</code>, <code>panama</code>, <code>papua_new_guinea</code>, <code>paraguay</code>, <code>peru</code>, <code>philippines</code>, <code>poland</code>, <code>portugal</code>, <code>puerto_rico</code>, <code>qatar</code>, <code>russia</code>, <code>republic_of_the_congo</code>, <code>romania</code>, <code>russia</code>, <code>rwanda</code>, <code>slovakia</code>, <code>samoa</code>, <code>san_marino</code>, <code>sao_tome_and_principe</code>, <code>saudi_arabia</code>, <code>senegal</code>, <code>serbia</code>, <code>seychelles</code>, <code>sierra_leone</code>, <code>singapore</code>, <code>slovakia</code>, <code>slovenia</code>, <code>solomon_islands</code>, <code>somalia</code>, <code>south_africa</code>, <code>south_korea</code>, <code>south_sudan</code>, <code>spain</code>, <code>sri_lanka</code>, <code>st_kitts_and_nevis</code>, <code>st_lucia</code>, <code>sudan</code>, <code>suriname</code>, <code>swaziland</code>, <code>sweden</code>, <code>switzerland</code>, <code>syria</code>, <code>taiwan</code>, <code>tajikistan</code>, <code>tanzania</code>, <code>thailand</code>, <code>togo</code>, <code>tonga</code>, <code>trinidad_and_tobago</code>, <code>tunisia</code>, <code>turkey</code>, <code>turkmenistan</code>, <code>uganda</code>, <code>ukraine</code>, <code>united_arab_emirates</code>, <code>united_kingdom</code>, <code>united_states</code>, <code>uruguay</code>, <code>uzbekistan</code>, <code>vanuatu</code>, <code>venezuela</code>, <code>vietnam</code>, <code>world</code>, <code>yemen</code>, <code>zambia</code>, <code>zimbabwe</code></td>
+</tr>
+<tr>
+<td>importance</td>
+<td>string</td>
+<td>No</td>
+<td>Level of importance <br/><code>1</code>: low <br/><code>2</code>: medium <br/><code>3</code>: high</td>
+</tr>
+<tr>
+<td>before</td>
+<td>String</td>
+<td>No</td>
+<td>Pagination of data to return records newer than the requested ts based on the date parameter. Unix timestamp format in milliseconds.</td>
+</tr>
+<tr>
+<td>after</td>
+<td>String</td>
+<td>No</td>
+<td>Pagination of data to return records earlier than the requested ts based on the date parameter. Unix timestamp format in milliseconds. The default is the timestamp of the request moment.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>String</td>
+<td>No</td>
+<td>Number of results per request. The maximum is 100. The default is 100.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"actual"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7.8%"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"calendarId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"330631"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Harmonised Inflation Rate YoY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1700121600000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"dateSpan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Harmonised Inflation Rate YoY"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"forecast"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7.8%"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"importance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"prevInitial"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"previous"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9%"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"refDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1698710400000"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Slovakia"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1700121605007"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre></div><h4 id="public-data-rest-api-get-economic-calendar-data-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>calendarId</td>
+<td>string</td>
+<td>Calendar ID</td>
+</tr>
+<tr>
+<td>date</td>
+<td>string</td>
+<td>Estimated release time of the value of actual field, millisecond format of Unix timestamp, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>region</td>
+<td>string</td>
+<td>Country, region or entity</td>
+</tr>
+<tr>
+<td>category</td>
+<td>string</td>
+<td>Category name</td>
+</tr>
+<tr>
+<td>event</td>
+<td>string</td>
+<td>Event name</td>
+</tr>
+<tr>
+<td>refDate</td>
+<td>string</td>
+<td>Date for which the datapoint refers to</td>
+</tr>
+<tr>
+<td>actual</td>
+<td>string</td>
+<td>The actual value of this event</td>
+</tr>
+<tr>
+<td>previous</td>
+<td>string</td>
+<td>Latest actual value of the previous period <br/>The value will be revised if revision is applicable</td>
+</tr>
+<tr>
+<td>forecast</td>
+<td>string</td>
+<td>Average forecast among a representative group of economists</td>
+</tr>
+<tr>
+<td>dateSpan</td>
+<td>string</td>
+<td><code>0</code>: The time of the event is known<br/><code>1</code>: we only know the date of the event, the exact time of the event is unknown.</td>
+</tr>
+<tr>
+<td>importance</td>
+<td>string</td>
+<td>Level of importance <br/><code>1</code>: low <br/><code>2</code>: medium <br/><code>3</code>: high</td>
+</tr>
+<tr>
+<td>uTime</td>
+<td>string</td>
+<td>Update time of this record, millisecond format of Unix timestamp, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>prevInitial</td>
+<td>string</td>
+<td>The initial value of the previous period <br/>Only applicable when revision happens</td>
+</tr>
+<tr>
+<td>ccy</td>
+<td>string</td>
+<td>Currency of the data</td>
+</tr>
+<tr>
+<td>unit</td>
+<td>string</td>
+<td>Unit of the data</td>
+</tr>
+</tbody></table>
+<h2 id="public-data-websocket">WebSocket</h2>

@@ -1,0 +1,91 @@
+<h3 id="order-book-trading-market-data-get-full-order-book">GET / Full order book</h3>
+<p>Retrieve order book of the instrument. The data will be updated once a second. Best ask price may be lower than the best bid price during the pre-open period.<br/>
+This endpoint does not return data immediately. Instead, it returns the latest data once the server-side cache has been updated.</p>
+<h4 id="order-book-trading-market-data-get-full-order-book-rate-limit-10-requests-per-2-seconds">Rate Limit: 10 requests per 2 seconds</h4><h4 id="order-book-trading-market-data-get-full-order-book-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-market-data-get-full-order-book-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/market/books-full</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/market/books-full?instId<span class="o">=</span>BTC-USDT&amp;sz<span class="o">=</span>1
+
+</code></pre></div><h4 id="order-book-trading-market-data-get-full-order-book-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Order book depth per side. Maximum 5000, e.g. 5000 bids + 5000 asks <br/> Default returns to <code>1</code> depth data.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"41006.8"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"0.60038921"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"1"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"41006.3"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"0.30178218"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"2"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1629966436396"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-get-full-order-book-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">asks</td>
+<td style="text-align: left">Array of Arrays</td>
+<td style="text-align: left">Order book on sell side</td>
+</tr>
+<tr>
+<td style="text-align: left">bids</td>
+<td style="text-align: left">Array of Arrays</td>
+<td style="text-align: left">Order book on buy side</td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order book generation time</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+An example of the array of asks and bids values: ["411.8", "10", "4"]<br/>
+- "411.8" is the depth price<br/>
+- "10" is the quantity at the price (number of contracts for derivatives, quantity in base currency for Spot and Spot Margin)<br/>
+- "4" is the number of orders at the price.<br/>
+</aside>
+<aside class="notice">
+The order book data will be updated around once a second during the call auction.
+</aside>

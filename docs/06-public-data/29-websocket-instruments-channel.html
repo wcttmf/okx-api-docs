@@ -1,0 +1,430 @@
+<h3 id="public-data-websocket-instruments-channel">Instruments channel</h3>
+<p>The instruments will be pushed if there is any change to the instrument’s state (such as delivery of FUTURES, exercise of OPTION, listing of new contracts / trading pairs, trading suspension, etc.).<br/>
+(The full instrument list is not pushed since December 28, 2022, <a href="/docs-v5/log_en/#2022-12-06">you can click here to view details</a>)</p>
+<h4 id="public-data-websocket-instruments-channel-url-path">URL Path</h4>
+<p>/ws/v5/public</p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"instruments"</span>,
+      <span class="s2">"instType"</span>: <span class="s2">"SPOT"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPublicAsync</span> <span class="kn">import</span> <span class="n">WsPublicAsync</span>
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPublicAsync</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"wss://wspap.okx.com:8443/ws/v5/public"</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"instruments"</span><span class="p">,</span>
+          <span class="s">"instType"</span><span class="p">:</span> <span class="s">"SPOT"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+</code></pre></div><h4 id="public-data-websocket-instruments-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td>op</td>
+<td>String</td>
+<td>Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td>args</td>
+<td>Array of objects</td>
+<td>Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Yes</td>
+<td>Channel name<br/><code>instruments</code></td>
+</tr>
+<tr>
+<td>&gt; instType</td>
+<td>String</td>
+<td>Yes</td>
+<td>Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"instruments"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">instruments</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">instType</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">FUTURES</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="public-data-websocket-instruments-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Event<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument type<br/><code>SPOT</code><br/><code>MARGIN</code><br/><code>SWAP</code><br/><code>FUTURES</code><br/><code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"instruments"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"alias"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"auctionEndTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"baseCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ctMult"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ctType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ctVal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ctValCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"contTdSwTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1704876947000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"expTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"futureSettlement"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instFamily"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPOT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lever"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"listTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1606468572000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"lotSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00000001"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxIcebergSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999999999.0000000000000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxLmtAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxLmtSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999999999"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxMktAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxMktSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxStopSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxTriggerSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999999999.0000000000000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxTwapSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999999999.0000000000000000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"minSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00001"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"optType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"openType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call_auction"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quoteCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"settleCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ruleType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"stk"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"tickSz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uly"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"instIdCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="public-data-websocket-instruments-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Channel name</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">data</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Subscribed data</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument type</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-UST</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; uly</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Underlying, e.g. <code>BTC-USD</code> <br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instFamily</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument family, e.g. <code>BTC-USD</code> <br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; category</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency category. Note: this parameter is already deprecated</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; baseCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Base currency, e.g. <code>BTC</code> in <code>BTC-USDT</code> <br/>Only applicable to <code>SPOT</code>/<code>MARGIN</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; quoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Quote currency, e.g. <code>USDT</code> in <code>BTC-USDT</code> <br/>Only applicable to <code>SPOT</code>/<code>MARGIN</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; settleCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Settlement and margin currency, e.g. <code>BTC</code> <br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ctVal</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract value</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ctMult</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract multiplier</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ctValCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract value currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; optType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Option type<br/><code>C</code>: Call<br/><code>P</code>: Put<br/>Only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; stk</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Strike price<br/>Only applicable to <code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; listTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Listing time<br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; auctionEndTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left"><del>The end time of call auction, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code> <br/>Only applicable to <code>SPOT</code> that are listed through call auctions, return "" in other cases (deprecated, use contTdSwTime)</del></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; contTdSwTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Continuous trading switch time. The switch time from call auction, prequote to continuous trading, Unix timestamp format in milliseconds. e.g. <code>1597026383085</code>.<br/> Only applicable to <code>SPOT</code>/<code>MARGIN</code> that are listed through call auction or prequote, return "" in other cases.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; openType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Open type<br/> <code>fix_price</code>: fix price opening<br/><code>pre_quote</code>: pre-quote<br/><code>call_auction</code>: call auction <br/>Only applicable to <code>SPOT</code>/<code>MARGIN</code>, return "" for all other business lines</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; expTime</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Expiry time<br/>Applicable to <code>SPOT</code>/<code>MARGIN</code>/<code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>. For <code>FUTURES</code>/<code>OPTION</code>, it is the delivery/exercise time. It can also be the delisting time of the trading instrument. Update once change.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lever</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Max Leverage<br/>Not applicable to <code>SPOT</code>/<code>OPTION</code>, used to distinguish between <code>MARGIN</code> and <code>SPOT</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; tickSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Tick size, e.g. <code>0.0001</code><br/>For Option, it is minimum tickSz among tick band.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; lotSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Lot size<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>base currency</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; minSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Minimum order size<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>base currency</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ctType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Contract type<br/><code>linear</code>: linear contract<br/><code>inverse</code>: inverse contract<br/>Only applicable to <code>FUTURES</code>/<code>SWAP</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; alias</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Alias<br/><code>this_week</code><br/><code>next_week</code><br/><code>this_month</code><br/><code>next_month</code><br/><code>quarter</code><br/><code>next_quarter</code><br/>Only applicable to <code>FUTURES</code> <br/><strong>Not recommended for use, users are encouraged to rely on the expTime field to determine the delivery time of the contract</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument status<br/><code>live</code><br/><code>suspend</code><br/><code>expired</code><br/><code>preopen</code>. e.g. There will be preopen before the Futures and Options new contracts state is live. <br/><code>test</code>: Test pairs, can't be traded</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; state</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument status<br/><code>live</code><br/><code>suspend</code><br/><code>expired</code><br/><code>preopen</code> e.g. Futures and options contracts rollover from generation to trading start; certain symbols before they go live<br/><code>test</code>: Test pairs, can't be traded</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ruleType</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trading rule types<br/> <code>normal</code>: normal trading<br/> <code>pre_market</code>: pre-market trading</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxLmtSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maximum order quantity of a single limit order.<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>base currency</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxMktSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maximum order quantity of a single market order.<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>USDT</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxTwapSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maximum order quantity of a single TWAP order.<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>base currency</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxIcebergSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maximum order quantity of a single iceBerg order.<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>base currency</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxTriggerSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maximum order quantity of a single trigger order.<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>base currency</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; maxStopSz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">The maximum order quantity of a single stop market order.<br/>If it is a derivatives contract, the value is the number of contracts.<br/>If it is <code>SPOT</code>/<code>MARGIN</code>, the value is the quantity in <code>USDT</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; futureSettlement</td>
+<td style="text-align: left">Boolean</td>
+<td style="text-align: left">Whether daily settlement for expiry feature is enabled<br/>Applicable to <code>FUTURES</code> <code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; instIdCode</td>
+<td style="text-align: left">Integer</td>
+<td style="text-align: left">Instrument ID code. <br/>For simple binary encoding, you must use <code>instIdCode</code> instead of <code>instId</code>.<br/>For the same <code>instId</code>, it's value may be different between production and demo trading.</td>
+</tr>
+</tbody></table>
+<aside class="notice"> 
+Instrument status will trigger pushing of incremental data from instruments channel.
+When a new contract is going to be listed, the instrument data of the new contract will be available with status preopen.
+When a product is going to be delisted (e.g. when a FUTURES contract is settled or OPTION contract is exercised), the instrument status will be changed to expired.
+</aside>
+<aside class="notice">
+listTime and contTdSwTime<br/>
+For spot symbols listed through a call auction or pre-open, listTime represents the start time of the auction or pre-open, and contTdSwTime indicates the end of the auction or pre-open and the start of continuous trading. For other scenarios, listTime will mark the beginning of continuous trading, and contTdSwTime will return an empty value "".
+</aside>
+<aside class="notice">
+state<br/>
+The state will always change from `preopen` to `live` when the listTime is reached. Certain symbols will now have `state:preopen` before they go live. Before going live, the instruments channel will push data for pre-listing symbols with `state:preopen`. If the listing is cancelled, the channel will send full data excluding the cancelled symbol, without additional notification. When the symbol goes live (reaching listTime), the channel will push data with `state:live`. Users can also query the corresponding data via the REST endpoint.<br/>
+When a product is going to be delisted (e.g. when a FUTURES contract is settled or OPTION contract is exercised), the instrument will not be available.
+</aside>

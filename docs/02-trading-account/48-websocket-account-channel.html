@@ -1,0 +1,697 @@
+<h3 id="trading-account-websocket-account-channel">Account channel</h3>
+<p>Retrieve account information. Data will be pushed when triggered by events such as placing order, canceling order, transaction execution, etc.
+It will also be pushed in regular interval according to subscription granularity.<br/></p>
+<p>Concurrent connection to this channel will be restricted by the following rules: <a href="/docs-v5/en/#overview-websocket-connection-count-limit">WebSocket connection count limit</a>.</p>
+<h4 id="trading-account-websocket-account-channel-url-path">URL Path</h4>
+<p>/ws/v5/private (required login)</p>
+<blockquote>
+<p>Request Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"account"</span>,
+      <span class="s2">"ccy"</span>: <span class="s2">"BTC"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/private"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"account"</span><span class="p">,</span>
+          <span class="s">"ccy"</span><span class="p">:</span> <span class="s">"BTC"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"id"</span>: <span class="s2">"1512"</span>,
+  <span class="s2">"op"</span>: <span class="s2">"subscribe"</span>,
+  <span class="s2">"args"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"channel"</span>: <span class="s2">"account"</span>,
+      <span class="s2">"extraParams"</span>: <span class="s2">"
+        {
+          </span><span class="se">\"</span><span class="s2">updateInterval</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">0</span><span class="se">\"</span><span class="s2">
+        }
+      "</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">okx.websocket.WsPrivateAsync</span> <span class="kn">import</span> <span class="n">WsPrivateAsync</span>
+
+
+<span class="k">def</span> <span class="nf">callbackFunc</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">ws</span> <span class="o">=</span> <span class="n">WsPrivateAsync</span><span class="p">(</span>
+        <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="p">,</span>
+        <span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span><span class="p">,</span>
+        <span class="n">secretKey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span><span class="p">,</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">"wss://ws.okx.com:8443/ws/v5/private"</span><span class="p">,</span>
+        <span class="n">useServerTime</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">)</span>
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s">"channel"</span><span class="p">:</span> <span class="s">"account"</span><span class="p">,</span>
+          <span class="s">"extraParams"</span><span class="p">:</span> <span class="s">"{</span><span class="se">\"</span><span class="s">updateInterval</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">0</span><span class="se">\"</span><span class="s">}"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">ws</span><span class="p">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callbackFunc</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div><h4 id="trading-account-websocket-account-channel-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message  <br/>Provided by client. It will be returned in response message for identifying the corresponding request. <br/>A combination of case-sensitive alphanumerics, all numbers, or all letters of up to 32 characters.</td>
+</tr>
+<tr>
+<td style="text-align: left">op</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/></td>
+</tr>
+<tr>
+<td style="text-align: left">args</td>
+<td style="text-align: left">Array of objects</td>
+<td style="text-align: left">Yes</td>
+<td>List of subscribed channels</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>account</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; extraParams</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Additional configuration</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt;&gt; updateInterval</td>
+<td style="text-align: left">int</td>
+<td style="text-align: left">No</td>
+<td><code>0</code>: only push due to account events <br/>The data will be pushed both by events and regularly if this field is omitted or set to other values than 0. <br/>The following format should be strictly obeyed when using this field. <br/>"extraParams": "<br/>{<br/>   \"updateInterval\": \"0\"<br/> }<br/>"</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Successful Response Example : single</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Successful Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Failure Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1512"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"60012"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid request: {</span><span class="se">\"</span><span class="s2">op</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">subscribe</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">argss</span><span class="se">\"</span><span class="s2">:[{ </span><span class="se">\"</span><span class="s2">channel</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">account</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">ccy</span><span class="se">\"</span><span class="s2"> : </span><span class="se">\"</span><span class="s2">BTC</span><span class="se">\"</span><span class="s2">}]}"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"connId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a4d3ae55"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-websocket-account-channel-response-parameters">Response parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">id</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Unique identifier of the message</td>
+</tr>
+<tr>
+<td style="text-align: left">event</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Operation<br/><code>subscribe</code><br/><code>unsubscribe</code><br/><code>error</code></td>
+</tr>
+<tr>
+<td style="text-align: left">arg</td>
+<td style="text-align: left">Object</td>
+<td style="text-align: left">No</td>
+<td>Subscribed channel</td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; channel</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>Channel name<br/><code>account</code></td>
+</tr>
+<tr>
+<td style="text-align: left">&gt; ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">code</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error code</td>
+</tr>
+<tr>
+<td style="text-align: left">msg</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td>Error message</td>
+</tr>
+<tr>
+<td style="text-align: left">connId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td>WebSocket connection ID</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Push Data Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"arg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"channel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44*********584"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"snapshot"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"curPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lastPage"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"adjEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55444.12216906034"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55444.12216906034"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"borrowFroz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nl">"availBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4734.371190691436"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"availEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4734.371190691435"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"borrowFroz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"cashBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4750.426970691436"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"coinUsdPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.99927"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"crossLiab"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"colRes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"collateralEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"collateralRestrict"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"colBorrAutoConversion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"disEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4889.379316336831"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4892.951170691435"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"eqUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4889.379316336831"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"smtSyncEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"spotCopyTradingEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fixedBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"frozenBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"158.57998"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"interest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isoEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isoLiab"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isoUpl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"liab"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxLoan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notionalLever"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ordFrozen"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"rewardBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"spotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"clSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"maxSpotInUseAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">          
+        </span><span class="nl">"spotIsoBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"stgyEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"150"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"twap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1705564213903"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-7.475800000000003"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uplLiab"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"spotBal"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"openAvgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"accAvgPx"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"spotUpl"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"spotUplRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalPnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalPnlRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}],</span><span class="w">
+        </span><span class="nl">"imr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"isoEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"mgnRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"mmr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notionalUsd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notionalUsdForBorrow"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notionalUsdForFutures"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notionalUsdForOption"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"notionalUsdForSwap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ordFroz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"totalEq"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55868.06403501676"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"uTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1705564223311"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"upl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-websocket-account-channel-push-data-parameters">Push data parameters</h4>
+<table><thead>
+<tr>
+<th><strong>Parameters</strong></th>
+<th><strong>Types</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td>arg</td>
+<td>Object</td>
+<td>Successfully subscribed channel</td>
+</tr>
+<tr>
+<td>&gt; channel</td>
+<td>String</td>
+<td>Channel name</td>
+</tr>
+<tr>
+<td>&gt; uid</td>
+<td>String</td>
+<td>User Identifier</td>
+</tr>
+<tr>
+<td>eventType</td>
+<td>String</td>
+<td>Event type: <br/><code>snapshot</code>: Initial and regular snapshot push <br/><code>event_update</code>: Event-driven update push</td>
+</tr>
+<tr>
+<td>curPage</td>
+<td>Integer</td>
+<td>Current page number. <br/>Only applicable for <code>snapshot</code> events. Not included in <code>event_update</code> events.</td>
+</tr>
+<tr>
+<td>lastPage</td>
+<td>Boolean</td>
+<td>Whether this is the last page of pagination:<br/><code>true</code><br/><code>false</code><br/>Only applicable for <code>snapshot</code> events. Not included in <code>event_update</code> events.</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Array of objects</td>
+<td>Subscribed data</td>
+</tr>
+<tr>
+<td>&gt; uTime</td>
+<td>String</td>
+<td>The latest time to get account information, millisecond format of Unix timestamp, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>&gt; totalEq</td>
+<td>String</td>
+<td>The total amount of equity in <code>USD</code></td>
+</tr>
+<tr>
+<td>&gt; isoEq</td>
+<td>String</td>
+<td>Isolated margin equity in <code>USD</code><br/>Applicable to <code>Futures mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; adjEq</td>
+<td>String</td>
+<td>Adjusted / Effective equity in <code>USD</code> <br/>The net fiat value of the assets in the account that can provide margins for spot, expiry futures, perpetual futures and options under the cross-margin mode. <br/>In multi-ccy or PM mode, the asset and margin requirement will all be converted to USD value to process the order check or liquidation. <br/>Due to the volatility of each currency market, our platform calculates the actual USD value of each currency based on discount rates to balance market risks. <br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; availEq</td>
+<td>String</td>
+<td>Account level available equity, excluding currencies that are restricted due to the collateralized borrowing limit.<br/> Applicable to <code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; ordFroz</td>
+<td>String</td>
+<td>Margin frozen for pending cross orders in <code>USD</code> <br/>Only applicable to <code>Spot mode</code>/<code>Multi-currency margin</code></td>
+</tr>
+<tr>
+<td>&gt; imr</td>
+<td>String</td>
+<td>Initial margin requirement in <code>USD</code> <br/>The sum of initial margins of all open positions and pending orders under cross-margin mode in <code>USD</code>. <br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; mmr</td>
+<td>String</td>
+<td>Maintenance margin requirement in <code>USD</code> <br/>The sum of maintenance margins of all open positions and pending orders under cross-margin mode in <code>USD</code>. <br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; borrowFroz</td>
+<td>String</td>
+<td>Potential borrowing IMR of the account in <code>USD</code> <br/>Only applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code>. It is "" for other margin modes.</td>
+</tr>
+<tr>
+<td>&gt; mgnRatio</td>
+<td>String</td>
+<td>Maintenance margin ratio in <code>USD</code>. <br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; notionalUsd</td>
+<td>String</td>
+<td>Notional value of positions in <code>USD</code> <br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; notionalUsdForBorrow</td>
+<td>String</td>
+<td>Notional value for <code>Borrow</code> in USD<br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; notionalUsdForSwap</td>
+<td>String</td>
+<td>Notional value of positions for <code>Perpetual Futures</code> in USD<br/>Applicable to <code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; notionalUsdForFutures</td>
+<td>String</td>
+<td>Notional value of positions for <code>Expiry Futures</code> in USD<br/>Applicable to <code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; notionalUsdForOption</td>
+<td>String</td>
+<td>Notional value of positions for <code>Option</code> in USD<br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; upl</td>
+<td>String</td>
+<td>Cross-margin info of unrealized profit and loss at the account level in <code>USD</code><br/>Applicable to <code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt; details</td>
+<td>Array of objects</td>
+<td>Detailed asset information in all currencies</td>
+</tr>
+<tr>
+<td>&gt;&gt; ccy</td>
+<td>String</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; eq</td>
+<td>String</td>
+<td>Equity of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; cashBal</td>
+<td>String</td>
+<td>Cash Balance</td>
+</tr>
+<tr>
+<td>&gt;&gt; uTime</td>
+<td>String</td>
+<td>Update time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; isoEq</td>
+<td>String</td>
+<td>Isolated margin equity of currency<br/>Applicable to <code>Futures mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; availEq</td>
+<td>String</td>
+<td>Available equity of currency<br/>Applicable to <code>Futures mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; disEq</td>
+<td>String</td>
+<td>Discount equity of currency in <code>USD</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; fixedBal</td>
+<td>String</td>
+<td>Frozen balance for <code>Dip Sniper</code> and <code>Peak Sniper</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; availBal</td>
+<td>String</td>
+<td>Available balance of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; frozenBal</td>
+<td>String</td>
+<td>Frozen balance of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; ordFrozen</td>
+<td>String</td>
+<td>Margin frozen for open orders <br/>Applicable to <code>Spot mode</code>/<code>Futures mode</code>/<code>Multi-currency margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; liab</td>
+<td>String</td>
+<td>Liabilities of currency<br/>It is a positive value, e.g. <code>21625.64</code>. <br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; upl</td>
+<td>String</td>
+<td>The sum of the unrealized profit &amp; loss of all margin and derivatives positions of currency. <br/>Applicable to <code>Futures mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; uplLiab</td>
+<td>String</td>
+<td>Liabilities due to Unrealized loss of currency<br/>Applicable to <code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; crossLiab</td>
+<td>String</td>
+<td>Cross Liabilities of currency<br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; isoLiab</td>
+<td>String</td>
+<td>Isolated Liabilities of currency<br/>Applicable to <code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; rewardBal</td>
+<td>String</td>
+<td>Trial fund balance</td>
+</tr>
+<tr>
+<td>&gt;&gt; mgnRatio</td>
+<td>String</td>
+<td>Cross Maintenance margin ratio of currency <br/>The index for measuring the risk of a certain asset in the account. <br/>Applicable to <code>Futures mode</code> and when there is cross position</td>
+</tr>
+<tr>
+<td>&gt;&gt; imr</td>
+<td>String</td>
+<td>Cross initial margin requirement at the currency level<br/>Applicable to <code>Futures mode</code> and when there is cross position</td>
+</tr>
+<tr>
+<td>&gt;&gt; mmr</td>
+<td>String</td>
+<td>Cross maintenance margin requirement at the currency level<br/>Applicable to <code>Futures mode</code> and when there is cross position</td>
+</tr>
+<tr>
+<td>&gt;&gt; interest</td>
+<td>String</td>
+<td>Interest of currency<br/>It is a positive value, e.g."9.01". Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; twap</td>
+<td>String</td>
+<td>System is forced repayment(TWAP) indicator<br/>Divided into multiple levels from 0 to 5, the larger the number, the more likely the auto repayment will be triggered.<br/>Applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; maxLoan</td>
+<td>String</td>
+<td>Max loan of currency<br/>Applicable to <code>cross</code> of <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; eqUsd</td>
+<td>String</td>
+<td>Equity <code>USD</code> of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; borrowFroz</td>
+<td>String</td>
+<td>Potential borrowing IMR of currency in <code>USD</code> <br/>Only applicable to <code>Spot mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code>. It is "" for other margin modes.</td>
+</tr>
+<tr>
+<td>&gt;&gt; notionalLever</td>
+<td>String</td>
+<td>Leverage of currency<br/>Applicable to <code>Futures mode</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; coinUsdPrice</td>
+<td>String</td>
+<td>Price index <code>USD</code> of currency</td>
+</tr>
+<tr>
+<td>&gt;&gt; stgyEq</td>
+<td>String</td>
+<td>strategy equity</td>
+</tr>
+<tr>
+<td>&gt;&gt; isoUpl</td>
+<td>String</td>
+<td>Isolated unrealized profit and loss of currency<br/>Applicable to <code>Futures mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; spotInUseAmt</td>
+<td>String</td>
+<td>Spot in use amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; clSpotInUseAmt</td>
+<td>String</td>
+<td>User-defined spot risk offset amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; maxSpotInUseAmt</td>
+<td>String</td>
+<td>Max possible spot risk offset amount<br/>Applicable to <code>Portfolio margin</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; spotIsoBal</td>
+<td>String</td>
+<td>Spot isolated balance<br/>Applicable to copy trading<br/>Applicable to <code>Spot mode</code>/<code>Futures mode</code></td>
+</tr>
+<tr>
+<td>&gt;&gt; smtSyncEq</td>
+<td>String</td>
+<td>Smart sync equity<br/>The default is "0", only applicable to copy trader.</td>
+</tr>
+<tr>
+<td>&gt;&gt; spotCopyTradingEq</td>
+<td>String</td>
+<td>Spot smart sync equity. <br/>The default is "0", only applicable to copy trader.</td>
+</tr>
+<tr>
+<td>&gt;&gt; spotBal</td>
+<td>String</td>
+<td>Spot balance. The unit is currency, e.g. BTC. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; openAvgPx</td>
+<td>String</td>
+<td>Spot average cost price. The unit is USD. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; accAvgPx</td>
+<td>String</td>
+<td>Spot accumulated cost price. The unit is USD. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; spotUpl</td>
+<td>String</td>
+<td>Spot unrealized profit and loss. The unit is USD. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; spotUplRatio</td>
+<td>String</td>
+<td>Spot unrealized profit and loss ratio. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; totalPnl</td>
+<td>String</td>
+<td>Spot accumulated profit and loss. The unit is USD. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; totalPnlRatio</td>
+<td>String</td>
+<td>Spot accumulated profit and loss ratio. <a href="https://www.okx.com/help/i-introduction-of-spot">More details</a></td>
+</tr>
+<tr>
+<td>&gt;&gt; colRes</td>
+<td>String</td>
+<td>Platform level collateral restriction status<br/> <code>0</code>: The restriction is not enabled.<br/> <code>1</code>: The restriction is not enabled. But the crypto is close to the platform's collateral limit.<br/> <code>2</code>: The restriction is enabled. This crypto can't be used as margin for your new orders. This may result in failed orders. But it will still be included in the account's adjusted equity and doesn't impact margin ratio.<br/> Refer to <a href="https://www.okx.com/help/introduction-to-the-platforms-collateralized-borrowing-limit-mechanism">Introduction to the platform collateralized borrowing limit</a> for more details.</td>
+</tr>
+<tr>
+<td>&gt;&gt; colBorrAutoConversion</td>
+<td>String</td>
+<td>Risk indicator of auto conversion. Divided into multiple levels from 1-5, the larger the number, the more likely the repayment will be triggered. The default will be 0, indicating there is no risk currently. 5 means this user is undergoing auto conversion now, 4 means this user will undergo auto conversion soon whereas 1/2/3 indicates there is a risk for auto conversion.<br/> Applicable to <code>Spot mode</code>/<code>Futures mode</code>/<code>Multi-currency margin</code>/<code>Portfolio margin</code><br/> When the total liability for each crypto set as collateral exceeds a certain percentage of the platform's total limit, the auto-conversion mechanism may be triggered. This may result in the automatic sale of excess collateral crypto if you've set this crypto as collateral and have large borrowings. To lower this risk, consider reducing your use of the crypto as collateral or reducing your liabilities.<br/> Refer to <a href="https://www.okx.com/help/introduction-to-the-platforms-collateralized-borrowing-limit-mechanism">Introduction to the platform collateralized borrowing limit</a> for more details.</td>
+</tr>
+<tr>
+<td>&gt;&gt; collateralRestrict</td>
+<td>Boolean</td>
+<td><del>Platform level collateralized borrow restriction<br/> <code>true</code><br/> <code>false</code></del>(deprecated, use colRes instead)</td>
+</tr>
+<tr>
+<td>&gt;&gt; collateralEnabled</td>
+<td>Boolean</td>
+<td><code>true</code>: Collateral enabled<br/><code>false</code>: Collateral disabled<br/>Applicable to <code>Multi-currency margin</code></td>
+</tr>
+</tbody></table>
+<aside class="notice">
+"" will be returned for inapplicable fields under the current account level.
+</aside>
+<aside class="notice">
+<br/> - The account data is sent on event basis and regular basis.
+<br/> - The event push is not pushed in real-time. It is aggregated and pushed at a fixed time interval, around 50ms. For example, if multiple events occur within a fixed time interval, the system will aggregate them into a single message and push it at the end of the fixed time interval. If the data volume is too large, it may be split into multiple messages.
+<br/> - The regular push sends updates regardless of whether there are activities in the trading account or not.
+</aside>
+<aside class="notice">
+<br/> - Only currencies with non-zero balance will be pushed. Definition of non-zero balance: any value of eq, availEq, availBql parameters is not 0. If the data is too large to be sent in a single push message, it will be split into multiple messages.
+<br/> - For example, when subscribing to account channel without specifying ccy and there are 5 currencies are with non-zero balance, all 5 currencies data will be pushed in initial snapshot and in regular update. Subsequently when there is change in balance or equity of an token, only the incremental data of that currency will be pushed triggered by this change.
+</aside>

@@ -1,0 +1,108 @@
+<h3 id="order-book-trading-market-data-get-trades">GET / Trades</h3>
+<p>Retrieve the recent transactions of an instrument.</p>
+<h4 id="order-book-trading-market-data-get-trades-rate-limit-100-requests-per-2-seconds">Rate Limit: 100 requests per 2 seconds</h4><h4 id="order-book-trading-market-data-get-trades-rate-limit-rule-ip">Rate limit rule: IP</h4><h4 id="order-book-trading-market-data-get-trades-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/market/trades</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>GET /api/v5/market/trades?instId<span class="o">=</span>BTC-USDT
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.MarketData</span> <span class="k">as</span> <span class="n">MarketData</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"0"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">marketDataAPI</span> <span class="o">=</span>  <span class="n">MarketData</span><span class="p">.</span><span class="n">MarketAPI</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Retrieve the recent transactions of an instrument
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">marketDataAPI</span><span class="p">.</span><span class="n">get_trades</span><span class="p">(</span>
+    <span class="n">instId</span><span class="o">=</span><span class="s">"BTC-USDT"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="order-book-trading-market-data-get-trades-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Instrument ID, e.g. <code>BTC-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">limit</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">Number of results per request. The maximum is <code>500</code>; The default is <code>100</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00001"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29963.2"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"242720720"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1654161646974"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00001"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"px"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29964.1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"242720719"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1654161641568"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="order-book-trading-market-data-get-trades-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade ID</td>
+</tr>
+<tr>
+<td style="text-align: left">px</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade price</td>
+</tr>
+<tr>
+<td style="text-align: left">sz</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade quantity <br/>For spot trading, the unit is base currency<br/>For <code>FUTURES</code>/<code>SWAP</code>/<code>OPTION</code>, the unit is contract.</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade side of taker <br/><code>buy</code> <br/><code>sell</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ts</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Trade time, Unix timestamp format in milliseconds, e.g. <code>1597026383085</code>.</td>
+</tr>
+</tbody></table>
+<aside class="notice">
+Up to 500 most recent historical public transaction data can be retrieved.
+</aside>

@@ -1,0 +1,142 @@
+<h3 id="trading-account-rest-api-get-the-maximum-loan-of-instrument">Get the maximum loan of instrument</h3><h4 id="trading-account-rest-api-get-the-maximum-loan-of-instrument-rate-limit-20-requests-per-2-seconds">Rate Limit: 20 requests per 2 seconds</h4><h4 id="trading-account-rest-api-get-the-maximum-loan-of-instrument-rate-limit-rule-user-id">Rate limit rule: User ID</h4><h4 id="trading-account-rest-api-get-the-maximum-loan-of-instrument-permission-read">Permission: Read</h4><h4 id="trading-account-rest-api-get-the-maximum-loan-of-instrument-http-request">HTTP Request</h4>
+<p><code>GET /api/v5/account/max-loan</code></p>
+<blockquote>
+<p>Request Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Max loan of cross `MARGIN` for currencies of trading pair in `Spot mode` (enabled borrowing)</span>
+GET  /api/v5/account/max-loan?instId<span class="o">=</span>BTC-USDT&amp;mgnMode<span class="o">=</span>cross
+
+<span class="c"># Max loan for currency in `Spot mode` (enabled borrowing)</span>
+GET  /api/v5/account/max-loan?ccy<span class="o">=</span>USDT&amp;mgnMode<span class="o">=</span>cross
+
+<span class="c"># Max loan of isolated `MARGIN` in `Futures mode`</span>
+GET  /api/v5/account/max-loan?instId<span class="o">=</span>BTC-USDT&amp;mgnMode<span class="o">=</span>isolated
+
+<span class="c"># Max loan of cross `MARGIN` in `Futures mode` (Margin Currency is BTC)</span>
+GET  /api/v5/account/max-loan?instId<span class="o">=</span>BTC-USDT&amp;mgnMode<span class="o">=</span>cross&amp;mgnCcy<span class="o">=</span>BTC
+
+<span class="c"># Max loan of cross `MARGIN` in `Multi-currency margin`</span>
+GET  /api/v5/account/max-loan?instId<span class="o">=</span>BTC-USDT&amp;mgnMode<span class="o">=</span>cross
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">okx.Account</span> <span class="k">as</span> <span class="n">Account</span>
+
+<span class="c1"># API initialization
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span>
+<span class="n">secretkey</span> <span class="o">=</span> <span class="s">"YOUR_SECRET_KEY"</span>
+<span class="n">passphrase</span> <span class="o">=</span> <span class="s">"YOUR_PASSPHRASE"</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"1"</span>  <span class="c1"># Production trading:0 , demo trading:1
+</span>
+<span class="n">accountAPI</span> <span class="o">=</span> <span class="n">Account</span><span class="p">.</span><span class="n">AccountAPI</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">secretkey</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">flag</span><span class="p">)</span>
+
+<span class="c1"># Max loan of cross MARGIN in Futures mode (Margin Currency is BTC)
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">accountAPI</span><span class="p">.</span><span class="n">get_max_loan</span><span class="p">(</span>
+    <span class="n">instId</span><span class="o">=</span><span class="s">"BTC-USDT"</span><span class="p">,</span>
+    <span class="n">mgnMode</span><span class="o">=</span><span class="s">"cross"</span><span class="p">,</span>
+    <span class="n">mgnCcy</span><span class="o">=</span><span class="s">"BTC"</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><h4 id="trading-account-rest-api-get-the-maximum-loan-of-instrument-request-parameters">Request Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left">Parameter</th>
+<th style="text-align: left">Type</th>
+<th style="text-align: left">Required</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Yes</td>
+<td style="text-align: left">Margin mode<br/><code>isolated</code> <code>cross</code></td>
+</tr>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Single instrument or multiple instruments (no more than 5) separated with comma, e.g. <code>BTC-USDT,ETH-USDT</code></td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Currency<br/>Applicable to get Max loan of manual borrow for the currency in <code>Spot mode</code> (enabled borrowing)</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Conditional</td>
+<td style="text-align: left">Margin currency<br/>Applicable to <code>isolated</code> <code>MARGIN</code> and <code>cross</code> <code>MARGIN</code> in <code>Futures mode</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left">tradeQuoteCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">No</td>
+<td style="text-align: left">The quote currency for trading. Only applicable to <code>SPOT</code>.<br/>The default value is the quote currency of <code>instId</code>, e.g. <code>USD</code> for <code>BTC-USD</code>.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Response Example</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"maxLoan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sell"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"instId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC-USDT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mgnCcy"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"maxLoan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ccy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h4 id="trading-account-rest-api-get-the-maximum-loan-of-instrument-response-parameters">Response Parameters</h4>
+<table><thead>
+<tr>
+<th style="text-align: left"><strong>Parameter</strong></th>
+<th style="text-align: left"><strong>Type</strong></th>
+<th style="text-align: left"><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: left">instId</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Instrument ID</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnMode</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin mode</td>
+</tr>
+<tr>
+<td style="text-align: left">mgnCcy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Margin currency</td>
+</tr>
+<tr>
+<td style="text-align: left">maxLoan</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Max loan</td>
+</tr>
+<tr>
+<td style="text-align: left">ccy</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Currency</td>
+</tr>
+<tr>
+<td style="text-align: left">side</td>
+<td style="text-align: left">String</td>
+<td style="text-align: left">Order side<br/><code>buy</code> <code>sell</code></td>
+</tr>
+</tbody></table>
